@@ -1,0 +1,44 @@
+---
+import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header>
+  <nav class="site-shell">
+    <a class="brand" href="/" aria-label={SITE_TITLE}>
+      <span class="mark">STK</span>
+      <span>{SITE_TITLE}</span>
+    </a>
+    <div class="internal-links">
+      <HeaderLink href="/">首页</HeaderLink>
+      <HeaderLink href="/blog">文章</HeaderLink>
+      <HeaderLink href="/about">研究框架</HeaderLink>
+      <a class="author" href="https://github.com/brucelau1987cn" target="_blank" rel="noreferrer">{SITE_AUTHOR}</a>
+    </div>
+  </nav>
+</header>
+<style>
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin: 0;
+    padding: 0.75rem 0;
+    background: rgba(255, 255, 255, 0.84);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+  }
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .brand { display: inline-flex; align-items: center; gap: 0.65rem; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
+  .mark { display: inline-flex; align-items: center; justify-content: center; width: 2.45rem; height: 2.45rem; border-radius: 12px; background: rgb(var(--black)); color: white; font-size: 0.78rem; letter-spacing: 0.04em; }
+  .internal-links { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; }
+  nav a { color: rgb(var(--gray-dark)); text-decoration: none; font-size: 0.92rem; font-weight: 700; padding: 0.55rem 0.75rem; border-radius: 999px; }
+  nav a.active { color: var(--accent-dark); background: var(--accent-soft); }
+  nav a:hover { background: var(--warm); color: rgb(var(--black)); }
+  .author { background: var(--blue-soft); color: var(--blue); border: 1px solid rgba(0, 117, 222, 0.12); }
+  @media (max-width: 720px) {
+    header { position: static; }
+    nav { align-items: flex-start; flex-direction: column; }
+    .internal-links { justify-content: flex-start; }
+  }
+</style>
