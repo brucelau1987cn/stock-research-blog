@@ -26,54 +26,61 @@ import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
     <main>
       <section class="intro">
         <span class="pill pill-red">由 {SITE_AUTHOR} 维护</span>
-        <h1>A股股票中短线研究框架</h1>
-        <p>这个站点记录A股个股研究、盘中修正、次日复盘和观察队列。目标是把题材强度、成交额、换手、日内位置、关键价位和仓位动作放进同一套可复盘流程。</p>
+        <h1>白发股神 — 研究框架</h1>
+        <p>{SITE_DESCRIPTION}</p>
       </section>
 
       <section>
-        <h2>当前评分权重</h2>
+        <h2>两大板块</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3>📊 个股分析</h3>
+            <p><strong>结论先行</strong>，A股个股中短线研究。每篇文章包含：上涨/下跌逻辑、关键价位、持仓动作、风险点。固定八段结构，覆盖从盘面强弱到次日复盘的完整闭环。</p>
+            <p><strong>核心规则：</strong>单票仓位上限20%。低吸高抛为主，追高只在主线强趋势且分时承接明确时考虑。A股颜色：🔴 涨/利好，🟢 跌/利空。</p>
+          </div>
+          <div class="card" style="background:var(--accent-soft)">
+            <h3>👩‍🦳 白发股神</h3>
+            <p><strong>白毛股神 Serenity</strong> (@aleabitoreddit) 推文追踪专栏。每4小时自动抓取最新推文，含投资解读、A股映射和风险提示。</p>
+            <p><strong>核心价值：</strong>Serenity 2026年收益超45倍，专注AI供应链上游"卡脖子"环节。本站将其方法论和最新观点同步为中文研究笔记。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>评分权重</h2>
         <div class="weight-grid">
-          <div class="weight card"><span class="pill pill-red">题材</span><strong>25%</strong><p>主线强度与产业链扩散，代表资金方向。</p></div>
-          <div class="weight card"><span class="pill">强度</span><strong>20%</strong><p>涨幅、日内位置、突破关键位的力度。</p></div>
-          <div class="weight card"><span class="pill">成交</span><strong>20%</strong><p>成交额、量能放大和大单承接。</p></div>
-          <div class="weight card"><span class="pill">换手</span><strong>15%</strong><p>适度换手提升活跃度，高换手滞涨提高风险。</p></div>
-          <div class="weight card"><span class="pill">价位</span><strong>10%</strong><p>开盘价、日内高低点、前高、支撑压力。</p></div>
-          <div class="weight card"><span class="pill pill-amber">风险</span><strong>10%</strong><p>估值、连续加速、冲高回落、题材退潮。</p></div>
+          <div class="weight card"><span class="pill pill-red">题材</span><strong>25%</strong><p>主线强度与产业链扩散。</p></div>
+          <div class="weight card"><span class="pill">强度</span><strong>20%</strong><p>涨幅、日内位置、突破力度。</p></div>
+          <div class="weight card"><span class="pill">成交</span><strong>20%</strong><p>成交额、量能、大单承接。</p></div>
+          <div class="weight card"><span class="pill">换手</span><strong>15%</strong><p>活跃度与高换手风险权衡。</p></div>
+          <div class="weight card"><span class="pill">价位</span><strong>10%</strong><p>开盘价、高低点、支撑压力。</p></div>
+          <div class="weight card"><span class="pill pill-amber">风险</span><strong>10%</strong><p>估值、连续加速、题材退潮。</p></div>
         </div>
       </section>
 
       <section class="two-col">
         <div class="card">
           <h2>四类股票</h2>
-          <h3>主线龙头</h3>
-          <p>题材最强、成交活跃、日内位置高，适合作为观察队列核心。</p>
-          <h3>链条扩散</h3>
-          <p>同题材补涨或中军品种，适合回踩低吸和分批做T。</p>
-          <h3>修复跟踪</h3>
-          <p>强势题材里位置较低或刚修复的品种，等待突破确认。</p>
-          <h3>风险观察</h3>
-          <p>下跌、冲高回落、高换手滞涨、跌破关键位的品种。</p>
+          <h3>主线龙头</h3><p>题材最强、成交活跃、日内位置高。</p>
+          <h3>链条扩散</h3><p>同题材补涨或中军，适合回踩低吸。</p>
+          <h3>修复跟踪</h3><p>强势题材里位置较低，等待确认。</p>
+          <h3>风险观察</h3><p>下跌、冲高回落、高换手滞涨。</p>
         </div>
         <div class="card">
           <h2>复盘方法</h2>
           <ol>
             <li>记录观察队列 Top 5。</li>
-            <li>收盘后更新实际涨跌幅、成交额和换手。</li>
-            <li>对比龙头、中军、补涨、弱票的强弱变化。</li>
-            <li>检查题材扩散、资金背离、高位过热和低位补涨。</li>
+            <li>收盘后更新涨跌幅、成交额和换手。</li>
+            <li>对比龙头、中军、补涨、弱票强弱变化。</li>
+            <li>检查题材扩散、资金背离、高位过热。</li>
             <li>更新下一轮关键价位和持仓动作。</li>
           </ol>
         </div>
       </section>
 
       <section class="notice">
-        <strong>每日同步约定</strong>
-        <p>盘面截图、实时快照和收盘复盘进入正式结论后，同步写入博客；首页“当前观察队列”跟随最新交易窗口更新。A股行情主用腾讯快照和东方财富补充，港股与市场状态使用 moomoo/Futu OpenD，只读执行。</p>
-      </section>
-
-      <section class="notice">
         <strong>免责声明</strong>
-        <p>本站内容为 {SITE_AUTHOR} 的个人研究记录，用于复盘股票研究框架和交易纪律，不构成投资建议。</p>
+        <p>本站内容为 {SITE_AUTHOR} 的个人研究记录，不构成投资建议。</p>
       </section>
     </main>
     <Footer />
