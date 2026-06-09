@@ -55,10 +55,10 @@ const pageDesc = '白毛股神 Serenity (@aleabitoreddit) — AI供应链投资�
       .section-divider h2 { margin: 0; white-space: nowrap; }
       .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-      ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; list-style-type: none; margin: 0; padding: 0; }
-      ul li:first-child { grid-column: 1 / -1; }
+      ul { display: grid; grid-template-columns: 1fr; gap: 1rem; list-style-type: none; margin: 0; padding: 0; }
+      ul li:first-child { grid-column: 1; }
       .post-card { display: grid; grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; color: rgb(var(--gray-dark)); text-decoration: none; min-height: 13rem; }
-      ul li:first-child .post-card { min-height: 15rem; background: linear-gradient(135deg, #fff, var(--accent-soft)); }
+      ul li:first-child .post-card { min-height: 13rem; background: linear-gradient(135deg, #fff, var(--accent-soft)); }
       .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
       .post-card .title { margin: 0; color: rgb(var(--black)); }
       .post-card .date { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
