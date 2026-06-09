@@ -14,6 +14,20 @@ const isSerenity = tags?.includes('白发股神');
 const tagLabel = isSerenity ? '白发股神' : '个股分析';
 const tagPill = isSerenity ? 'pill-red' : '';
 const tweetHeadings = headings.filter((heading) => heading.depth === 3 && heading.text.startsWith('Tweet '));
+const tweetDates = tweetHeadings.map((heading) => heading.text.match(/^Tweet\s+\d+\s+·\s+([^—]+)/)?.[1].trim() || heading.text);
+const tweetDateTotals = tweetDates.reduce<Record<string, number>>((acc, date) => {
+  acc[date] = (acc[date] || 0) + 1;
+  return acc;
+}, {});
+const tweetDateSeen: Record<string, number> = {};
+const tweetLinks = tweetHeadings.map((heading, index) => {
+  const date = tweetDates[index];
+  tweetDateSeen[date] = (tweetDateSeen[date] || 0) + 1;
+  return {
+    slug: heading.slug,
+    label: tweetDateTotals[date] > 1 ? `${date} · ${tweetDateSeen[date]}` : date,
+  };
+});
 const stockHeadings = headings.filter((heading) => heading.depth === 2).slice(0, 8);
 ---
 
@@ -70,9 +84,9 @@ const stockHeadings = headings.filter((heading) => heading.depth === 2).slice(0,
               <>
                 <h2>快捷目录</h2>
                 <a class="section-link" href="#结论先行">结论先行</a>
-                {tweetHeadings.length > 0 && tweetHeadings.map((heading, index) => (
-                  <a class="tweet-link" href={`#${heading.slug}`}>
-                    <span class="toc-count">{index + 1}</span>{heading.text.replace(/^Tweet\s+\d+\s+·\s*/, '')}
+                {tweetLinks.length > 0 && tweetLinks.map((tweet, index) => (
+                  <a class="tweet-link" href={`#${tweet.slug}`}>
+                    <span class="toc-count">{index + 1}</span>{tweet.label}
                   </a>
                 ))}
                 <a class="section-link" href="#全局风险提示">全局风险提示</a>
