@@ -278,6 +278,59 @@ th { text-align: left; background: var(--warm); color: rgb(var(--black)); }
 	background: var(--amber-soft);
 }
 
+/* Tweet card styles */
+.tweet {
+	margin: 1rem 0 1.5rem;
+	border: 1px solid var(--border);
+	border-radius: 18px;
+	background: white;
+	overflow: hidden;
+}
+.tweet-header {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	padding: 0.9rem 1.1rem;
+	border-bottom: 1px solid var(--border);
+	background: var(--warm-2);
+}
+.tweet-avatar {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.2rem;
+	height: 2.2rem;
+	border-radius: 999px;
+	background: var(--accent);
+	color: white;
+	font-weight: 800;
+	font-size: 0.9rem;
+	flex-shrink: 0;
+}
+.tweet-handle { color: rgb(var(--gray)); font-size: 0.85rem; font-weight: 400; }
+.tweet-date { margin-left: auto; color: rgb(var(--gray)); font-size: 0.82rem; white-space: nowrap; }
+.tweet-body {
+	padding: 1rem 1.1rem;
+	font-size: 1rem;
+	line-height: 1.7;
+}
+.tweet-body blockquote {
+	font-style: italic;
+	border-left: 4px solid var(--accent);
+	padding: 0.75rem 1rem;
+	margin: 0.6rem 0;
+	background: var(--warm-2);
+	border-radius: 0 12px 12px 0;
+}
+.tweet-body blockquote em,
+.tweet-body blockquote cite {
+	font-style: normal;
+	color: rgb(var(--gray));
+	font-size: 0.9rem;
+	display: block;
+	margin-top: 0.5rem;
+}
+
 .prose {
 	font-size: 1.02rem;
 }
