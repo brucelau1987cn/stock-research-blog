@@ -9,10 +9,12 @@ import { SITE_AUTHOR } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, headings = [] } = Astro.props;
 const isSerenity = tags?.includes('白发股神');
 const tagLabel = isSerenity ? '白发股神' : '个股分析';
 const tagPill = isSerenity ? 'pill-red' : '';
+const tweetHeadings = headings.filter((heading) => heading.depth === 3 && heading.text.startsWith('Tweet '));
+const stockHeadings = headings.filter((heading) => heading.depth === 2).slice(0, 8);
 ---
 
 <html lang="zh-CN">
@@ -34,6 +36,9 @@ const tagPill = isSerenity ? 'pill-red' : '';
       .sidebar h2 { margin: 0 0 0.75rem; font-size: 1rem; letter-spacing: 0; }
       .sidebar a { display: block; color: rgb(var(--gray-dark)); text-decoration: none; padding: 0.55rem 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; font-weight: 700; }
       .sidebar a:hover { color: var(--accent); }
+      .sidebar .tweet-link { font-size: 0.86rem; line-height: 1.35; }
+      .sidebar .section-link { color: rgb(var(--gray)); font-size: 0.88rem; }
+      .sidebar .toc-count { display: inline-flex; align-items: center; justify-content: center; min-width: 1.45rem; height: 1.45rem; margin-right: 0.35rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent-dark); font-size: 0.78rem; font-weight: 900; }
       .disclaimer { margin-top: 1rem; padding: 0.8rem; border-radius: 14px; background: var(--amber-soft); color: rgb(var(--gray-dark)); font-size: 0.86rem; line-height: 1.55; }
       @media (max-width: 960px) { .article-shell { grid-template-columns: 1fr; } .sidebar { position: static; order: -1; } }
     </style>
@@ -63,23 +68,30 @@ const tagPill = isSerenity ? 'pill-red' : '';
           <aside class="sidebar card">
             {isSerenity ? (
               <>
-                <h2>阅读顺序</h2>
-                <a href="#结论先行">结论先行</a>
-                <a href="#今日最新动态">今日最新动态</a>
-                <a href="#serenity-背景速览">Serenity 背景</a>
-                <a href="#代表性战绩">代表性战绩</a>
-                <a href="#最新方向">最新方向</a>
-                <a href="#风险提示">风险提示</a>
+                <h2>快捷目录</h2>
+                <a class="section-link" href="#结论先行">结论先行</a>
+                {tweetHeadings.length > 0 && tweetHeadings.map((heading, index) => (
+                  <a class="tweet-link" href={`#${heading.slug}`}>
+                    <span class="toc-count">{index + 1}</span>{heading.text.replace(/^Tweet\s+\d+\s+·\s*/, '')}
+                  </a>
+                ))}
+                <a class="section-link" href="#全局风险提示">全局风险提示</a>
               </>
             ) : (
               <>
-                <h2>阅读顺序</h2>
-                <a href="#结论先行">结论先行</a>
-                <a href="#上涨-下跌逻辑">上涨/下跌逻辑</a>
-                <a href="#适合加仓还是减仓">操作优先级</a>
-                <a href="#关键价位">关键价位</a>
-                <a href="#风险点">风险点</a>
-                <a href="#持仓者动作">持仓者动作</a>
+                <h2>快捷目录</h2>
+                {stockHeadings.length > 0 ? stockHeadings.map((heading) => (
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                )) : (
+                  <>
+                    <a href="#结论先行">结论先行</a>
+                    <a href="#上涨-下跌逻辑">上涨/下跌逻辑</a>
+                    <a href="#适合加仓还是减仓">操作优先级</a>
+                    <a href="#关键价位">关键价位</a>
+                    <a href="#风险点">风险点</a>
+                    <a href="#持仓者动作">持仓者动作</a>
+                  </>
+                )}
               </>
             )}
             <div class="disclaimer">个人研究记录，用于复盘股票研究框架和交易纪律，不构成投资建议。</div>
