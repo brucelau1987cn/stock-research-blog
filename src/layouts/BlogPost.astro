@@ -14,7 +14,11 @@ const isSerenity = tags?.includes('白发股神');
 const tagLabel = isSerenity ? '白发股神' : '个股分析';
 const tagPill = isSerenity ? 'pill-red' : '';
 const tweetHeadings = headings.filter((heading) => heading.depth === 3 && heading.text.startsWith('Tweet '));
-const tweetDates = tweetHeadings.map((heading) => heading.text.match(/^Tweet\s+\d+\s+·\s+([^—]+)/)?.[1].trim() || heading.text);
+const tweetDates = tweetHeadings.map((heading) => {
+  const match = heading.text.match(/^Tweet\s+\d+\s+·\s+([^—]+)/)?.[1].trim();
+  if (!match) return heading.text;
+  return match.replace(/\s+北京时间$/, '');
+});
 const tweetDateTotals = tweetDates.reduce<Record<string, number>>((acc, date) => {
   acc[date] = (acc[date] || 0) + 1;
   return acc;

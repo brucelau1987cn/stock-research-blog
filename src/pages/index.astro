@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getPostUrl } from '../utils/postUrl';
 
 const allPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const serenityPosts = allPosts.filter(p => p.data.tags?.includes('白发股神'));
@@ -74,7 +75,7 @@ const latestStock = stockPosts.slice(0, 3);
           </div>
           <div class="pillar-list">
             {latestSerenity.length > 0 ? latestSerenity.map(post => (
-              <a class="pillar-item" href={`/blog/${post.id}/`}>
+              <a class="pillar-item" href={getPostUrl(post)}>
                 <h3>{post.data.title}</h3>
                 <p class="desc">{post.data.description}</p>
                 <p class="date"><FormattedDate date={post.data.pubDate} /></p>
@@ -92,7 +93,7 @@ const latestStock = stockPosts.slice(0, 3);
           </div>
           <div class="pillar-list">
             {latestStock.length > 0 ? latestStock.map(post => (
-              <a class="pillar-item" href={`/blog/${post.id}/`}>
+              <a class="pillar-item" href={getPostUrl(post)}>
                 <h3>{post.data.title}</h3>
                 <p class="desc">{post.data.description}</p>
                 <p class="date"><FormattedDate date={post.data.pubDate} /></p>
