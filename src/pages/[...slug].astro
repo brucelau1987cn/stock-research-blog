@@ -4,12 +4,10 @@ import BlogPost from '../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts
-		.filter((post) => post.data.tags?.includes('白发股神') && /^\d{6}$/.test(post.id))
-		.map((post) => ({
-			params: { slug: post.id },
-			props: post,
-		}));
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
 }
 type Props = CollectionEntry<'blog'>;
 
