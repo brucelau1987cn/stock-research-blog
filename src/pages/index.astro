@@ -41,9 +41,6 @@ const latestStock = stockPosts.slice(0, 3);
       .pillar-more { padding: 0.75rem 1.5rem; border-top: 1px solid var(--border); text-align: center; }
       .pillar-more a { color: var(--accent); font-weight: 800; text-decoration: none; font-size: 0.92rem; }
 
-      .about-card { margin: 0 0 3rem; padding: 1.5rem; border-radius: 20px; background: linear-gradient(135deg, #fff, var(--warm-2)); border: 1px solid var(--border); }
-      .about-card h2 { margin-top: 0; }
-
       .pillar-ser { border-color: rgba(214,61,46,0.18); }
       .pillar-ser .pillar-header { background: var(--accent-soft); }
 
@@ -62,7 +59,6 @@ const latestStock = stockPosts.slice(0, 3);
         <div class="actions">
           <a class="btn primary" href="/stock-analysis/">📊 个股分析</a>
           <a class="btn secondary" href="/serenity/">👩‍🦳 白发股神</a>
-          <a class="btn secondary" href="/about">📋 研究框架</a>
         </div>
       </section>
 
@@ -104,11 +100,6 @@ const latestStock = stockPosts.slice(0, 3);
         </div>
       </section>
 
-      <section class="about-card">
-        <h2>关于本站</h2>
-        <p>由 {SITE_AUTHOR} 维护的A股研究站。两件事：<strong>个股分析</strong>——从盘面强弱出发，结论先行，含关键价位和持仓动作；<strong>白发股神</strong>——追踪白毛股神 Serenity 的AI供应链投资动态，自动同步推文并附解读。</p>
-        <p>免责声明：个人研究记录，不构成投资建议。A股颜色：🔴 涨/利好，🟢 跌/利空。</p>
-      </section>
     </main>
     <Footer />
   </body>
