@@ -128,5 +128,31 @@
       "unit": "%",
       "name": "PMI"
     }
-  }
+  },
+  "latest_views": [
+    {
+      "code": "SPCX",
+      "label": "SpaceX 事件驱动 / 纳指再平衡可能引发流动性虹吸",
+      "tweet_id": 2065088136884220158,
+      "tweet_time_bjt": "2026-06-11 23:05:53"
+    },
+    {
+      "code": "META",
+      "label": "mega-cap tech beta 受 SpaceX 流动性抽离影响",
+      "tweet_id": 2065088136884220158,
+      "tweet_time_bjt": "2026-06-11 23:05:53"
+    },
+    {
+      "code": "MSFT",
+      "label": "mega-cap tech beta 受 SpaceX 流动性抽离影响",
+      "tweet_id": 2065088136884220158,
+      "tweet_time_bjt": "2026-06-11 23:05:53"
+    },
+    {
+      "code": "AAOI",
+      "label": "光模块估值弹性仍在，但高波动",
+      "tweet_id": 2065086233290924354,
+      "tweet_time_bjt": "2026-06-11 22:58:20"
+    }
+  ]
 }
