@@ -131,6 +131,102 @@
   },
   "latest_views": [
     {
+      "code": "SNDK",
+      "label": "伊朗局势缓和带动存储/光互联盘面修复，偏情绪反弹。",
+      "tweet_id": 2065136761077158061,
+      "tweet_time_bjt": "2026-06-12 02:19:06"
+    },
+    {
+      "code": "MRVL",
+      "label": "伊朗局势缓和带动存储/光互联盘面修复，偏情绪反弹。",
+      "tweet_id": 2065136761077158061,
+      "tweet_time_bjt": "2026-06-12 02:19:06"
+    },
+    {
+      "code": "LITE",
+      "label": "伊朗局势缓和带动存储/光互联盘面修复，偏情绪反弹。",
+      "tweet_id": 2065136761077158061,
+      "tweet_time_bjt": "2026-06-12 02:19:06"
+    },
+    {
+      "code": "WULF",
+      "label": "Anthropic 首批 DC 租赁信号，Neocloud colo 赛道受益。",
+      "tweet_id": 2065130589204992048,
+      "tweet_time_bjt": "2026-06-12 01:54:35"
+    },
+    {
+      "code": "CIFR",
+      "label": "Anthropic 首批 DC 租赁信号，Neocloud colo 赛道受益。",
+      "tweet_id": 2065130589204992048,
+      "tweet_time_bjt": "2026-06-12 01:54:35"
+    },
+    {
+      "code": "WYFI",
+      "label": "Anthropic 首批 DC 租赁信号，Neocloud colo 赛道受益。",
+      "tweet_id": 2065130589204992048,
+      "tweet_time_bjt": "2026-06-12 01:54:35"
+    },
+    {
+      "code": "HUT",
+      "label": "Anthropic 首批 DC 租赁信号，Neocloud colo 赛道受益。",
+      "tweet_id": 2065130589204992048,
+      "tweet_time_bjt": "2026-06-12 01:54:35"
+    },
+    {
+      "code": "NVDA",
+      "label": "800V DC / CPO 继续推进，优先投资上游供应链与材料瓶颈。",
+      "tweet_id": 2065114293767741950,
+      "tweet_time_bjt": "2026-06-12 00:49:50"
+    },
+    {
+      "code": "AAOI",
+      "label": "美国本土光模块/AI 基建龙头，供应链重估逻辑延续且高波动。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
+      "code": "INTC",
+      "label": "关键西方 AI 供应链节点，光子学与算力建设主线共振。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
+      "code": "IQE",
+      "label": "关键西方 AI 供应链节点，光子学与算力建设主线共振。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
+      "code": "XFAB",
+      "label": "关键西方 AI 供应链节点，光子学与算力建设主线共振。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
+      "code": "MU",
+      "label": "关键西方 AI 供应链节点，光子学与算力建设主线共振。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
+      "code": "WOLF",
+      "label": "关键西方 AI 供应链节点，光子学与算力建设主线共振。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
+      "code": "SOI",
+      "label": "关键西方 AI 供应链节点，光子学与算力建设主线共振。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
+      "code": "SIVE",
+      "label": "关键西方 AI 供应链节点，光子学与算力建设主线共振。",
+      "tweet_id": 2065105141238489398,
+      "tweet_time_bjt": "2026-06-12 00:13:28"
+    },
+    {
       "code": "SPCX",
       "label": "SpaceX 事件驱动 / 纳指再平衡可能引发流动性虹吸",
       "tweet_id": 2065088136884220158,
@@ -147,12 +243,6 @@
       "label": "mega-cap tech beta 受 SpaceX 流动性抽离影响",
       "tweet_id": 2065088136884220158,
       "tweet_time_bjt": "2026-06-11 23:05:53"
-    },
-    {
-      "code": "AAOI",
-      "label": "光模块估值弹性仍在，但高波动",
-      "tweet_id": 2065086233290924354,
-      "tweet_time_bjt": "2026-06-11 22:58:20"
     }
   ]
 }
