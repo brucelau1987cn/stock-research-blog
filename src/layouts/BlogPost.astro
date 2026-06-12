@@ -42,6 +42,32 @@ const groupTweetHeadingsByDate = () => {
 
 const tweetGroupsByDate = groupTweetHeadingsByDate();
 
+// 个股分析页跟踪段（H3 "跟踪 YYYY-MM-DD HH:MM BJT"）按日期分组，跳转当日最新一条
+// 多个 H2 时取第一个作为「跟踪段容器」
+const stockTrackHeadings = headings.filter(
+  (h) => h.depth === 3 && /^跟踪\s+\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(h.text),
+);
+const groupStockTrackByDate = () => {
+  const groups: { date: string; count: number; slug: string; latestTime: string }[] = [];
+  for (const heading of stockTrackHeadings) {
+    const dateMatch = heading.text.match(/^跟踪\s+(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})/);
+    if (!dateMatch) continue;
+    const [, date, time] = dateMatch;
+    const existing = groups.find((g) => g.date === date);
+    if (existing) {
+      existing.count += 1;
+      if (time > existing.latestTime) {
+        existing.slug = heading.slug;
+        existing.latestTime = time;
+      }
+    } else {
+      groups.push({ date, count: 1, slug: heading.slug, latestTime: time });
+    }
+  }
+  return groups;
+};
+const stockTrackGroupsByDate = groupStockTrackByDate();
+
 const stockHeadings = headings.filter((heading) => heading.depth === 2).slice(0, 8);
 ---
 
@@ -120,6 +146,17 @@ const stockHeadings = headings.filter((heading) => heading.depth === 2).slice(0,
                     <a href="#关键价位">关键价位</a>
                     <a href="#风险点">风险点</a>
                     <a href="#持仓者动作">持仓者动作</a>
+                  </>
+                )}
+                {stockTrackGroupsByDate.length > 0 && (
+                  <>
+                    <a class="section-link" href="#跟踪记录">跟踪记录</a>
+                    {stockTrackGroupsByDate.map((track) => (
+                      <a class="tweet-link" href={`#${track.slug}`}>
+                        <span class="toc-date">{track.date} {track.latestTime}</span>
+                        {track.count > 1 && <span class="toc-count">{track.count}</span>}
+                      </a>
+                    ))}
                   </>
                 )}
               </>

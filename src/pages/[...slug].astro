@@ -4,10 +4,12 @@ import BlogPost from '../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+	return posts.map((post) => {
+		const tags = post.data.tags ?? [];
+		// 个股分析页：URL 剥掉 YYYYMMDD- 日期前缀
+		const slug = tags.includes('个股分析') ? post.id.replace(/^\d{8}-/, '') : post.id;
+		return { params: { slug }, props: post };
+	});
 }
 type Props = CollectionEntry<'blog'>;
 
