@@ -1,132 +1,204 @@
 {
-  "as_of": "2026-06-12 17:00:00 HKT",
+  "as_of": "2026-06-12 22:26:17 HKT",
   "trading_day": "2026-06-12",
   "stocks": [
     {
-      "name": "沃格光电",
-      "code": "603773",
-      "price": "—",
-      "pct": "—",
-      "tags": ["TGV", "玻璃基板", "2025高信念"]
-    },
-    {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "—",
-      "pct": "—",
-      "tags": ["人形机器人", "谐波减速器", "丝杠"]
-    },
-    {
-      "name": "新易盛",
-      "code": "300502",
-      "price": "—",
-      "pct": "—",
-      "tags": ["CPO", "光模块", "高速光器件"]
-    },
-    {
-      "name": "中际旭创",
-      "code": "300308",
-      "price": "—",
-      "pct": "—",
-      "tags": ["CPO", "光模块龙头", "1.6T"]
-    },
-    {
-      "name": "天孚通信",
-      "code": "300394",
-      "price": "—",
-      "pct": "—",
-      "tags": ["CPO", "光器件", "硅光"]
-    },
-    {
-      "name": "光库科技",
-      "code": "300620",
-      "price": "—",
-      "pct": "—",
-      "tags": ["CPO", "铌酸锂", "EML"]
-    },
-    {
-      "name": "通富微电",
-      "code": "002156",
-      "price": "—",
-      "pct": "—",
-      "tags": ["AI ASIC", "封测", "AMD"]
-    },
-    {
-      "name": "长电科技",
-      "code": "600584",
-      "price": "—",
-      "pct": "—",
-      "tags": ["AI ASIC", "封测", "先进封装"]
+      "price": "351.0",
+      "pct": "-4.3597",
+      "sector": "robot",
+      "sector_label": "🤖 人形机器人",
+      "amplitude": 10.623978000000001,
+      "turnover": 12.267,
+      "amount_yi": 81.93
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "—",
-      "pct": "—",
-      "tags": ["电子特气", "WF6替代", "LDS前驱体", "6/12新增"]
-    },
-    {
-      "name": "昊华科技",
-      "code": "600378",
-      "price": "—",
-      "pct": "—",
-      "tags": ["电子特气", "WF6中试", "6/12新增"]
-    },
-    {
-      "name": "中船特气",
-      "code": "688146",
-      "price": "—",
-      "pct": "—",
-      "tags": ["电子特气龙头", "三氟化氮", "6/12新增"]
-    },
-    {
-      "name": "金宏气体",
-      "code": "688106",
-      "price": "—",
-      "pct": "—",
-      "tags": ["电子特气", "综合特气", "6/12新增"]
-    },
-    {
-      "name": "立昂微",
-      "code": "605358",
-      "price": "—",
-      "pct": "—",
-      "tags": ["GaAs/Silicon外延", "化合物半导体", "6/12新增"]
+      "price": "132.99",
+      "pct": "-1.3500",
+      "sector": "gas_epi",
+      "sector_label": "💨 电子特气 + 外延片",
+      "amplitude": 9.413248000000001,
+      "turnover": 20.821,
+      "amount_yi": 91.33
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "—",
-      "pct": "—",
-      "tags": ["化合物半导体IDM", "InP/GaAs", "6/12新增"]
+      "price": "13.92",
+      "pct": "-8.7811",
+      "sector": "mat",
+      "sector_label": "🧪 半导体材料",
+      "amplitude": 8.453473,
+      "turnover": 8.659,
+      "amount_yi": 62.59
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "—",
-      "pct": "—",
-      "tags": ["InP衬底", "出口管制", "6/11验证"]
+      "price": "92.26",
+      "pct": "4.5558",
+      "sector": "mat",
+      "sector_label": "🧪 半导体材料",
+      "amplitude": 7.241614,
+      "turnover": 19.989,
+      "amount_yi": 118.55
     },
     {
-      "name": "沪硅产业",
-      "code": "688126",
-      "price": "—",
-      "pct": "—",
-      "tags": ["硅片", "12英寸", "6/12延伸"]
+      "name": "立昂微",
+      "code": "605358",
+      "price": "66.1",
+      "pct": "-7.1238",
+      "sector": "mat",
+      "sector_label": "🧪 半导体材料",
+      "amplitude": 16.509765,
+      "turnover": 14.025000000000002,
+      "amount_yi": 74.34
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "—",
-      "pct": "—",
-      "tags": ["PVD/ALD", "先进制程设备", "6/12新增"]
+      "price": "667.19",
+      "pct": "4.6573",
+      "sector": "equip",
+      "sector_label": "⚙️ 半导体设备",
+      "amplitude": 4.048627,
+      "turnover": 2.119,
+      "amount_yi": 102.74
+    },
+    {
+      "name": "沪硅产业",
+      "code": "688126",
+      "price": "29.59",
+      "pct": "-8.9538",
+      "sector": "mat",
+      "sector_label": "🧪 半导体材料",
+      "amplitude": 20.984615,
+      "turnover": 11.698,
+      "amount_yi": 100.32
+    },
+    {
+      "name": "天孚通信",
+      "code": "300394",
+      "price": "280.95",
+      "pct": "-4.4388",
+      "sector": "cpo",
+      "sector_label": "🔦 CPO / 光模块",
+      "amplitude": 8.180271999999999,
+      "turnover": 4.358,
+      "amount_yi": 138.58
     },
     {
       "name": "拓荆科技",
       "code": "688072",
-      "price": "—",
-      "pct": "—",
-      "tags": ["CVD/ALD", "先进制程设备", "6/12新增"]
+      "price": "645.18",
+      "pct": "-1.5398",
+      "sector": "equip",
+      "sector_label": "⚙️ 半导体设备",
+      "amplitude": 11.558594,
+      "turnover": 5.48,
+      "amount_yi": 104.53
+    },
+    {
+      "name": "长电科技",
+      "code": "600584",
+      "price": "68.92",
+      "pct": "-4.2113",
+      "sector": "packaging",
+      "sector_label": "🔧 ASIC 封测",
+      "amplitude": 9.770674,
+      "turnover": 10.412,
+      "amount_yi": 133.59
+    },
+    {
+      "name": "通富微电",
+      "code": "002156",
+      "price": "57.22",
+      "pct": "-4.7762",
+      "sector": "packaging",
+      "sector_label": "🔧 ASIC 封测",
+      "amplitude": 9.785322,
+      "turnover": 9.591,
+      "amount_yi": 86.86
+    },
+    {
+      "name": "昊华科技",
+      "code": "600378",
+      "price": "57.15",
+      "pct": "-10.0000",
+      "sector": "gas_epi",
+      "sector_label": "💨 电子特气 + 外延片",
+      "amplitude": 9.606299,
+      "turnover": 10.543,
+      "amount_yi": 67.24
+    },
+    {
+      "name": "沃格光电",
+      "code": "603773",
+      "price": "129.8",
+      "pct": "-6.9267",
+      "sector": "tgv",
+      "sector_label": "🧊 TGV / 玻璃基板",
+      "amplitude": 17.467374,
+      "turnover": 24.304000000000002,
+      "amount_yi": 72.83
+    },
+    {
+      "name": "中际旭创",
+      "code": "300308",
+      "price": "1149.0",
+      "pct": "2.2242",
+      "sector": "cpo",
+      "sector_label": "🔦 CPO / 光模块",
+      "amplitude": 5.366548,
+      "turnover": 3.125,
+      "amount_yi": 400.03
+    },
+    {
+      "name": "中船特气",
+      "code": "688146",
+      "price": "302.0",
+      "pct": "-13.6650",
+      "sector": "gas_epi",
+      "sector_label": "💨 电子特气 + 外延片",
+      "amplitude": 16.30932,
+      "turnover": 19.619,
+      "amount_yi": 87.86
+    },
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "price": "506.46",
+      "pct": "-3.7148",
+      "sector": "cpo",
+      "sector_label": "🔦 CPO / 光模块",
+      "amplitude": 8.019010999999999,
+      "turnover": 5.218,
+      "amount_yi": 337.34
+    },
+    {
+      "name": "金宏气体",
+      "code": "688106",
+      "price": "28.17",
+      "pct": "-14.8943",
+      "sector": "gas_epi",
+      "sector_label": "💨 电子特气 + 外延片",
+      "amplitude": 11.752266,
+      "turnover": 12.636,
+      "amount_yi": 20.3
+    },
+    {
+      "name": "光库科技",
+      "code": "300620",
+      "price": "285.88",
+      "pct": "-2.5797",
+      "sector": "cpo",
+      "sector_label": "🔦 CPO / 光模块",
+      "amplitude": 6.0316920000000005,
+      "turnover": 5.998,
+      "amount_yi": 43.33
     }
   ],
   "etf_top": [
