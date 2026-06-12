@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-11 21:04:29 HKT",
+  "as_of": "2026-06-12 12:09:09 HKT",
   "trading_day": "2026-06-11",
   "stocks": [
     {
@@ -243,6 +243,24 @@
       "label": "mega-cap tech beta 受 SpaceX 流动性抽离影响",
       "tweet_id": 2065088136884220158,
       "tweet_time_bjt": "2026-06-11 23:05:53"
+    },
+    {
+      "code": "NBIS",
+      "label": "Nebius 入选 Nasdaq 100，AI 算力 / neocloud 赛道资金面进一步加码。",
+      "tweet_id": 2065262802328293497,
+      "tweet_time_bjt": "2026-06-12 10:39:57"
+    },
+    {
+      "code": "ALAB",
+      "label": "Astera Labs 入选 Nasdaq 100，CPO / 光互联龙头地位再获指数级别背书。",
+      "tweet_id": 2065262802328293497,
+      "tweet_time_bjt": "2026-06-12 10:39:57"
+    },
+    {
+      "code": "RKLB",
+      "label": "Rocket Lab 入选 Nasdaq 100，商业航天 / 太空基建进入大型指数视野。",
+      "tweet_id": 2065262802328293497,
+      "tweet_time_bjt": "2026-06-12 10:39:57"
     }
   ]
 }
