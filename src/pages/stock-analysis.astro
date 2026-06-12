@@ -14,7 +14,13 @@ const stockPosts = (await getCollection('blog'))
   .filter((post) => post.data.tags?.includes('个股分析'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const featuredStockPosts = stockPosts.slice(0, 7);
-const stockCode = (title: string) => title.match(/^(\d{6})/)?.[1] ?? title;
+// 解析 frontmatter title，格式：'002026 山东威达：12.06 元...'
+// 返回 { code, name } 两段；拿不到 name 时降级为 code
+const parseStockTitle = (title: string): { code: string; name: string } => {
+  const m = title.match(/^(\d{6})\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
+  if (!m) return { code: title, name: '' };
+  return { code: m[1], name: m[2].trim() };
+};
 
 const pageTitle = `个股分析 | ${SITE_TITLE}`;
 const pageDesc = 'A股个股中短线研究：结论先行，围绕盘口强弱、上涨/下跌逻辑、关键价位、仓位动作与次日复盘清单，服务交易计划与纪律复盘。覆盖 CPO/光模块、玻璃基板 TGV、人形机器人、ASIC 封测、稀有金属、电力电网等白毛股神 Serenity 主线赛道。';
@@ -71,6 +77,8 @@ const tagClass = (v: any) => {
       .analysis-card { display: block; padding: 1rem 1.1rem; border-radius: 18px; border: 1px solid var(--border); background: white; box-shadow: var(--box-shadow); text-decoration: none; color: rgb(var(--gray-dark)); }
       .analysis-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; }
       .analysis-card strong { display: block; color: rgb(var(--black)); margin-bottom: 0.45rem; line-height: 1.45; }
+      .analysis-card .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
+      .analysis-card .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
       .analysis-card p { margin: 0; color: rgb(var(--gray)); line-height: 1.6; font-size: 0.92rem; }
       .analysis-card .meta { margin-top: 0.6rem; color: rgb(var(--gray)); font-size: 0.82rem; }
 
@@ -98,6 +106,8 @@ const tagClass = (v: any) => {
       ul li:first-child .post-card { min-height: 15rem; background: linear-gradient(135deg, #fff, var(--warm-2)); }
       .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
       .post-card .title { margin: 0; color: rgb(var(--black)); }
+      .post-card .title .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
+      .post-card .title .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
       .post-card .date { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
       .post-card .description { margin: 0; color: rgb(var(--gray)); }
       .empty { text-align: center; padding: 3rem 1rem; color: rgb(var(--gray)); }
@@ -147,13 +157,19 @@ const tagClass = (v: any) => {
         </div>
         {featuredStockPosts.length > 0 ? (
           <div class="analysis-grid">
-            {featuredStockPosts.map((post) => (
-              <a class="analysis-card" href={getPostUrl(post)}>
-                <strong>{stockCode(post.data.title)}</strong>
-                <p>{post.data.description}</p>
-                <div class="meta"><FormattedDate date={post.data.pubDate} /></div>
-              </a>
-            ))}
+            {featuredStockPosts.map((post) => {
+              const s = parseStockTitle(post.data.title);
+              return (
+                <a class="analysis-card" href={getPostUrl(post)}>
+                  <strong class="analysis-card-title">
+                    {s.name ? <span class="stock-name">{s.name}</span> : null}
+                    <span class="stock-code">{s.code}</span>
+                  </strong>
+                  <p>{post.data.description}</p>
+                  <div class="meta"><FormattedDate date={post.data.pubDate} /></div>
+                </a>
+              );
+            })}
           </div>
         ) : (
           <div class="empty">暂无个股分析文章。</div>
@@ -230,19 +246,25 @@ const tagClass = (v: any) => {
       <div class="section-divider"><h2>📌 全部个股研究</h2></div>
       {stockPosts.length > 0 ? (
         <ul>
-          {stockPosts.map((post) => (
-            <li>
-              <a class="post-card" href={getPostUrl(post)}>
-                {post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
-                <div>
-                  <span class="pill">个股分析</span>
-                  <h2 class="title">{stockCode(post.data.title)}</h2>
-                </div>
-                <p class="description">{post.data.description}</p>
-                <p class="date"><FormattedDate date={post.data.pubDate} /></p>
-              </a>
-            </li>
-          ))}
+          {stockPosts.map((post) => {
+            const s = parseStockTitle(post.data.title);
+            return (
+              <li>
+                <a class="post-card" href={getPostUrl(post)}>
+                  {post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
+                  <div>
+                    <span class="pill">个股分析</span>
+                    <h2 class="title">
+                      {s.name ? <span class="stock-name">{s.name}</span> : null}
+                      <span class="stock-code">{s.code}</span>
+                    </h2>
+                  </div>
+                  <p class="description">{post.data.description}</p>
+                  <p class="date"><FormattedDate date={post.data.pubDate} /></p>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       ) : (
         <div class="empty">暂无个股分析文章。</div>
