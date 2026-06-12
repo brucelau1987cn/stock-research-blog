@@ -15,26 +15,39 @@ const tagLabel = isSerenity ? '白发股神' : '个股分析';
 const tagPill = isSerenity ? 'pill-red' : '';
 const tweetHeadings = headings.filter((heading) => heading.depth === 3 && heading.text.startsWith('Tweet '));
 const extractDateTime = (text: string) => {
-  const match = text.match(/^Tweet\s+\d+\s+·\s+(.+?)\s+北京时间/);
+  // 兼容两种 heading 格式：
+  //   A. "Tweet N · 2026年6月12日 16:31 北京时间 — ..."
+  //   B. "Tweet · 2026年6月12日 16:31 北京时间 — ..."   （无 N）
+  //   C. "Tweet N · 2026年6月7日（待补精确时分） — ..."   （无时间）
+  const match = text.match(/^Tweet(?:\s+\d+)?\s+·\s+(.+?)\s+—/);
   return match?.[1] ?? text;
 };
 
 const groupTweetHeadingsByDate = () => {
-  const groups: { date: string; count: number; slug: string; latestTime: string }[] = [];
+  const groups: { date: string; count: number; slug: string; latestTime: string; raw: string }[] = [];
   for (const heading of tweetHeadings) {
     const full = extractDateTime(heading.text);
-    const dateOnly = full.replace(/\s+\d{2}:\d{2}$/, '');
-    const timeMatch = full.match(/(\d{2}:\d{2})$/);
-    const time = timeMatch?.[1] ?? '';
+    // 拆出日期 + 时间。日期形如 "2026年6月12日"，时间形如 "16:31"
+    // 兼容 "（待补精确时分）" 这种没时间的脏数据
+    const timeMatch = full.match(/(\d{2}:\d{2})/);
+    const time = timeMatch?.[1] ?? '时间待补';
+    // 拆出纯日期：先把"全天 / 待补 / 时间"等脏数据当时间后缀剥掉，再剥 HH:MM
+    const dateOnly = full
+      .replace(/\s*(全天|待补精确时分|时间待补|具体时分|时分).*$/, '')
+      .replace(/\s*\d{2}:\d{2}.*$/, '')
+      .replace(/\s*（[^）]*）.*$/, '')
+      .trim();
     const existing = groups.find((g) => g.date === dateOnly);
     if (existing) {
       existing.count += 1;
+      // 选时间更晚那条作为跳转锚点
       if (time > existing.latestTime) {
         existing.slug = heading.slug;
         existing.latestTime = time;
+        existing.raw = full;
       }
     } else {
-      groups.push({ date: dateOnly, count: 1, slug: heading.slug, latestTime: time });
+      groups.push({ date: dateOnly, count: 1, slug: heading.slug, latestTime: time, raw: full });
     }
   }
   return groups;
