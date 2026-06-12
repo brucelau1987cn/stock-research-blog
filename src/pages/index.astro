@@ -9,9 +9,10 @@ import { getPostUrl } from '../utils/postUrl';
 
 const allPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const serenityPosts = allPosts.filter(p => p.data.tags?.includes('白发股神'));
-const stockPosts = allPosts.filter(p => !p.data.tags?.includes('白发股神'));
+const stockPosts = allPosts.filter(p => p.data.tags?.includes('个股分析'));
 const latestSerenity = serenityPosts.slice(0, 3);
 const latestStock = stockPosts.slice(0, 3);
+const stockCode = (title: string) => title.match(/^(\d{6})/)?.[1] ?? title;
 ---
 
 <!doctype html>
@@ -72,7 +73,7 @@ const latestStock = stockPosts.slice(0, 3);
           <div class="pillar-list">
             {latestStock.length > 0 ? latestStock.map(post => (
               <a class="pillar-item" href={getPostUrl(post)}>
-                <h3>{post.data.title}</h3>
+                <h3>{stockCode(post.data.title)}</h3>
                 <p class="desc">{post.data.description}</p>
                 <p class="date"><FormattedDate date={post.data.pubDate} /></p>
               </a>

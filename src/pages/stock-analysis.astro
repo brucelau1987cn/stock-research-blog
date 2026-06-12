@@ -11,8 +11,10 @@ import { SITE_TITLE } from '../consts';
 import { getPostUrl } from '../utils/postUrl';
 
 const stockPosts = (await getCollection('blog'))
-  .filter((post) => post.data.tags?.includes('个股分析') || !post.data.tags?.includes('白发股神'))
+  .filter((post) => post.data.tags?.includes('个股分析'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredStockPosts = stockPosts.slice(0, 7);
+const stockCode = (title: string) => title.match(/^(\d{6})/)?.[1] ?? title;
 
 const pageTitle = `个股分析 | ${SITE_TITLE}`;
 const pageDesc = 'A股个股中短线研究：结论先行，围绕盘口强弱、上涨/下跌逻辑、关键价位、仓位动作与次日复盘清单，服务交易计划与纪律复盘。覆盖 CPO/光模块、玻璃基板 TGV、人形机器人、ASIC 封测、稀有金属、电力电网等白毛股神 Serenity 主线赛道。';
@@ -61,6 +63,17 @@ const tagClass = (v: any) => {
       .intro-card strong { display: block; margin-bottom: 0.45rem; color: rgb(var(--black)); font-size: 1.02rem; }
       .intro-card p { margin: 0; color: rgb(var(--gray)); line-height: 1.65; font-size: 0.94rem; }
 
+      .analysis-section { margin: 2rem 0 1rem; }
+      .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+      .analysis-section-head h2 { margin: 0; }
+      .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
+      .analysis-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+      .analysis-card { display: block; padding: 1rem 1.1rem; border-radius: 18px; border: 1px solid var(--border); background: white; box-shadow: var(--box-shadow); text-decoration: none; color: rgb(var(--gray-dark)); }
+      .analysis-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; }
+      .analysis-card strong { display: block; color: rgb(var(--black)); margin-bottom: 0.45rem; line-height: 1.45; }
+      .analysis-card p { margin: 0; color: rgb(var(--gray)); line-height: 1.6; font-size: 0.92rem; }
+      .analysis-card .meta { margin-top: 0.6rem; color: rgb(var(--gray)); font-size: 0.82rem; }
+
       .section-divider { margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 1rem; }
       .section-divider h2 { margin: 0; white-space: nowrap; }
       .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
@@ -68,6 +81,7 @@ const tagClass = (v: any) => {
       .market-pulse { margin: 1.5rem 0 0; padding: 1.2rem 1.3rem; border-radius: 18px; border: 1px solid var(--border); background: linear-gradient(135deg, #fff, var(--accent-soft)); }
       .market-pulse-head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
       .market-pulse-head h2 { margin: 0; font-size: 1.18rem; }
+      .market-pulse-head .pulse-source { display: inline-flex; align-items: center; min-height: 1.9rem; padding: 0.1rem 0.55rem; border-radius: 999px; background: rgba(214,61,46,0.1); color: rgb(180, 50, 40); font-size: 0.8rem; font-weight: 800; }
       .market-pulse-head .asof { color: rgb(var(--gray)); font-size: 0.85rem; }
       .market-pulse p { margin: 0.4rem 0; color: rgb(var(--gray-dark)); line-height: 1.7; font-size: 0.96rem; }
       .market-pulse ul { display: block; list-style: none; margin: 0.5rem 0 0; padding: 0; }
@@ -126,9 +140,30 @@ const tagClass = (v: any) => {
         <a href="/serenity/">👩‍🦳 白发股神</a>
       </div>
 
-      <section class="market-pulse" aria-label="本周市场速写">
+      <section class="analysis-section" aria-label="本次个股分析总览">
+        <div class="analysis-section-head">
+          <h2>🧭 本次 7 篇个股分析</h2>
+          <p>每篇单独点击查看详情；这里先给结论总览。</p>
+        </div>
+        {featuredStockPosts.length > 0 ? (
+          <div class="analysis-grid">
+            {featuredStockPosts.map((post) => (
+              <a class="analysis-card" href={getPostUrl(post)}>
+                <strong>{stockCode(post.data.title)}</strong>
+                <p>{post.data.description}</p>
+                <div class="meta"><FormattedDate date={post.data.pubDate} /></div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="empty">暂无个股分析文章。</div>
+        )}
+      </section>
+
+      <section class="market-pulse" aria-label="Serenity推文关联股票本周市场速写">
         <div class="market-pulse-head">
           <h2>📡 本周市场速写</h2>
+          <span class="pulse-source">Serenity 推文关联股票</span>
           <span class="asof">
             {pulseIsLive
               ? `数据截至 ${pulse.trading_day} 收盘 · 自动刷新于 ${pulse.as_of}`
@@ -192,7 +227,7 @@ const tagClass = (v: any) => {
         )}
       </section>
 
-      <div class="section-divider"><h2>📌 最新个股研究</h2></div>
+      <div class="section-divider"><h2>📌 全部个股研究</h2></div>
       {stockPosts.length > 0 ? (
         <ul>
           {stockPosts.map((post) => (
@@ -201,7 +236,7 @@ const tagClass = (v: any) => {
                 {post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
                 <div>
                   <span class="pill">个股分析</span>
-                  <h2 class="title">{post.data.title}</h2>
+                  <h2 class="title">{stockCode(post.data.title)}</h2>
                 </div>
                 <p class="description">{post.data.description}</p>
                 <p class="date"><FormattedDate date={post.data.pubDate} /></p>
