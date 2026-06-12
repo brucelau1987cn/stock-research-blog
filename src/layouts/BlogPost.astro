@@ -14,21 +14,34 @@ const isSerenity = tags?.includes('白发股神');
 const tagLabel = isSerenity ? '白发股神' : '个股分析';
 const tagPill = isSerenity ? 'pill-red' : '';
 const tweetHeadings = headings.filter((heading) => heading.depth === 3 && heading.text.startsWith('Tweet '));
-const tweetDates = tweetHeadings.map((heading) => {
-  const match = heading.text.match(/^Tweet\s+\d+\s+·\s+([^—]+)/)?.[1].trim();
-  if (!match) return heading.text;
-  return match.replace(/\s+北京时间$/, '');
-});
-const tweetGroups = tweetHeadings.reduce<{ date: string; slug: string; count: number }[]>((groups, heading, index) => {
-  const date = tweetDates[index];
-  const existing = groups.find((group) => group.date === date);
-  if (existing) {
-    existing.count += 1;
-  } else {
-    groups.push({ date, slug: heading.slug, count: 1 });
+const extractDateTime = (text: string) => {
+  const match = text.match(/^Tweet\s+\d+\s+·\s+(.+?)\s+北京时间/);
+  return match?.[1] ?? text;
+};
+
+const groupTweetHeadingsByDate = () => {
+  const groups: { date: string; count: number; slug: string; latestTime: string }[] = [];
+  for (const heading of tweetHeadings) {
+    const full = extractDateTime(heading.text);
+    const dateOnly = full.replace(/\s+\d{2}:\d{2}$/, '');
+    const timeMatch = full.match(/(\d{2}:\d{2})$/);
+    const time = timeMatch?.[1] ?? '';
+    const existing = groups.find((g) => g.date === dateOnly);
+    if (existing) {
+      existing.count += 1;
+      if (time > existing.latestTime) {
+        existing.slug = heading.slug;
+        existing.latestTime = time;
+      }
+    } else {
+      groups.push({ date: dateOnly, count: 1, slug: heading.slug, latestTime: time });
+    }
   }
   return groups;
-}, []);
+};
+
+const tweetGroupsByDate = groupTweetHeadingsByDate();
+
 const stockHeadings = headings.filter((heading) => heading.depth === 2).slice(0, 8);
 ---
 
@@ -86,9 +99,9 @@ const stockHeadings = headings.filter((heading) => heading.depth === 2).slice(0,
               <>
                 <h2>快捷目录</h2>
                 <a class="section-link" href="#结论先行">结论先行</a>
-                {tweetGroups.length > 0 && tweetGroups.map((tweet) => (
+                {tweetGroupsByDate.length > 0 && tweetGroupsByDate.map((tweet) => (
                   <a class="tweet-link" href={`#${tweet.slug}`}>
-                    <span class="toc-date">{tweet.date}</span>
+                    <span class="toc-date">{tweet.date} {tweet.latestTime}</span>
                     {tweet.count > 1 && <span class="toc-count">{tweet.count}</span>}
                   </a>
                 ))}

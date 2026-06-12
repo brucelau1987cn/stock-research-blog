@@ -12,7 +12,13 @@ const serenityPosts = allPosts.filter(p => p.data.tags?.includes('白发股神')
 const stockPosts = allPosts.filter(p => p.data.tags?.includes('个股分析'));
 const latestSerenity = serenityPosts.slice(0, 3);
 const latestStock = stockPosts.slice(0, 3);
-const stockCode = (title: string) => title.match(/^(\d{6})/)?.[1] ?? title;
+const stockInfo = (title: string) => {
+  const match = title.match(/^(\d{6})\s+([^：:]+?)(?=[:：]|$)/);
+  const code = match?.[1] ?? title.match(/^(\d{6})/)?.[1] ?? title;
+  const name = match?.[2] ?? title;
+  const board = code.startsWith('68') ? '科创' : code.startsWith('30') ? '创业' : '主板';
+  return `${name} ${code}（${board}）`;
+};
 ---
 
 <!doctype html>
@@ -73,8 +79,8 @@ const stockCode = (title: string) => title.match(/^(\d{6})/)?.[1] ?? title;
           <div class="pillar-list">
             {latestStock.length > 0 ? latestStock.map(post => (
               <a class="pillar-item" href={getPostUrl(post)}>
-                <h3>{stockCode(post.data.title)}</h3>
-                <p class="desc">{post.data.description}</p>
+                <h3>{stockInfo(post.data.title)}</h3>
+                <p class="desc"><strong style="color:rgb(var(--black))">最新结论：</strong>{post.data.description}</p>
                 <p class="date"><FormattedDate date={post.data.pubDate} /></p>
               </a>
             )) : <div class="pillar-item"><p class="desc" style="margin:0;color:rgb(var(--gray))">个股分析文章即将上线。</p></div>}
