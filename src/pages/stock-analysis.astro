@@ -48,8 +48,25 @@ const tagClass = (v: any) => {
   if (Number.isNaN(n) || n === 0) return 'flat';
   return n > 0 ? 'up' : 'dn';
 };
----
 
+// 按 sector 分组（frontmatter 提前算好，模板里只渲染）
+const SECTOR_ORDER = ['cpo', 'tgv', 'robot', 'packaging', 'gas_epi', 'mat', 'equip', '_ungrouped'];
+const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: number | null }> = (() => {
+  const groups = new Map<string, { label: string; items: any[] }>();
+  for (const s of (pulse.stocks || [])) {
+    const key = s.sector || '_ungrouped';
+    const label = s.sector_label || (key === '_ungrouped' ? '📦 未分组' : key);
+    if (!groups.has(key)) groups.set(key, { label, items: [] });
+    groups.get(key)!.items.push(s);
+  }
+  return SECTOR_ORDER.filter(k => groups.has(k)).map((k) => {
+    const g = groups.get(k)!;
+    const valid = g.items.map((s: any) => Number(s.pct)).filter((n: number) => !Number.isNaN(n));
+    const avg = valid.length > 0 ? valid.reduce((a: number, b: number) => a + b, 0) / valid.length : null;
+    return { key: k, label: g.label, items: g.items, avg };
+  });
+})();
+---
 <!doctype html>
 <html lang="zh-CN">
   <head>
@@ -95,6 +112,11 @@ const tagClass = (v: any) => {
       .market-pulse ul { display: block; list-style: none; margin: 0.5rem 0 0; padding: 0; }
       .market-pulse li { padding: 0.3rem 0; color: rgb(var(--gray-dark)); line-height: 1.65; font-size: 0.95rem; }
       .market-pulse li strong { color: rgb(var(--black)); }
+      .pulse-sector { margin: 0.65rem 0 0; padding: 0.6rem 0.85rem 0.7rem; border-radius: 12px; background: rgba(0, 0, 0, 0.025); border-left: 3px solid var(--border); }
+      .pulse-sector-head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.35rem; }
+      .pulse-sector-label { color: rgb(var(--black)); font-weight: 800; font-size: 0.98rem; }
+      .pulse-sector-list { list-style: none; padding: 0; margin: 0.15rem 0 0; display: block !important; }
+      .pulse-sector-list li { display: block !important; padding: 0.18rem 0; color: rgb(var(--gray-dark)); line-height: 1.55; font-size: 0.92rem; }
       .pulse-tag { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.78rem; font-weight: 800; margin-right: 0.4rem; }
       .pulse-tag.up { background: rgba(34, 197, 94, 0.12); color: #15803d; }
       .pulse-tag.dn { background: rgba(239, 68, 68, 0.12); color: #b91c1c; }
@@ -203,16 +225,30 @@ const tagClass = (v: any) => {
             ) : (
               <p>Serenity 主线标的今日表现：</p>
             )}
-            {pulse.stocks && pulse.stocks.length > 0 ? (
-              <ul>
-                {pulse.stocks.map((s: any) => (
-                  <li>
-                    <span class={`pulse-tag ${tagClass(s.pct)}`}>{fmtPct(s.pct)}</span>
-                    <strong>{s.name} {s.code}</strong>
-                    {s.price && s.price !== '—' ? <> · 最新价 {s.price}</> : null}
-                  </li>
+            {pulseSectors.length > 0 ? (
+              <div class="pulse-sectors">
+                {pulseSectors.map((sector) => (
+                  <div class="pulse-sector">
+                    <div class="pulse-sector-head">
+                      <span class="pulse-sector-label">{sector.label}</span>
+                      {sector.items.length > 1 ? (
+                        <span class={`pulse-tag ${tagClass(sector.avg)}`}>
+                          板块均值 {fmtPct(sector.avg)}
+                        </span>
+                      ) : null}
+                    </div>
+                    <ul class="pulse-sector-list">
+                      {sector.items.map((s: any) => (
+                        <li>
+                          <span class={`pulse-tag ${tagClass(s.pct)}`}>{fmtPct(s.pct)}</span>
+                          <strong>{s.name} {s.code}</strong>
+                          {s.price && s.price !== '—' ? <> · 最新价 {s.price}</> : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             ) : null}
             {pulse.etf_top && pulse.etf_top.length > 0 ? (
               <>
