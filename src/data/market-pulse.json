@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-12 22:26:17 HKT",
+  "as_of": "2026-06-13 20:00:00 BJT (narrative-refresh; price snapshot from 2026-06-12 22:26:17 HKT)",
   "trading_day": "2026-06-12",
   "stocks": [
     {
@@ -22,7 +22,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": 9.413248000000001,
       "turnover": 20.821,
-      "amount_yi": 91.33
+      "amount_yi": 91.33,
+      "latest_view": "6/13 18:03 BJT Serenity 续 6/12 WF6 主题：明确点名韩国 Foosung 093370.KS（~$1.2B MC）为最大受益方；雅克科技 002409 作为 A 股 WF6 替代平台（LDS 前驱体）地位再确认。19:27 BJT 韩文帖升级冲击范围至上游钨原料，给出 25~35% 全球供应链受冲击数字。关联标的：厦门钨业 600549 / 章源钨业 002378 / 中钨高新 000657。"
     },
     {
       "name": "三安光电",
