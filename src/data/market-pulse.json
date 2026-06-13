@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-13 20:00:00 BJT (narrative-refresh; price snapshot from 2026-06-12 22:26:17 HKT)",
+  "as_of": "2026-06-14 07:00:00 BJT (narrative-refresh; price snapshot from 2026-06-12 22:26:17 HKT)",
   "trading_day": "2026-06-12",
   "stocks": [
     {
@@ -155,7 +155,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.366548,
       "turnover": 3.125,
-      "amount_yi": 400.03
+      "amount_yi": 400.03,
+      "latest_view": "6/14 05:26 BJT Serenity 升级 SIVE 为「长期复利核心持仓」——把 SIVE 与 SNDK 并列（same names keep compounding），并明确「I am not selling a share, supercycle 开始」；05:27 BJT 续帖首次明确 SIVE 美股上市动机 = 「Nasdaq 流动性要求 + M&A 需求」，公开表态「very positive, I want to see SIVE trade on US markets」；06:51 BJT 高互动帖（eng=613）用「全球市场人格化」框架把 SIVE 列为欧洲 AI 供应链龙头代表，并首次点名 SOI（Soitec 法国 FD-SOI 衬底）作为欧洲材料代表。Serenity 6/14 当日 SIVE 三帖串联意味着 SIVE/SOI/XFAB 已被划为同一条「欧洲小盘 AI 供应链」主线，中际旭创 300308 作为 A 股 SiPh/光模块龙头核心间接受益。关联标的：新易盛 300502 / 天孚通信 300394 / 光库科技 300620。"
     },
     {
       "name": "中船特气",
