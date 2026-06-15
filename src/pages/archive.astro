@@ -22,6 +22,11 @@ const pageDesc = tag === '白发股神'
   ? 'A股个股中短线研究，结论先行，关键价位与持仓动作。'
   : SITE_DESCRIPTION;
 const isSerenity = tag === '白发股神';
+const parseStockTitle = (title: string): { code: string; name: string } => {
+  const m = title.match(/^(\d{6})\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
+  if (!m) return { code: title, name: '' };
+  return { code: m[1], name: m[2].trim() };
+};
 ---
 
 <!doctype html>
@@ -69,6 +74,8 @@ const isSerenity = tag === '白发股神';
       ul li:first-child .post-card { min-height: 15rem; background: linear-gradient(135deg, #fff, var(--accent-soft)); }
       .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
       .post-card .title { margin: 0; color: rgb(var(--black)); }
+      .post-card .title .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
+      .post-card .title .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
       .post-card .date { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
       .post-card .description { margin: 0; color: rgb(var(--gray)); }
       .empty { text-align: center; padding: 3rem 1rem; color: rgb(var(--gray)); }
@@ -232,21 +239,28 @@ const isSerenity = tag === '白发股神';
 
           {filtered.length > 0 ? (
             <ul>
-              {filtered.map((post) => (
-                <li>
-                  <a class="post-card" href={getPostUrl(post)}>
-                    {post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
-                    <div>
-                      <span class={`pill ${post.data.tags?.includes('白发股神') ? 'pill-red' : ''}`}>
-                        {post.data.tags?.includes('白发股神') ? '白发股神' : '个股分析'}
-                      </span>
-                      <h2 class="title">{post.data.title}</h2>
-                    </div>
-                    <p class="description">{post.data.description}</p>
-                    <p class="date"><FormattedDate date={post.data.pubDate} /></p>
-                  </a>
-                </li>
-              ))}
+              {filtered.map((post) => {
+                const isStock = post.data.tags?.includes('个股分析');
+                const s = isStock ? parseStockTitle(post.data.title) : null;
+                return (
+                  <li>
+                    <a class="post-card" href={getPostUrl(post)}>
+                      {post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
+                      <div>
+                        <span class={`pill ${post.data.tags?.includes('白发股神') ? 'pill-red' : ''}`}>
+                          {post.data.tags?.includes('白发股神') ? '白发股神' : '个股分析'}
+                        </span>
+                        <h2 class="title">
+                          {s?.name ? <span class="stock-name">{s.name}</span> : null}
+                          {s ? <span class="stock-code">{s.code}</span> : post.data.title}
+                        </h2>
+                      </div>
+                      <p class="description">{post.data.description}</p>
+                      <p class="date"><FormattedDate date={post.data.pubDate} /></p>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           ) : (
             <div class="empty">暂无文章。</div>
