@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-15 16:00:23 HKT",
+  "as_of": "2026-06-15 20:00:00 BJT (narrative-refresh; price snapshot from 2026-06-15 16:00:23 HKT)",
   "trading_day": "2026-06-15",
   "stocks": [
     {
@@ -11,7 +11,8 @@
       "sector_label": "🤖 人形机器人",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 Serenity 回复确认仍喜欢 Leaderdrive（绿的谐波），定位为本月机器人长期想法。"
     },
     {
       "name": "雅克科技",
@@ -22,7 +23,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 Foosung 093370.KS 单日大涨验证 WF6 出口管制受益链，雅克科技维持 A 股电子特气核心映射。"
     },
     {
       "name": "三安光电",
@@ -33,7 +35,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 同时受 InP/GaAs 化合物半导体与 800V DC power semi 叙事映射，三安光电关注度提升。"
     },
     {
       "name": "云南锗业",
@@ -44,7 +47,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 Serenity 指出中国放松 InP 衬底出口缓解光子量产瓶颈；云南锗业对应 InP/锗材料上游映射。"
     },
     {
       "name": "立昂微",
@@ -55,7 +59,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 InP/GaAs 外延与 IQE/TSEM 多年协议强化化合物半导体材料链，立昂微为外延/硅片映射。"
     },
     {
       "name": "北方华创",
@@ -88,7 +93,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 $SIVE/$IQE 事件链继续强化光互联主线，天孚通信维持硅光/光器件映射。"
     },
     {
       "name": "拓荆科技",
@@ -132,7 +138,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 WF6/Foosung 事件链继续验证电子特气对偶受益，昊华科技维持黎明院 WF6 映射。"
     },
     {
       "name": "沃格光电",
@@ -154,7 +161,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 Serenity 新增 800V DC 提前 + InP 出口松动/IQE-TSEM 锁产能，CPO/光互联链继续受益；A股映射以中际旭创为核心龙头。"
     },
     {
       "name": "中船特气",
@@ -165,7 +173,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 WF6 出口管制主题延续，中船特气作为电子特气龙头继续跟踪。"
     },
     {
       "name": "新易盛",
@@ -176,7 +185,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 Serenity 将 InP easing 与光子量产瓶颈缓解并列，CPO 光模块弹性继续强化。"
     },
     {
       "name": "金宏气体",
@@ -187,7 +197,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 WF6/Foosung 受益链延续，金宏气体作为综合特气映射继续跟踪。"
     },
     {
       "name": "光库科技",
@@ -198,7 +209,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": null,
       "turnover": null,
-      "amount_yi": null
+      "amount_yi": null,
+      "latest_view": "6/15 InP easing + IQE/TSEM 锁产能提升光器件链关注度，光库科技维持高弹性映射。"
     }
   ],
   "etf_top": [
