@@ -1,270 +1,268 @@
 {
-  "as_of": "2026-06-14 07:00:00 BJT (narrative-refresh; price snapshot from 2026-06-12 22:26:17 HKT)",
-  "trading_day": "2026-06-12",
+  "as_of": "2026-06-15 16:00:23 HKT",
+  "trading_day": "2026-06-15",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "351.0",
-      "pct": "-4.3597",
+      "price": "372.62",
+      "pct": "6.1595",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 10.623978000000001,
-      "turnover": 12.267,
-      "amount_yi": 81.93
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "132.99",
-      "pct": "-1.3500",
+      "price": "138.83",
+      "pct": "4.3913",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.413248000000001,
-      "turnover": 20.821,
-      "amount_yi": 91.33,
-      "latest_view": "6/13 18:03 BJT Serenity 续 6/12 WF6 主题：明确点名韩国 Foosung 093370.KS（~$1.2B MC）为最大受益方；雅克科技 002409 作为 A 股 WF6 替代平台（LDS 前驱体）地位再确认。19:27 BJT 韩文帖升级冲击范围至上游钨原料，给出 25~35% 全球供应链受冲击数字。关联标的：厦门钨业 600549 / 章源钨业 002378 / 中钨高新 000657。"
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "13.92",
-      "pct": "-8.7811",
+      "price": "15.31",
+      "pct": "9.9856",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 8.453473,
-      "turnover": 8.659,
-      "amount_yi": 62.59
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "92.26",
-      "pct": "4.5558",
+      "price": "101.49",
+      "pct": "10.0043",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 7.241614,
-      "turnover": 19.989,
-      "amount_yi": 118.55
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "66.1",
-      "pct": "-7.1238",
+      "price": "68.05",
+      "pct": "2.9501",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 16.509765,
-      "turnover": 14.025000000000002,
-      "amount_yi": 74.34
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "667.19",
-      "pct": "4.6573",
+      "price": "682.22",
+      "pct": "2.2527",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 4.048627,
-      "turnover": 2.119,
-      "amount_yi": 102.74
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "29.59",
-      "pct": "-8.9538",
+      "price": "31.22",
+      "pct": "5.5086",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 20.984615,
-      "turnover": 11.698,
-      "amount_yi": 100.32
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "280.95",
-      "pct": "-4.4388",
+      "price": "305.04",
+      "pct": "8.5745",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 8.180271999999999,
-      "turnover": 4.358,
-      "amount_yi": 138.58
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "拓荆科技",
       "code": "688072",
-      "price": "645.18",
-      "pct": "-1.5398",
+      "price": "669.69",
+      "pct": "3.7989",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 11.558594,
-      "turnover": 5.48,
-      "amount_yi": 104.53
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "68.92",
-      "pct": "-4.2113",
+      "price": "74.32",
+      "pct": "7.8352",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 9.770674,
-      "turnover": 10.412,
-      "amount_yi": 133.59
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "57.22",
-      "pct": "-4.7762",
+      "price": "61.54",
+      "pct": "7.5498",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 9.785322,
-      "turnover": 9.591,
-      "amount_yi": 86.86
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "57.15",
-      "pct": "-10.0000",
+      "price": "56.27",
+      "pct": "-1.5398",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.606299,
-      "turnover": 10.543,
-      "amount_yi": 67.24
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "129.8",
-      "pct": "-6.9267",
+      "price": "137.3",
+      "pct": "5.7781",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 17.467374,
-      "turnover": 24.304000000000002,
-      "amount_yi": 72.83
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "1149.0",
-      "pct": "2.2242",
+      "price": "1245.0",
+      "pct": "8.3551",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 5.366548,
-      "turnover": 3.125,
-      "amount_yi": 400.03,
-      "latest_view": "6/14 05:26 BJT Serenity 升级 SIVE 为「长期复利核心持仓」——把 SIVE 与 SNDK 并列（same names keep compounding），并明确「I am not selling a share, supercycle 开始」；05:27 BJT 续帖首次明确 SIVE 美股上市动机 = 「Nasdaq 流动性要求 + M&A 需求」，公开表态「very positive, I want to see SIVE trade on US markets」；06:51 BJT 高互动帖（eng=613）用「全球市场人格化」框架把 SIVE 列为欧洲 AI 供应链龙头代表，并首次点名 SOI（Soitec 法国 FD-SOI 衬底）作为欧洲材料代表。Serenity 6/14 当日 SIVE 五帖串联意味着 SIVE/SOI/XFAB 已被划为同一条「欧洲小盘 AI 供应链」主线。**6/14 23:27 BJT 月度级爆款方法论收口帖（eng=6,343，6 月迄今 Top 1，1998 赞/490 回复/425k 曝光）：明确「TA is astrology for traders」，把 SIVE +1,900% 作为基本面正面论据并首次给出具体涨幅数字**——意味着 SIVE 估值锚点从 3 个月 +1,128% 升格为长期 +1,900%，中际旭创 300308 作为 A 股 SiPh/光模块龙头核心间接受益。关联标的：新易盛 300502 / 天孚通信 300394 / 光库科技 300620。"
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "中船特气",
       "code": "688146",
-      "price": "302.0",
-      "pct": "-13.6650",
+      "price": "318.3",
+      "pct": "5.3974",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 16.30932,
-      "turnover": 19.619,
-      "amount_yi": 87.86
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "506.46",
-      "pct": "-3.7148",
+      "price": "540.49",
+      "pct": "6.7192",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 8.019010999999999,
-      "turnover": 5.218,
-      "amount_yi": 337.34
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "28.17",
-      "pct": "-14.8943",
+      "price": "28.95",
+      "pct": "2.7689",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 11.752266,
-      "turnover": 12.636,
-      "amount_yi": 20.3
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "285.88",
-      "pct": "-2.5797",
+      "price": "343.05",
+      "pct": "19.9979",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 6.0316920000000005,
-      "turnover": 5.998,
-      "amount_yi": 43.33
+      "amplitude": null,
+      "turnover": null,
+      "amount_yi": null
     }
   ],
   "etf_top": [
     {
-      "code": "517520.SH",
-      "name": "黄金股etf永赢",
-      "price": "1.807",
-      "pct": 6.419
+      "code": "159971.SZ",
+      "name": "富国创业板etf",
+      "price": "1.606",
+      "pct": 20.03
     },
     {
-      "code": "560860.SH",
-      "name": "万家中证工业有色金属主题etf",
-      "price": "1.712",
-      "pct": 6.138
+      "code": "159259.SZ",
+      "name": "易方达国证成长100etf",
+      "price": "1.650",
+      "pct": 8.481
     },
     {
-      "code": "517400.SH",
-      "name": "国泰中证沪深港黄金产业股票etf",
-      "price": "1.422",
-      "pct": 6.119
+      "code": "588010.SH",
+      "name": "博时上证科创板新材料etf",
+      "price": "1.293",
+      "pct": 8.02
     },
     {
-      "code": "159315.SZ",
-      "name": "黄金股etf工银",
-      "price": "1.476",
-      "pct": 6.111
+      "code": "159779.SZ",
+      "name": "招商中证消费电子主题etf",
+      "price": "1.683",
+      "pct": 7.885000000000001
     },
     {
-      "code": "159322.SZ",
-      "name": "平安中证沪深港黄金产业etf",
-      "price": "1.453",
-      "pct": 6.058
+      "code": "561310.SH",
+      "name": "国泰中证消费电子主题etf",
+      "price": "1.679",
+      "pct": 7.766000000000001
     }
   ],
   "etf_bottom": [
     {
-      "code": "589020.SH",
-      "name": "鹏华科创板半导体材料设备主题etf",
-      "price": "2.149",
-      "pct": -3.1109999999999998
-    },
-    {
-      "code": "588710.SH",
-      "name": "华泰柏瑞上证科创板半导体材料设备主题etf",
-      "price": "2.744",
-      "pct": -3.073
+      "code": "159981.SZ",
+      "name": "建信能源化工期货etf",
+      "price": "1.552",
+      "pct": -6.787
     },
     {
       "code": "513350.SH",
       "name": "富国标普石油天然气勘探及生产精选行业etf(qdii)",
-      "price": "1.222",
-      "pct": -3.016
+      "price": "1.153",
+      "pct": -5.647
+    },
+    {
+      "code": "515220.SH",
+      "name": "国泰中证煤炭etf",
+      "price": "1.258",
+      "pct": -4.552
+    },
+    {
+      "code": "159930.SZ",
+      "name": "汇添富中证能源etf",
+      "price": "1.662",
+      "pct": -3.147
     },
     {
       "code": "159518.SZ",
       "name": "嘉实标普石油天然气勘探及生产精选行业etf(qdii)",
-      "price": "1.113",
-      "pct": -2.964
-    },
-    {
-      "code": "588170.SH",
-      "name": "华夏上证科创板半导体材料设备主题etf",
-      "price": "2.666",
-      "pct": -2.843
+      "price": "1.079",
+      "pct": -3.055
     }
   ],
   "macro": {
