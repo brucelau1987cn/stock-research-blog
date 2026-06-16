@@ -13,7 +13,7 @@ import { getPostUrl } from '../utils/postUrl';
 const stockPosts = (await getCollection('blog'))
   .filter((post) => post.data.tags?.includes('个股分析'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const featuredStockPosts = stockPosts.slice(0, 7);
+const featuredStockPosts = stockPosts.slice(0, 8);
 // 解析 frontmatter title，格式：'002026 山东威达：12.06 元...'
 // 返回 { code, name } 两段；拿不到 name 时降级为 code
 const parseStockTitle = (title: string): { code: string; name: string } => {
@@ -165,7 +165,7 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
 
       <section class="analysis-section" aria-label="本次个股分析总览">
         <div class="analysis-section-head">
-          <h2>🧭 本次 7 篇个股分析</h2>
+          <h2>🧭 个股分析</h2>
           <p>每篇单独点击查看详情；这里先给结论总览。</p>
         </div>
         {featuredStockPosts.length > 0 ? (
@@ -270,32 +270,6 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
         )}
       </section>
 
-      <div class="section-divider"><h2>📌 全部个股研究</h2></div>
-      {stockPosts.length > 0 ? (
-        <ul>
-          {stockPosts.map((post) => {
-            const s = parseStockTitle(post.data.title);
-            return (
-              <li>
-                <a class="post-card" href={getPostUrl(post)}>
-                  {post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
-                  <div>
-                    <span class="pill">个股分析</span>
-                    <h2 class="title">
-                      {s.name ? <span class="stock-name">{s.name}</span> : null}
-                      <span class="stock-code">{s.code}</span>
-                    </h2>
-                  </div>
-                  <p class="description">{post.data.description}</p>
-                  <p class="date"><FormattedDate date={post.data.pubDate} /></p>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <div class="empty">暂无个股分析文章。</div>
-      )}
     </main>
     <Footer />
   </body>
