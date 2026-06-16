@@ -5,17 +5,27 @@ interface Props {
 }
 
 const { date, showTime = false } = Astro.props;
-const dateTimeFormat = new Intl.DateTimeFormat('zh-CN', {
-	timeZone: 'Asia/Shanghai',
-	year: 'numeric',
-	month: '2-digit',
-	day: '2-digit',
-	hour: showTime ? '2-digit' : undefined,
-	minute: showTime ? '2-digit' : undefined,
-	hour12: false,
-});
+const formatBJT = (date: Date, showTime: boolean) => {
+	const parts = new Intl.DateTimeFormat('en-CA', {
+		timeZone: 'Asia/Shanghai',
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+		hour: showTime ? '2-digit' : undefined,
+		minute: showTime ? '2-digit' : undefined,
+		hour12: false,
+	}).formatToParts(date);
+	const get = (type: string) => parts.find((p) => p.type === type)?.value || '';
+	const y = get('year');
+	const m = get('month');
+	const d = get('day');
+	if (!showTime) return `${y}-${m}-${d}`;
+	const h = get('hour');
+	const min = get('minute');
+	return `${y}-${m}-${d} ${h}:${min} BJT`;
+};
 ---
 
 <time datetime={date.toISOString()}>
-	{dateTimeFormat.format(date)}
+	{formatBJT(date, showTime)}
 </time>
