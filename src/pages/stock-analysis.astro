@@ -13,7 +13,8 @@ import { getPostUrl } from '../utils/postUrl';
 const stockPosts = (await getCollection('blog'))
   .filter((post) => post.data.tags?.includes('个股分析'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const featuredStockPosts = stockPosts.slice(0, 8);
+const featuredStockPosts = stockPosts;
+const FEATURED_PAGE_SIZE = 6;
 // 解析 frontmatter title，格式：'002026 山东威达：12.06 元...'
 // 返回 { code, name } 两段；拿不到 name 时降级为 code
 const parseStockTitle = (title: string): { code: string; name: string } => {
@@ -94,6 +95,10 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
       .analysis-card .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
       .analysis-card p { margin: 0; color: rgb(var(--gray)); line-height: 1.6; font-size: 0.92rem; }
       .analysis-card .meta { margin-top: 0.6rem; color: rgb(var(--gray)); font-size: 0.82rem; }
+      .analysis-pagination { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-top: 1rem; }
+      .analysis-pagination button { display: inline-flex; align-items: center; min-height: 2.35rem; padding: 0.45rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: white; color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; }
+      .analysis-pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
+      .analysis-pagination .page-info { color: rgb(var(--gray)); font-size: 0.9rem; }
 
       .section-divider { margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 1rem; }
       .section-divider h2 { margin: 0; white-space: nowrap; }
@@ -169,25 +174,74 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
           <p>每篇单独点击查看详情；这里先给结论总览。</p>
         </div>
         {featuredStockPosts.length > 0 ? (
-          <div class="analysis-grid">
+          <>
+          <div class="analysis-grid" id="analysis-grid">
             {featuredStockPosts.map((post) => {
               const s = parseStockTitle(post.data.title);
               return (
-                <a class="analysis-card" href={getPostUrl(post)}>
+                <a class="analysis-card analysis-card-item" href={getPostUrl(post)}>
                   <strong class="analysis-card-title">
                     {s.name ? <span class="stock-name">{s.name}</span> : null}
                     <span class="stock-code">{s.code}</span>
                   </strong>
                   <p>{post.data.description}</p>
-                  <div class="meta"><FormattedDate date={post.data.pubDate} /></div>
+                  <div class="meta">最后同步：<FormattedDate date={post.data.pubDate} showTime={true} /></div>
                 </a>
               );
             })}
           </div>
+          {featuredStockPosts.length > FEATURED_PAGE_SIZE ? (
+            <div class="analysis-pagination" aria-label="个股分析分页">
+              <button type="button" id="analysis-prev" disabled>上一页</button>
+              <span class="page-info" id="analysis-page-info"></span>
+              <button type="button" id="analysis-next">下一页</button>
+            </div>
+          ) : null}
+          </>
         ) : (
           <div class="empty">暂无个股分析文章。</div>
         )}
       </section>
+
+      <script is:inline>
+        (() => {
+          const pageSize = 6;
+          const cards = Array.from(document.querySelectorAll('.analysis-card-item'));
+          const prev = document.getElementById('analysis-prev');
+          const next = document.getElementById('analysis-next');
+          const info = document.getElementById('analysis-page-info');
+          if (!cards.length || !prev || !next || !info) return;
+          const totalPages = Math.max(1, Math.ceil(cards.length / pageSize));
+          let page = 1;
+
+          const render = () => {
+            cards.forEach((card, index) => {
+              const visible = Math.floor(index / pageSize) + 1 === page;
+              card.style.display = visible ? '' : 'none';
+            });
+            prev.disabled = page <= 1;
+            next.disabled = page >= totalPages;
+            info.textContent = `第 ${page} / ${totalPages} 页 · 每页 ${pageSize} 条`;
+          };
+
+          prev.addEventListener('click', () => {
+            if (page > 1) {
+              page -= 1;
+              render();
+              document.querySelector('.analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+          next.addEventListener('click', () => {
+            if (page < totalPages) {
+              page += 1;
+              render();
+              document.querySelector('.analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+
+          render();
+        })();
+      </script>
 
       <section class="market-pulse" aria-label="Serenity推文关联股票本周市场速写">
         <div class="market-pulse-head">
