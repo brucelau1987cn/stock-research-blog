@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-16 16:04:31 BJT",
+  "as_of": "2026-06-17 00:25:00 BJT (narrative-refresh; price snapshot from 2026-06-16 16:04:31 BJT)",
   "trading_day": "2026-06-16",
   "stocks": [
     {
@@ -84,7 +84,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/16 $MU 被类比为 next $NVDA，存储/HBM 主题延续，通富微电作为先进封测与存储链映射继续跟踪。"
+      "latest_view": "6/17 $MU/DRAM-NAND 价格周期继续走向业绩验证，通富微电作为封测端受益映射之一。"
     },
     {
       "name": "长电科技",
@@ -96,7 +96,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/16 存储主线延续到 $MU/$SNDK/三星/SK 海力士，长电科技作为封测链映射继续跟踪。"
+      "latest_view": "6/17 存储主线从 $SNDK 扩展至 $MU/三星/SK 海力士，长电科技对应存储/先进封测映射。"
     },
     {
       "name": "雅克科技",
