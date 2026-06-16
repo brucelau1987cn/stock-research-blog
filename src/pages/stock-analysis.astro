@@ -72,10 +72,6 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
   <head>
     <BaseHead title={pageTitle} description={pageDesc} />
     <style>
-      .filter-bar { display: flex; gap: 0.5rem; margin: 0 0 2rem; flex-wrap: wrap; }
-      .filter-bar a { display: inline-flex; align-items: center; min-height: 2.4rem; padding: 0.5rem 0.85rem; border-radius: 999px; font-weight: 800; font-size: 0.92rem; text-decoration: none; color: rgb(var(--gray-dark)); border: 1px solid var(--border); background: white; }
-      .filter-bar a.active { background: rgb(var(--black)); color: white; border-color: rgb(var(--black)); }
-      .filter-bar a:hover:not(.active) { background: var(--warm); }
 
       .stock-hero { padding: 2.5rem 0 1rem; }
       .stock-hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.04em; }
@@ -166,11 +162,6 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
         </div>
       </div>
 
-      <div class="filter-bar">
-        <a href="/archive/">全部</a>
-        <a href="/stock-analysis/" class="active">📊 个股分析</a>
-        <a href="/serenity/">👩‍🦳 白发股神</a>
-      </div>
 
       <section class="analysis-section" aria-label="本次个股分析总览">
         <div class="analysis-section-head">
