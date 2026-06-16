@@ -81,7 +81,7 @@ const stockInfo = (title: string) => {
               <a class="pillar-item" href={getPostUrl(post)}>
                 <h3>{stockInfo(post.data.title)}</h3>
                 <p class="desc">{post.data.description}</p>
-                <p class="date">最后同步：<FormattedDate date={post.data.pubDate} showTime={true} /></p>
+                <p class="date">更新：<FormattedDate date={post.data.pubDate} showTime={true} /></p>
               </a>
             )) : <div class="pillar-item"><p class="desc" style="margin:0;color:rgb(var(--gray))">个股分析文章即将上线。</p></div>}
           </div>
@@ -99,7 +99,7 @@ const stockInfo = (title: string) => {
               <a class="pillar-item" href={getPostUrl(post)}>
                 <h3>{post.data.title}</h3>
                 <p class="desc">{post.data.description}</p>
-                <p class="date">最后同步：<FormattedDate date={post.data.pubDate} showTime={true} /></p>
+                <p class="date">更新：<FormattedDate date={post.data.pubDate} showTime={true} /></p>
               </a>
             )) : <div class="pillar-item"><p class="desc" style="margin:0;color:rgb(var(--gray))">白发股神专栏即将上线，定时同步 Serenity 最新推文与投资解读。</p></div>}
           </div>
