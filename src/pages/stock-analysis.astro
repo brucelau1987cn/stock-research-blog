@@ -95,10 +95,12 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
       .analysis-card .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
       .analysis-card p { margin: 0; color: rgb(var(--gray)); line-height: 1.6; font-size: 0.92rem; }
       .analysis-card .meta { margin-top: 0.6rem; color: rgb(var(--gray)); font-size: 0.82rem; }
-      .analysis-pagination { display: flex; align-items: center; justify-content: center; gap: 0.8rem; margin-top: 1rem; }
-      .analysis-pagination button { display: inline-flex; align-items: center; min-height: 2.35rem; padding: 0.45rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: white; color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; }
-      .analysis-pagination button:disabled { opacity: 0.45; cursor: not-allowed; }
-      .analysis-pagination .page-info { color: rgb(var(--gray)); font-size: 0.9rem; }
+      .analysis-pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; flex-wrap: wrap; }
+      .analysis-pagination button { display: inline-flex; align-items: center; min-height: 2.45rem; padding: 0.48rem 0.98rem; border-radius: 999px; border: 1px solid var(--border); background: linear-gradient(180deg, #fff, #fafafa); color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+      .analysis-pagination button:hover:not(:disabled) { background: var(--warm-2); border-color: rgba(214,61,46,0.18); }
+      .analysis-pagination button:disabled { opacity: 0.38; cursor: not-allowed; box-shadow: none; }
+      .analysis-pagination .page-info { color: rgb(var(--gray)); font-size: 0.88rem; font-weight: 700; padding: 0 0.2rem; }
+      .analysis-pagination .page-dot { width: 0.45rem; height: 0.45rem; border-radius: 999px; background: rgba(214,61,46,0.45); }
 
       .section-divider { margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 1rem; }
       .section-divider h2 { margin: 0; white-space: nowrap; }
@@ -220,8 +222,8 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
               card.style.display = visible ? '' : 'none';
             });
             prev.disabled = page <= 1;
-            next.disabled = page >= totalPages;
-            info.textContent = `第 ${page} / ${totalPages} 页 · 每页 ${pageSize} 条`;
+            next.style.display = page >= totalPages ? 'none' : '';
+            info.innerHTML = `第 ${page} / ${totalPages} 页 <span class="page-dot"></span> 每页 ${pageSize} 条`;
           };
 
           prev.addEventListener('click', () => {
