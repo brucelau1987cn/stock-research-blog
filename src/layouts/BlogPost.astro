@@ -132,7 +132,7 @@ const stockHeadings = headings.filter((heading) => heading.depth === 2);
           </div>
           <h1>{title}</h1>
           <p class="description">{description}</p>
-          {updatedDate && <div class="last-updated-on">更新于 <FormattedDate date={updatedDate} /></div>}
+          {updatedDate && <div class="last-updated-on">最后同步：<FormattedDate date={updatedDate} showTime={true} /></div>}
         </div>
         <div class="article-shell">
           <div class="prose">
