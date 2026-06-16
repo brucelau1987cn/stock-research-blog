@@ -12,7 +12,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/15 Serenity 将 InP easing 与光子量产瓶颈缓解并列，CPO 光模块弹性继续强化。"
+      "latest_view": "6/16 Serenity 指出 $AMD 正大规模争抢 CW laser 供给，$NVDA 已锁 EML/CW capacity，CPO 光模块仍处早期放量阶段。"
     },
     {
       "name": "中际旭创",
@@ -24,7 +24,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/15 Serenity 新增 800V DC 提前 + InP 出口松动/IQE-TSEM 锁产能，CPO/光互联链继续受益；A股映射以中际旭创为核心龙头。"
+      "latest_view": "6/16 AMD/CW laser 大额 PO + $SIVE/$LITE/$COHR 产能瓶颈继续强化 CPO/光互联主线，中际旭创维持核心龙头映射。"
     },
     {
       "name": "天孚通信",
@@ -36,7 +36,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/15 $SIVE/$IQE 事件链继续强化光互联主线，天孚通信维持硅光/光器件映射。"
+      "latest_view": "6/16 CPO 仍未正式 ramp，CW laser/EML 产能被系统性抢占，天孚通信维持光器件高弹性映射。"
     },
     {
       "name": "光库科技",
@@ -48,7 +48,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/15 InP easing + IQE/TSEM 锁产能提升光器件链关注度，光库科技维持高弹性映射。"
+      "latest_view": "6/16 Serenity 继续强调 CW laser 与 CPO 光学瓶颈，光库科技对应光器件/激光链高弹性映射。"
     },
     {
       "name": "沃格光电",
@@ -84,7 +84,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": null
+      "latest_view": "6/16 $MU 被类比为 next $NVDA，存储/HBM 主题延续，通富微电作为先进封测与存储链映射继续跟踪。"
     },
     {
       "name": "长电科技",
@@ -96,7 +96,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": null
+      "latest_view": "6/16 存储主线延续到 $MU/$SNDK/三星/SK 海力士，长电科技作为封测链映射继续跟踪。"
     },
     {
       "name": "雅克科技",
@@ -156,7 +156,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/15 InP/GaAs 外延与 IQE/TSEM 多年协议强化化合物半导体材料链，立昂微为外延/硅片映射。"
+      "latest_view": "6/16 $AXTI/InP 供应链复盘与欧洲 AI 供应链清单强化化合物半导体材料链，立昂微维持外延/硅片映射。"
     },
     {
       "name": "三安光电",
@@ -168,7 +168,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/15 同时受 InP/GaAs 化合物半导体与 800V DC power semi 叙事映射，三安光电关注度提升。"
+      "latest_view": "6/16 CPO/光子学 + InP/GaAs + power semi 叙事继续发酵，三安光电同时覆盖化合物半导体与功率半导体映射。"
     },
     {
       "name": "云南锗业",
@@ -180,7 +180,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/15 Serenity 指出中国放松 InP 衬底出口缓解光子量产瓶颈；云南锗业对应 InP/锗材料上游映射。"
+      "latest_view": "6/16 Serenity 复盘 $AXTI/InP 供应链研究方法，云南锗业继续对应 InP/锗材料上游映射。"
     },
     {
       "name": "沪硅产业",
@@ -366,5 +366,5 @@
       "name": "制造业PMI"
     }
   },
-  "source_note": "Data refreshed via hithink-* skills; manual fallback used because market_pulse_refresh.sh aborted on first quote query."
+  "source_note": "Data refreshed via hithink-* skills; Serenity latest_view labels updated through 2026-06-16 19:05 BJT."
 }
