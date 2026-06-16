@@ -194,9 +194,9 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
           </div>
           {featuredStockPosts.length > FEATURED_PAGE_SIZE ? (
             <div class="analysis-pagination" aria-label="个股分析分页">
-              <button type="button" id="analysis-prev" disabled>上一页</button>
+              <button type="button" id="analysis-prev" disabled>← 上一页</button>
               <span class="page-info" id="analysis-page-info"></span>
-              <button type="button" id="analysis-next">下一页</button>
+              <button type="button" id="analysis-next">下一页 →</button>
             </div>
           ) : null}
           </>
@@ -223,7 +223,7 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
             });
             prev.disabled = page <= 1;
             next.style.display = page >= totalPages ? 'none' : '';
-            info.innerHTML = `第 ${page} / ${totalPages} 页 <span class="page-dot"></span> 每页 ${pageSize} 条`;
+            info.innerHTML = `${page}/${totalPages} <span class="page-dot"></span> 6条/页`;
           };
 
           prev.addEventListener('click', () => {
