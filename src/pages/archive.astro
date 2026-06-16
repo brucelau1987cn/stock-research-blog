@@ -209,7 +209,7 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
                       <h2 class="title">{post.data.title}</h2>
                     </div>
                     <p class="description">{post.data.description}</p>
-                    <p class="date"><FormattedDate date={post.data.pubDate} /></p>
+                    <p class="date">最后同步：<FormattedDate date={post.data.pubDate} showTime={true} /></p>
                   </a>
                 </li>
               ))}
@@ -256,7 +256,7 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
                         </h2>
                       </div>
                       <p class="description">{post.data.description}</p>
-                      <p class="date"><FormattedDate date={post.data.pubDate} /></p>
+                      <p class="date">最后同步：<FormattedDate date={post.data.pubDate} showTime={true} /></p>
                     </a>
                   </li>
                 );
