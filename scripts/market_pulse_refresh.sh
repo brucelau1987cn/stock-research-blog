@@ -80,7 +80,9 @@ fetch_all_quotes() {
   # 把 SECTORS_JSON 展平为 name 列表
   local names
   names=$(echo "$SECTORS_JSON" | python3 -c "import json,sys; d=json.load(sys.stdin); [print(s['name']) for k in d for s in d[k]['stocks']]")
-  local query="A股 收盘价 涨跌幅 振幅 换手率 成交额 成交量 ${names}"
+  # Do not prefix with "A股": iWencai currently treats that as a universe query and
+  # returns the first page of all A-shares instead of restricting to the named tickers.
+  local query="${names} 收盘价 涨跌幅 振幅 换手率 成交额 成交量"
 
   local out
   if out=$(python3 ~/skills/hithink-astock-selector/scripts/cli.py --query "$query" --limit 20 2>/dev/null); then
@@ -105,8 +107,8 @@ for r in d['datas']:
     # iWencai 多返回了我们不关心的票，跳过
     continue
   sec_key, sec_label, code = meta
-  price = r.get('收盘价[20260612]') or r.get('最新价') or '—'
-  pct = r.get('涨跌幅[20260612]') or r.get('最新涨跌幅')
+  price = next((v for k, v in r.items() if k.startswith('收盘价[') and k.endswith(']') and v not in (None, '')), None) or r.get('最新价') or '—'
+  pct = next((v for k, v in r.items() if k.startswith('涨跌幅[') and k.endswith(']') and v not in (None, '')), None) or r.get('最新涨跌幅')
   if pct is None or pct == '':
     pct = '—'
   else:
@@ -114,9 +116,9 @@ for r in d['datas']:
   out.append({
     'name': short, 'code': code, 'price': str(price), 'pct': pct,
     'sector': sec_key, 'sector_label': sec_label,
-    'amplitude': r.get('振幅[20260612]'),
-    'turnover': r.get('换手率[20260612]'),
-    'amount_yi': round(float(r.get('成交额[20260612]') or 0) / 1e8, 2) if r.get('成交额[20260612]') else None,
+    'amplitude': next((v for k, v in r.items() if k.startswith('振幅[') and k.endswith(']')), None),
+    'turnover': next((v for k, v in r.items() if k.startswith('换手率[') and k.endswith(']')), None),
+    'amount_yi': (lambda amt: round(float(amt) / 1e8, 2) if amt else None)(next((v for k, v in r.items() if k.startswith('成交额[') and k.endswith(']')), None)),
   })
 print(json.dumps(out, ensure_ascii=False))
 "

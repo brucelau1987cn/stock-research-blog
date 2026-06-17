@@ -278,5 +278,75 @@
       "unit": "%",
       "name": "PMI"
     }
-  }
+  },
+  "industry_top5": [
+    {
+      "code": "884059.TI",
+      "name": "玻璃玻纤",
+      "price": "7077.530",
+      "pct": 7.428800000000001
+    },
+    {
+      "code": "884229.TI",
+      "name": "半导体设备",
+      "price": "269713.320",
+      "pct": 6.1169
+    },
+    {
+      "code": "884227.TI",
+      "name": "集成电路制造",
+      "price": "21172.255",
+      "pct": 5.8446
+    },
+    {
+      "code": "881172.TI",
+      "name": "电子化学品",
+      "price": "116608.708",
+      "pct": 5.3434
+    },
+    {
+      "code": "884091.TI",
+      "name": "半导体材料",
+      "price": "12101.603",
+      "pct": 4.7873
+    }
+  ],
+  "northbound_top5": [
+    {
+      "code": "300620.SZ",
+      "name": "光库科技",
+      "price": "395.2",
+      "pct": 0.690463,
+      "net_buy_yuan": 727046248.89
+    },
+    {
+      "code": "002851.SZ",
+      "name": "麦格米特",
+      "price": "178.9",
+      "pct": 9.325348,
+      "net_buy_yuan": 691644954.08
+    },
+    {
+      "code": "300870.SZ",
+      "name": "欧陆通",
+      "price": "374.01",
+      "pct": 0.270777,
+      "net_buy_yuan": 661393207.9
+    },
+    {
+      "code": "002436.SZ",
+      "name": "兴森科技",
+      "price": "47.8",
+      "pct": 8.390023000000001,
+      "net_buy_yuan": 472760571.18
+    },
+    {
+      "code": "002484.SZ",
+      "name": "江海股份",
+      "price": "104.93",
+      "pct": 9.989518,
+      "net_buy_yuan": 308790196.0
+    }
+  ],
+  "source_note": "Data refreshed via hithink-* skills; industry_top5 from hithink-industry-query; northbound_top5 latest available via hithink-market-query (2026-06-16 for northbound)."
 }
