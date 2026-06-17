@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-17 16:03:18 HKT",
+  "as_of": "2026-06-17 20:03:55 BJT (narrative-refresh; price snapshot from 2026-06-17 16:03:18 HKT)",
   "trading_day": "2026-06-17",
   "stocks": [
     {
@@ -88,7 +88,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 4.610268,
       "turnover": 4.2909999999999995,
-      "amount_yi": 151.14
+      "amount_yi": 151.14,
+      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 $AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 $SIVE / $AAOI / 可能 Macom；A股 CPO/光模块映射继续看中际旭创、天孚通信、新易盛、光库科技。"
     },
     {
       "name": "拓荆科技",
@@ -154,7 +155,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 4.493266,
       "turnover": 1.96,
-      "amount_yi": 272.72
+      "amount_yi": 272.72,
+      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 $AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 $SIVE / $AAOI / 可能 Macom；A股 CPO/光模块映射继续看中际旭创、天孚通信、新易盛、光库科技。"
     },
     {
       "name": "中船特气",
@@ -176,7 +178,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 3.8961750000000004,
       "turnover": 3.106,
-      "amount_yi": 213.5
+      "amount_yi": 213.5,
+      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 $AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 $SIVE / $AAOI / 可能 Macom；A股 CPO/光模块映射继续看中际旭创、天孚通信、新易盛、光库科技。"
     },
     {
       "name": "金宏气体",
@@ -198,7 +201,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 6.593799000000001,
       "turnover": 6.41,
-      "amount_yi": 62.22
+      "amount_yi": 62.22,
+      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 $AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 $SIVE / $AAOI / 可能 Macom；A股 CPO/光模块映射继续看中际旭创、天孚通信、新易盛、光库科技。"
     }
   ],
   "etf_top": [
