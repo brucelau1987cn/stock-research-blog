@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-17 00:25:00 BJT (narrative-refresh; price snapshot from 2026-06-16 16:04:31 BJT)",
+  "as_of": "2026-06-17 11:00:00 BJT (narrative-refresh; price snapshot from 2026-06-16 16:04:31 BJT)",
   "trading_day": "2026-06-16",
   "stocks": [
     {
@@ -12,7 +12,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/16 Serenity 指出 $AMD 正大规模争抢 CW laser 供给，$NVDA 已锁 EML/CW capacity，CPO 光模块仍处早期放量阶段。"
+      "latest_view": "6/17 Mizuho 称 CPO 无延迟且因 $NVDA demand ramp 上修 optical engine；$AAOI 稀缺 laser capacity 被 AMD/hyperscaler 争抢，CPO 光模块主线继续强化。"
     },
     {
       "name": "中际旭创",
@@ -24,7 +24,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/16 AMD/CW laser 大额 PO + $SIVE/$LITE/$COHR 产能瓶颈继续强化 CPO/光互联主线，中际旭创维持核心龙头映射。"
+      "latest_view": "6/17 CPO/800V DC 无延迟 + optical engine 上修验证光互联需求，中际旭创维持 A 股 CPO 核心龙头映射。"
     },
     {
       "name": "天孚通信",
@@ -36,7 +36,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/16 CPO 仍未正式 ramp，CW laser/EML 产能被系统性抢占，天孚通信维持光器件高弹性映射。"
+      "latest_view": "6/17 InP DFB laser / CW laser 仍是下一阶段 CPO 焦点，天孚通信对应高端光器件与封装环节弹性。"
     },
     {
       "name": "光库科技",
@@ -48,7 +48,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": "6/16 Serenity 继续强调 CW laser 与 CPO 光学瓶颈，光库科技对应光器件/激光链高弹性映射。"
+      "latest_view": "6/17 Mizuho 上修 optical engine 且 $AAOI 稀缺 laser capacity 被追捧，光库科技继续对应激光/光器件高弹性映射。"
     },
     {
       "name": "沃格光电",
@@ -204,7 +204,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": null
+      "latest_view": "6/17 $AEHR 暂无新增新闻，半导体测试设备链未形成赛道升级；北方华创设备主线暂不因该帖调整。"
     },
     {
       "name": "拓荆科技",
@@ -216,7 +216,7 @@
       "amplitude": null,
       "turnover": null,
       "amount_yi": null,
-      "latest_view": null
+      "latest_view": "6/17 $AEHR 帖属于单票评论，不构成设备链赛道级变化；拓荆科技最新观点维持原设备映射。"
     }
   ],
   "etf_top": [
@@ -366,5 +366,5 @@
       "name": "制造业PMI"
     }
   },
-  "source_note": "Data refreshed via hithink-* skills; Serenity latest_view labels updated through 2026-06-16 19:05 BJT."
+  "source_note": "Data refreshed via hithink-* skills; Serenity latest_view labels updated through 2026-06-17 11:00 BJT."
 }
