@@ -1,282 +1,268 @@
 {
-  "as_of": "2026-06-17 20:03:55 BJT (narrative-refresh; price snapshot from 2026-06-17 16:03:18 HKT)",
-  "trading_day": "2026-06-17",
+  "as_of": "2026-06-18 17:30:29 HKT",
+  "trading_day": "2026-06-18",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "381.6",
-      "pct": "1.4300",
+      "price": "408.01",
+      "pct": "6.9209",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 5.451597,
-      "turnover": 7.091,
-      "amount_yi": 48.96,
-      "latest_view": "Serenity 6/17 20:52 直接点名若在中国会 long LeaderDrive（688017），看好机器人仍处早期 ramp 且中国在低成本大规模量产上领先；A股机器人链继续关注绿的谐波、双环传动、鸣志电器、拓普集团。"
+      "amplitude": 10.005241,
+      "turnover": 10.474,
+      "amount_yi": 76.94
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "147.92",
-      "pct": "7.3751",
+      "price": "150.16",
+      "pct": "1.5143",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.5964,
-      "turnover": 11.770999999999999,
-      "amount_yi": 54.22,
-      "latest_view": "Serenity 6/17 23:24 继续把玻璃基板 / 外延片 / 电子特气放在同一条 AI 封装升级链里，结合 6/17 玻璃基板时间表，雅克科技仍是电子特气与外延片链的重点跟踪标的。"
+      "amplitude": 5.239319,
+      "turnover": 9.976,
+      "amount_yi": 46.94
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "17.16",
-      "pct": "1.9002",
+      "price": "17.54",
+      "pct": "2.2145",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 3.8004749999999996,
-      "turnover": 7.077999999999999,
-      "amount_yi": 60.27
+      "amplitude": 4.312354,
+      "turnover": 6.049,
+      "amount_yi": 53.15
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "99.26",
-      "pct": "-1.9170",
+      "price": "100.44",
+      "pct": "1.1888",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 4.130434999999999,
-      "turnover": 15.362,
-      "amount_yi": 98.72,
-      "latest_view": "Serenity 6/17 21:18 认为 XFAB 的 silicon photonics / AI DC / power semi adjacent exposure 被低估；对云南锗业这类材料映射来说，市场仍在重新定价供应链与概念分层。"
+      "amplitude": 6.850695,
+      "turnover": 14.297,
+      "amount_yi": 94.55
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "70.95",
-      "pct": "4.1086",
+      "price": "70.2",
+      "pct": "-1.0571",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 8.818782,
-      "turnover": 12.642999999999999,
-      "amount_yi": 66.77,
-      "latest_view": "Serenity 6/17 21:18 把 silicon photonics / AI DC / power semi adjacent exposure 重新摆上台面，立昂微继续位于材料与外延链条中。"
+      "amplitude": 5.990133999999999,
+      "turnover": 10.906,
+      "amount_yi": 59.94
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "704.22",
-      "pct": "4.7650",
+      "price": "721.04",
+      "pct": "2.3885",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 7.140838,
-      "turnover": 1.567,
-      "amount_yi": 77.37,
-      "latest_view": "Serenity 6/17 21:46 把 AI 电力需求、capex 与降息联到公用事业 / 电网估值上，同时 6/17 19:24 的 CPO / CW laser 瓶颈继续抬高数据中心供电与设备链的重要性。"
+      "amplitude": 4.285593,
+      "turnover": 1.444,
+      "amount_yi": 75.29
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "32.4",
-      "pct": "4.3478",
+      "price": "32.2",
+      "pct": "-0.6173",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 10.692432,
-      "turnover": 9.56,
-      "amount_yi": 82.02
+      "amplitude": 4.012346,
+      "turnover": 7.249999999999999,
+      "amount_yi": 64.09
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "329.33",
-      "pct": "1.4228",
+      "price": "336.6",
+      "pct": "2.2075",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 4.610268,
-      "turnover": 4.2909999999999995,
-      "amount_yi": 151.14,
-      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 SIVE / AAOI / 可能 Macom；天孚通信继续受益于 CPO / 光模块与稀缺激光产能叙事。"
+      "amplitude": 5.007136,
+      "turnover": 4.519,
+      "amount_yi": 164.97
     },
     {
       "name": "拓荆科技",
       "code": "688072",
-      "price": "740.0",
-      "pct": "12.8393",
+      "price": "734.0",
+      "pct": "-0.8108",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 15.629765,
-      "turnover": 4.1770000000000005,
-      "amount_yi": 81.78
+      "amplitude": 4.385135,
+      "turnover": 3.16,
+      "amount_yi": 65.92
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "81.76",
-      "pct": "6.2784",
+      "price": "83.03",
+      "pct": "1.5533",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 8.878200999999999,
-      "turnover": 12.450999999999999,
-      "amount_yi": 180.16
+      "amplitude": 5.528376,
+      "turnover": 13.081000000000001,
+      "amount_yi": 195.48
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "67.22",
-      "pct": "6.8171",
+      "price": "68.27",
+      "pct": "1.5620",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 11.10758,
-      "turnover": 11.827,
-      "amount_yi": 118.41,
-      "latest_view": "Serenity 6/17 23:24 $AEHR 获硅光客户追加 wafer-level burn-in 订单，验证光互联 / 硅光量产也会继续传导到半导体测试设备链。"
+      "amplitude": 4.403451,
+      "turnover": 10.764,
+      "amount_yi": 111.33
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "63.8",
-      "pct": "10.0000",
+      "price": "65.16",
+      "pct": "2.1317",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 14.931034000000002,
-      "turnover": 10.633,
-      "amount_yi": 69.6,
-      "latest_view": "Serenity 6/17 20:01 玻璃基板 ramp 时间表被明确到 2026H2 / 2027，市场对封装升级与电子特气 / 外延片链的再定价逻辑继续强化。"
+      "amplitude": 9.388715,
+      "turnover": 9.661999999999999,
+      "amount_yi": 66.39
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "166.13",
-      "pct": "9.9980",
+      "price": "164.7",
+      "pct": "-0.8608",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 6.919155000000001,
-      "turnover": 5.313,
-      "amount_yi": 19.51,
-      "latest_view": "Serenity 6/17 20:01 强调玻璃基板是下一轮封装迁移方向，Absolics 预计 2026H2 ramp、Samsung Electro-Mechanics 2027 ramp；沃格光电继续作为 TGV / 玻璃基板核心映射。"
+      "amplitude": 13.83856,
+      "turnover": 15.095,
+      "amount_yi": 55.61
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "1276.11",
-      "pct": "2.2450",
+      "price": "1367.88",
+      "pct": "7.1914",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 4.493266,
-      "turnover": 1.96,
-      "amount_yi": 272.72,
-      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 SIVE / AAOI / 可能 Macom；中际旭创继续处在 CPO / 光模块主线。"
+      "amplitude": 7.8182920000000005,
+      "turnover": 2.572,
+      "amount_yi": 381.77
     },
     {
       "name": "中船特气",
       "code": "688146",
-      "price": "339.7",
-      "pct": "5.2354",
+      "price": "364.0",
+      "pct": "7.1534",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 12.289343,
-      "turnover": 12.925,
-      "amount_yi": 60.92,
-      "latest_view": "Serenity 6/17 把玻璃基板 / 外延片 / 电子特气继续纳入封装升级主线，6/17 的玻璃基板时间表为后续供给验证提供了更清晰的量产锚点。"
+      "amplitude": 12.257875,
+      "turnover": 10.782,
+      "amount_yi": 53.64
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "557.88",
-      "pct": "1.6175",
+      "price": "581.48",
+      "pct": "4.2303",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 3.8961750000000004,
-      "turnover": 3.106,
-      "amount_yi": 213.5,
-      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 SIVE / AAOI / 可能 Macom；新易盛继续受益于 CPO / 光模块与激光瓶颈扩散。"
+      "amplitude": 6.5999859999999995,
+      "turnover": 3.418,
+      "amount_yi": 247.4
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "31.17",
-      "pct": "3.6237",
+      "price": "30.27",
+      "pct": "-2.8874",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 7.2473399999999994,
-      "turnover": 7.898,
-      "amount_yi": 12.98,
-      "latest_view": "Serenity 6/17 继续把电子特气放在玻璃基板 / 外延片 / AI 封装升级链条中，后续重点仍是订单验证与客户导入节奏。"
+      "amplitude": 3.5290340000000002,
+      "turnover": 7.696,
+      "amount_yi": 12.48
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "395.2",
-      "pct": "0.6905",
+      "price": "390.8",
+      "pct": "-1.1134",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 6.593799000000001,
-      "turnover": 6.41,
-      "amount_yi": 62.22,
-      "latest_view": "Serenity 6/17 19:24 引 TrendForce 称 AMD 正以多笔大额采购订单争抢 CW laser supply，西方独立产能集中在 SIVE / AAOI / 可能 Macom；光库科技继续处在 CPO / 光模块核心映射位。"
+      "amplitude": 3.527328,
+      "turnover": 5.426,
+      "amount_yi": 52.1
     }
   ],
   "etf_top": [
     {
-      "code": "588170.SH",
-      "name": "华夏上证科创板半导体材料设备主题etf",
-      "price": "3.071",
-      "pct": 8.708
+      "code": "159022.SZ",
+      "name": "富国中证科创创业人工智能etf",
+      "price": "1.300",
+      "pct": 11.684
     },
     {
-      "code": "589020.SH",
-      "name": "鹏华科创板半导体材料设备主题etf",
-      "price": "2.476",
-      "pct": 8.549
+      "code": "159142.SZ",
+      "name": "景顺长城中证科创创业人工智能etf",
+      "price": "1.490",
+      "pct": 6.05
     },
     {
-      "code": "588710.SH",
-      "name": "华泰柏瑞上证科创板半导体材料设备主题etf",
-      "price": "3.162",
-      "pct": 8.436
+      "code": "159141.SZ",
+      "name": "科创创业人工智能etf永赢",
+      "price": "1.465",
+      "pct": 6.006
     },
     {
-      "code": "560780.SH",
-      "name": "广发中证半导体材料设备etf",
-      "price": "3.315",
-      "pct": 7.7
+      "code": "515980.SH",
+      "name": "华富中证人工智能产业etf",
+      "price": "1.230",
+      "pct": 5.761
     },
     {
-      "code": "159327.SZ",
-      "name": "万家中证半导体材料设备主题etf",
-      "price": "3.573",
-      "pct": 7.4910000000000005
+      "code": "159140.SZ",
+      "name": "易方达中证科创创业人工智能etf",
+      "price": "1.546",
+      "pct": 5.7459999999999996
     }
   ],
   "etf_bottom": [
     {
-      "code": "159855.SZ",
-      "name": "影视etf",
-      "price": "0.762",
-      "pct": -2.682
+      "code": "512070.SH",
+      "name": "易方达沪深300非银etf",
+      "price": "0.756",
+      "pct": -4.183
     },
     {
-      "code": "516620.SH",
-      "name": "国泰中证影视主题etf",
-      "price": "0.855",
-      "pct": -2.5090000000000003
+      "code": "513750.SH",
+      "name": "广发中证港股通非银etf",
+      "price": "1.457",
+      "pct": -4.082
     },
     {
-      "code": "515220.SH",
-      "name": "国泰中证煤炭etf",
-      "price": "1.195",
-      "pct": -2.4490000000000003
+      "code": "515630.SH",
+      "name": "保险证券",
+      "price": "1.210",
+      "pct": -3.739
     },
     {
-      "code": "159060.SZ",
-      "name": "浦银安盛国证粮食产业etf",
-      "price": "0.979",
-      "pct": -2.2950000000000004
+      "code": "561560.SH",
+      "name": "华泰柏瑞中证全指电力公用事业etf",
+      "price": "1.324",
+      "pct": -3.499
     },
     {
-      "code": "159245.SZ",
-      "name": "富国国证港股通消费主题etf",
-      "price": "0.793",
-      "pct": -2.22
+      "code": "562960.SH",
+      "name": "易方达中证绿色电力etf",
+      "price": "1.189",
+      "pct": -3.49
     }
   ],
   "macro": {
@@ -292,75 +278,5 @@
       "unit": "%",
       "name": "PMI"
     }
-  },
-  "industry_top5": [
-    {
-      "code": "884059.TI",
-      "name": "玻璃玻纤",
-      "price": "7077.530",
-      "pct": 7.428800000000001
-    },
-    {
-      "code": "884229.TI",
-      "name": "半导体设备",
-      "price": "269713.320",
-      "pct": 6.1169
-    },
-    {
-      "code": "884227.TI",
-      "name": "集成电路制造",
-      "price": "21172.255",
-      "pct": 5.8446
-    },
-    {
-      "code": "881172.TI",
-      "name": "电子化学品",
-      "price": "116608.708",
-      "pct": 5.3434
-    },
-    {
-      "code": "884091.TI",
-      "name": "半导体材料",
-      "price": "12101.603",
-      "pct": 4.7873
-    }
-  ],
-  "northbound_top5": [
-    {
-      "code": "300620.SZ",
-      "name": "光库科技",
-      "price": "395.2",
-      "pct": 0.690463,
-      "net_buy_yuan": 727046248.89
-    },
-    {
-      "code": "002851.SZ",
-      "name": "麦格米特",
-      "price": "178.9",
-      "pct": 9.325348,
-      "net_buy_yuan": 691644954.08
-    },
-    {
-      "code": "300870.SZ",
-      "name": "欧陆通",
-      "price": "374.01",
-      "pct": 0.270777,
-      "net_buy_yuan": 661393207.9
-    },
-    {
-      "code": "002436.SZ",
-      "name": "兴森科技",
-      "price": "47.8",
-      "pct": 8.390023000000001,
-      "net_buy_yuan": 472760571.18
-    },
-    {
-      "code": "002484.SZ",
-      "name": "江海股份",
-      "price": "104.93",
-      "pct": 9.989518,
-      "net_buy_yuan": 308790196.0
-    }
-  ],
-  "source_note": "Data refreshed via hithink-* skills; industry_top5 from hithink-industry-query; northbound_top5 latest available via hithink-market-query (2026-06-16 for northbound)."
+  }
 }
