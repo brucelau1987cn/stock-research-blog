@@ -13,7 +13,7 @@ const allPosts = (await getCollection('blog')).sort(
 );
 const filtered = allPosts.filter(p => p.data.tags?.includes('白发股神'));
 const pageTitle = `白发股神 | ${SITE_TITLE}`;
-const pageDesc = '白发股神 Serenity (@aleabitoreddit) — AI供应链投资动态追踪，每4小时自动同步推文 + 投资解读 + A股映射。';
+const pageDesc = '白发股神 Serenity (@aleabitoreddit) — AI / 半导体供应链投资动态追踪，聚焦 CPO、TGV、机器人、封测、材料与电力链条，并同步 A股映射。';
 ---
 
 <!doctype html>
