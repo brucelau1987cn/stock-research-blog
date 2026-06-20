@@ -154,7 +154,7 @@
       "amplitude": 13.83856,
       "turnover": 15.095,
       "amount_yi": 55.61,
-      "serenity_view": "6/17-6/18 继续跟踪玻璃基板 / TGV 产能迁移，仍属 AI 封装升级主线。"
+      "serenity_view": "6/19 21:11 $LPK NASDAQ 上市+70% 份额+TAM 上修，设备卖铲人催化；6/17-6/18 继续跟踪玻璃基板/TGV 产能迁移，仍属 AI 封装升级主线。"
     },
     {
       "name": "中际旭创",
@@ -213,7 +213,43 @@
       "amplitude": 3.527328,
       "turnover": 5.426,
       "amount_yi": 52.1,
-      "serenity_view": "6/19 17:20 Serenity 抛出 $AAOI $471m/月独立激光产能量化——美国本土独立供给入场，CW laser 稀缺叙事进入定量验证阶段；6/18-6/19 Serenity 三次强化 $AAOI，从「最可能候选」到「$471m/月量化产能」，光模块链继续受益。"
+      "serenity_view": "6/19 17:20 $AAOI $471m/月独立激光产能量化，CW laser 稀缺叙事进入定量验证；6/19 20:29 Serenity 明确反驳光子学/激光供过于求论，与存储 YMTC/CXMT 叙事同逻辑；光模块链继续受益。"
+    },
+    {
+      "name": "顺络电子",
+      "code": "002138",
+      "price": "—",
+      "pct": "—",
+      "sector": "mlcc",
+      "sector_label": "🔌 MLCC / 被动元件",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "serenity_view": "6/19 20:55 Serenity 复盘 MLCC 瓶颈——2月内太阳诱电+211%/$VSH+146%/村田+155%。A股高端 MLCC 龙头。"
+    },
+    {
+      "name": "三环集团",
+      "code": "300408",
+      "price": "—",
+      "pct": "—",
+      "sector": "mlcc",
+      "sector_label": "🔌 MLCC / 被动元件",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "serenity_view": "6/19 20:55 Serenity 复盘 MLCC 瓶颈——AI/HPC 用量暴增+产能扩建 18-24 月=供给紧缺。A股 MLCC 陶瓷封装基座龙头。"
+    },
+    {
+      "name": "风华高科",
+      "code": "000636",
+      "price": "—",
+      "pct": "—",
+      "sector": "mlcc",
+      "sector_label": "🔌 MLCC / 被动元件",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "serenity_view": "6/19 20:55 Serenity 复盘 MLCC 瓶颈——被动元件供给刚性紧缺。A股 MLCC 片式电容龙头。"
     }
   ],
   "etf_top": [
