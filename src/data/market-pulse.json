@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-19 08:58:00 HKT",
+  "as_of": "2026-06-20 20:10:00 BJT (narrative-refresh; price snapshot from 2026-06-19 08:58:00 HKT)",
   "trading_day": "2026-06-18",
   "stocks": [
     {
@@ -118,7 +118,7 @@
       "amplitude": 5.528376,
       "turnover": 13.081000000000001,
       "amount_yi": 195.48,
-      "serenity_view": "6/20 11:52 BJT Serenity 分析 Priortech/$CAMT NAV 折价，封测设备控股公司框架扩展。6/17-6/18 封测链仍是 CPO / AI ASIC 的基础设施环节。"
+      "serenity_view": "6/20 11:52 BJT Serenity 分析 Priortech/$CAMT NAV 折价，封测设备控股公司框架扩展。"
     },
     {
       "name": "通富微电",
@@ -130,7 +130,7 @@
       "amplitude": 4.403451,
       "turnover": 10.764,
       "amount_yi": 111.33,
-      "serenity_view": "6/20 11:52 BJT Serenity 分析 Priortech/$CAMT NAV 折价，封测设备控股公司框架扩展。6/17-6/18 封测链仍是 CPO / AI ASIC 的基础设施环节。"
+      "serenity_view": "6/20 11:52 BJT Serenity 分析 Priortech/$CAMT NAV 折价，封测设备控股公司框架扩展。"
     },
     {
       "name": "昊华科技",
