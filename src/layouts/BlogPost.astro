@@ -23,6 +23,13 @@ const extractDateTime = (text: string) => {
   return match?.[1] ?? text;
 };
 
+const parseChineseDateKey = (date: string) => {
+  const match = date.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/);
+  if (!match) return date;
+  const [, year, month, day] = match;
+  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+};
+
 const groupTweetHeadingsByDate = () => {
   const groups: { date: string; count: number; slug: string; latestTime: string; raw: string }[] = [];
   for (const heading of tweetHeadings) {
@@ -50,6 +57,12 @@ const groupTweetHeadingsByDate = () => {
       groups.push({ date: dateOnly, count: 1, slug: heading.slug, latestTime: time, raw: full });
     }
   }
+  groups.sort((a, b) => {
+    const aDate = parseChineseDateKey(a.date);
+    const bDate = parseChineseDateKey(b.date);
+    if (aDate !== bDate) return aDate < bDate ? 1 : -1;
+    return a.latestTime < b.latestTime ? 1 : -1;
+  });
   return groups;
 };
 
