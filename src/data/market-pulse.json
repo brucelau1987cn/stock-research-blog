@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-20 20:10:00 BJT (narrative-refresh; price snapshot from 2026-06-19 08:58:00 HKT)",
+  "as_of": "2026-06-21 19:30:47 BJT (serenity narrative refresh; price snapshot from 2026-06-19 08:58:00 HKT)",
   "trading_day": "2026-06-18",
   "stocks": [
     {
@@ -12,7 +12,7 @@
       "amplitude": 10.005241,
       "turnover": 10.474,
       "amount_yi": 76.94,
-      "serenity_view": "6/17 Serenity 仍偏多机器人长线，认为中国低成本量产领先。"
+      "serenity_view": "6/17 仍偏多机器人长线 · 认·中国低成本量产领先"
     },
     {
       "name": "雅克科技",
@@ -24,7 +24,7 @@
       "amplitude": 5.239319,
       "turnover": 9.976,
       "amount_yi": 46.94,
-      "serenity_view": "6/17-6/18 电子特气 / 外延片链仍是 AI 供应链延伸主线。"
+      "serenity_view": "6/17-18 电子特气 / 外延片链仍是 AI 供应链延伸主线"
     },
     {
       "name": "三安光电",
@@ -47,7 +47,7 @@
       "amplitude": 6.850695,
       "turnover": 14.297,
       "amount_yi": 94.55,
-      "serenity_view": "6/17-6/18 光学材料 / 外延链与硅光叙事继续受关注。"
+      "serenity_view": "6/17-18 光学材料 / 外延链与硅光叙事继续受关注"
     },
     {
       "name": "立昂微",
@@ -59,7 +59,7 @@
       "amplitude": 5.990133999999999,
       "turnover": 10.906,
       "amount_yi": 59.94,
-      "serenity_view": "6/17-6/18 光学材料 / 外延链与硅光叙事继续受关注。"
+      "serenity_view": "6/17-18 光学材料 / 外延链与硅光叙事继续受关注"
     },
     {
       "name": "北方华创",
@@ -71,7 +71,7 @@
       "amplitude": 4.285593,
       "turnover": 1.444,
       "amount_yi": 75.29,
-      "serenity_view": "6/19 ASML 出口管制追问升温，中国光刻机获取困境利好半导体设备国产替代链。6/17-6/18 半导体设备仍受材料与制程升级共振。"
+      "serenity_view": "ASML 出口管制追问升温 · 中国光刻机获取困境利好半导体设备国产替代链"
     },
     {
       "name": "沪硅产业",
@@ -94,7 +94,7 @@
       "amplitude": 5.007136,
       "turnover": 4.519,
       "amount_yi": 164.97,
-      "serenity_view": "6/21 16:44 BJT Serenity 明确指出 EML 与 CW laser 同时紧缺，$COHR 可能向 $LITE 外购，光互联供给瓶颈进一步升级；6/21 15:53 BJT 继续研究 OE Solutions（138080）作为韩国少数 EML 玩家之一，赛道从 $AAOI 扩展到韩国本土供给起点。"
+      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
     },
     {
       "name": "拓荆科技",
@@ -106,7 +106,7 @@
       "amplitude": 4.385135,
       "turnover": 3.16,
       "amount_yi": 65.92,
-      "serenity_view": "6/17-6/18 半导体设备仍受材料与制程升级共振。"
+      "serenity_view": "18 半导体设备仍受材料与制程升级共振"
     },
     {
       "name": "长电科技",
@@ -118,7 +118,7 @@
       "amplitude": 5.528376,
       "turnover": 13.081000000000001,
       "amount_yi": 195.48,
-      "serenity_view": "6/20 11:52-12:01 BJT Serenity 将 holding co / NAV 折价框架扩展到 Priortech/$CAMT 与韩国 Daeduck/DB/Hyosung，封测设备与 FC-BGA/Foundry/电网链条同步受益。"
+      "serenity_view": "6/20 11:52-12:01 将 holding co / NAV 折价框架扩展到 Priortech/$CAMT 与韩国 Daeduck/DB/Hyosung · 封测设备与 FC-BGA/Foundry/电网链条同步受益"
     },
     {
       "name": "通富微电",
@@ -130,7 +130,7 @@
       "amplitude": 4.403451,
       "turnover": 10.764,
       "amount_yi": 111.33,
-      "serenity_view": "6/20 11:52-12:01 BJT Serenity 将 holding co / NAV 折价框架扩展到 Priortech/$CAMT 与韩国 Daeduck/DB/Hyosung，封测设备与 FC-BGA/Foundry/电网链条同步受益。"
+      "serenity_view": "6/20 11:52-12:01 将 holding co / NAV 折价框架扩展到 Priortech/$CAMT 与韩国 Daeduck/DB/Hyosung · 封测设备与 FC-BGA/Foundry/电网链条同步受益"
     },
     {
       "name": "昊华科技",
@@ -142,7 +142,7 @@
       "amplitude": 9.388715,
       "turnover": 9.661999999999999,
       "amount_yi": 66.39,
-      "serenity_view": "6/17-6/18 电子特气 / 外延片链仍是 AI 供应链延伸主线。"
+      "serenity_view": "18 电子特气 / 外延片链仍是 AI 供应链延伸主线"
     },
     {
       "name": "沃格光电",
@@ -154,7 +154,7 @@
       "amplitude": 13.83856,
       "turnover": 15.095,
       "amount_yi": 55.61,
-      "serenity_view": "6/19 21:11 $LPK NASDAQ 上市+70% 份额+TAM 上修，设备卖铲人催化；6/17-6/18 继续跟踪玻璃基板/TGV 产能迁移，仍属 AI 封装升级主线。"
+      "serenity_view": "21:11 $LPK NASDAQ 上市+70% 份额+TAM 上修 · 设备卖铲人催化"
     },
     {
       "name": "中际旭创",
@@ -166,7 +166,7 @@
       "amplitude": 7.8182920000000005,
       "turnover": 2.572,
       "amount_yi": 381.77,
-      "serenity_view": "6/21 16:44 BJT Serenity 明确指出 EML 与 CW laser 同时紧缺，$COHR 可能向 $LITE 外购，光互联供给瓶颈进一步升级；6/21 15:53 BJT 继续研究 OE Solutions（138080）作为韩国少数 EML 玩家之一，赛道从 $AAOI 扩展到韩国本土供给起点。"
+      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
     },
     {
       "name": "中船特气",
@@ -178,7 +178,7 @@
       "amplitude": 12.257875,
       "turnover": 10.782,
       "amount_yi": 53.64,
-      "serenity_view": "6/17-6/18 电子特气 / 外延片链仍是 AI 供应链延伸主线。"
+      "serenity_view": "18 电子特气 / 外延片链仍是 AI 供应链延伸主线"
     },
     {
       "name": "新易盛",
@@ -190,7 +190,7 @@
       "amplitude": 6.5999859999999995,
       "turnover": 3.418,
       "amount_yi": 247.4,
-      "serenity_view": "6/21 16:44 BJT Serenity 明确指出 EML 与 CW laser 同时紧缺，$COHR 可能向 $LITE 外购，光互联供给瓶颈进一步升级；6/21 15:53 BJT 继续研究 OE Solutions（138080）作为韩国少数 EML 玩家之一，赛道从 $AAOI 扩展到韩国本土供给起点。"
+      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
     },
     {
       "name": "金宏气体",
@@ -213,7 +213,7 @@
       "amplitude": 3.527328,
       "turnover": 5.426,
       "amount_yi": 52.1,
-      "serenity_view": "6/21 16:44 BJT Serenity 明确指出 EML 与 CW laser 同时紧缺，$COHR 可能向 $LITE 外购，光互联供给瓶颈进一步升级；6/21 15:53 BJT 继续研究 OE Solutions（138080）作为韩国少数 EML 玩家之一，赛道从 $AAOI 扩展到韩国本土供给起点。"
+      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
     },
     {
       "name": "顺络电子",
@@ -225,7 +225,7 @@
       "amplitude": 0,
       "turnover": 0,
       "amount_yi": 0,
-      "serenity_view": "6/19 20:55 Serenity 复盘 MLCC 瓶颈——2月内太阳诱电+211%/$VSH+146%/村田+155%。A股高端 MLCC 龙头。"
+      "serenity_view": "20:55 复盘 MLCC 瓶颈——2月内太阳诱电+211%/$VSH+146%/村田+155% · A股高端 MLCC 龙头"
     },
     {
       "name": "三环集团",
@@ -237,7 +237,7 @@
       "amplitude": 0,
       "turnover": 0,
       "amount_yi": 0,
-      "serenity_view": "6/19 20:55 Serenity 复盘 MLCC 瓶颈——AI/HPC 用量暴增+产能扩建 18-24 月=供给紧缺。A股 MLCC 陶瓷封装基座龙头。"
+      "serenity_view": "20:55 复盘 MLCC 瓶颈——AI/HPC 用量暴增+产能扩建 18-24 月=供给紧缺 · A股 MLCC 陶瓷封装基座龙头"
     },
     {
       "name": "风华高科",
@@ -249,7 +249,7 @@
       "amplitude": 0,
       "turnover": 0,
       "amount_yi": 0,
-      "serenity_view": "6/19 20:55 Serenity 复盘 MLCC 瓶颈——被动元件供给刚性紧缺。A股 MLCC 片式电容龙头。"
+      "serenity_view": "20:55 复盘 MLCC 瓶颈——被动元件供给刚性紧缺 · A股 MLCC 片式电容龙头"
     },
     {
       "name": "深南电路",
@@ -261,7 +261,7 @@
       "amplitude": 0,
       "turnover": 0,
       "amount_yi": 0,
-      "serenity_view": "6/20 12:01 BJT Serenity 拆解韩国 holding co——Daeduck（353200）底层资产~3.8x MC，FC-BGA+MLB 封装基板受益标的。"
+      "serenity_view": "6/20 12:01 拆解韩国 holding co——Daeduck（353200）底层资产~3.8x MC · FC-BGA+MLB 封装基板受益标的"
     },
     {
       "name": "兴森科技",
@@ -273,7 +273,7 @@
       "amplitude": 0,
       "turnover": 0,
       "amount_yi": 0,
-      "serenity_view": "6/20 12:01 BJT Serenity 拆解韩国 holding co——Daeduck FC-BGA/MLB 底层资产折价逻辑，IC载板对标。"
+      "serenity_view": "6/20 12:01 拆解韩国 holding co——Daeduck FC-BGA/MLB 底层资产折价逻辑 · IC载板对标"
     }
   ],
   "etf_top": [
