@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-22 17:30:45 HKT",
+  "as_of": "2026-06-22 18:40:00 BJT (serenity narrative refresh; price snapshot from 2026-06-22 17:30 HKT)",
   "trading_day": "2026-06-22",
   "stocks": [
     {
@@ -143,7 +143,8 @@
       "sector_label": "🧊 TGV / 玻璃基板",
       "amplitude": 10.321797,
       "turnover": 13.719000000000001,
-      "amount_yi": 52.91
+      "amount_yi": 52.91,
+      "serenity_view": "6/22 18:33 BJT $LPK 量价框架升级——fully ramp 合理市值 $3-5B，玻璃基板设备 TAM 锚点（A 股 TGV 本体唯一直接映射，$LPK 是设备端核心受益方）"
     },
     {
       "name": "中际旭创",
