@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-21 19:30:47 BJT (serenity narrative refresh; price snapshot from 2026-06-19 08:58:00 HKT)",
+  "as_of": "2026-06-22 10:20:00 BJT (serenity narrative refresh; price snapshot from 2026-06-19 08:58:00 HKT)",
   "trading_day": "2026-06-18",
   "stocks": [
     {
@@ -261,7 +261,7 @@
       "amplitude": 0,
       "turnover": 0,
       "amount_yi": 0,
-      "serenity_view": "6/20 12:01 拆解韩国 holding co——Daeduck（353200）底层资产~3.8x MC · FC-BGA+MLB 封装基板受益标的"
+      "serenity_view": "6/22 09:25-09:31 Palliser 入股 Ajinomoto 2 个月后 ABF 涨价 30% 案例 + 6/20 12:01 拆解韩国 holding co Daeduck（353200）底层资产~3.8x MC · FC-BGA+MLB 封装基板受益标的"
     },
     {
       "name": "兴森科技",
@@ -273,7 +273,31 @@
       "amplitude": 0,
       "turnover": 0,
       "amount_yi": 0,
-      "serenity_view": "6/20 12:01 拆解韩国 holding co——Daeduck FC-BGA/MLB 底层资产折价逻辑 · IC载板对标"
+      "serenity_view": "6/22 09:25-09:31 ABF 涨价模板对 IC 载板定价权映射 + 6/20 12:01 Daeduck FC-BGA/MLB 底层资产折价逻辑 · IC载板对标"
+    },
+    {
+      "name": "沪电股份",
+      "code": "002463",
+      "price": "—",
+      "pct": "—",
+      "sector": "pcb",
+      "sector_label": "🟢 AI DC PCB",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "serenity_view": "6/22 09:20 WUS TW（8292）3 连板——其持股 WUS Kunshan 即沪电股份（11.4%×42.04亿=$4.79B），NAV 折价 + AI DC 独立增长双驱动映射标的"
+    },
+    {
+      "name": "胜宏科技",
+      "code": "300476",
+      "price": "—",
+      "pct": "—",
+      "sector": "pcb",
+      "sector_label": "🟢 AI DC PCB",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "serenity_view": "6/22 09:20 WUS TW AI DC PCB 增长叙事对标——A 股 AI 服务器高多层 PCB 龙头"
     }
   ],
   "etf_top": [
