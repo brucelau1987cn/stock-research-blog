@@ -1,367 +1,268 @@
 {
-  "as_of": "2026-06-22 10:20:00 BJT (serenity narrative refresh; price snapshot from 2026-06-19 08:58:00 HKT)",
-  "trading_day": "2026-06-18",
+  "as_of": "2026-06-22 17:30:45 HKT",
+  "trading_day": "2026-06-22",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "408.01",
-      "pct": "6.9209",
+      "price": "393.31",
+      "pct": "-3.6029",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 10.005241,
-      "turnover": 10.474,
-      "amount_yi": 76.94,
-      "serenity_view": "6/17 仍偏多机器人长线 · 认·中国低成本量产领先"
+      "amplitude": 9.663979000000001,
+      "turnover": 10.602,
+      "amount_yi": 76.81
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "150.16",
-      "pct": "1.5143",
+      "price": "165.18",
+      "pct": "10.0027",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 5.239319,
-      "turnover": 9.976,
-      "amount_yi": 46.94,
-      "serenity_view": "6/17-18 电子特气 / 外延片链仍是 AI 供应链延伸主线"
+      "amplitude": 8.204582,
+      "turnover": 10.903,
+      "amount_yi": 55.2
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "17.54",
-      "pct": "2.2145",
+      "price": "19.29",
+      "pct": "9.9772",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 4.312354,
-      "turnover": 6.049,
-      "amount_yi": 53.15
+      "amplitude": 3.477765,
+      "turnover": 7.474,
+      "amount_yi": 71.59
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "100.44",
-      "pct": "1.1888",
+      "price": "110.48",
+      "pct": "9.9960",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 6.850695,
-      "turnover": 14.297,
-      "amount_yi": 94.55,
-      "serenity_view": "6/17-18 光学材料 / 外延链与硅光叙事继续受关注"
+      "amplitude": 5.057746,
+      "turnover": 5.399,
+      "amount_yi": 38.55
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "70.2",
-      "pct": "-1.0571",
+      "price": "68.71",
+      "pct": "-2.1225",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 5.990133999999999,
-      "turnover": 10.906,
-      "amount_yi": 59.94,
-      "serenity_view": "6/17-18 光学材料 / 外延链与硅光叙事继续受关注"
+      "amplitude": 10.05698,
+      "turnover": 12.639,
+      "amount_yi": 66.16
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "721.04",
-      "pct": "2.3885",
+      "price": "745.0",
+      "pct": "3.3230",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 4.285593,
-      "turnover": 1.444,
-      "amount_yi": 75.29,
-      "serenity_view": "ASML 出口管制追问升温 · 中国光刻机获取困境利好半导体设备国产替代链"
+      "amplitude": 4.788916,
+      "turnover": 1.485,
+      "amount_yi": 79.64
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "32.2",
-      "pct": "-0.6173",
+      "price": "33.9",
+      "pct": "5.2795",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 4.012346,
-      "turnover": 7.249999999999999,
-      "amount_yi": 64.09
+      "amplitude": 6.6149070000000005,
+      "turnover": 9.254,
+      "amount_yi": 84.36
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "336.6",
-      "pct": "2.2075",
+      "price": "326.12",
+      "pct": "-3.1135",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 5.007136,
-      "turnover": 4.519,
-      "amount_yi": 164.97,
-      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
+      "amplitude": 6.806298,
+      "turnover": 5.6899999999999995,
+      "amount_yi": 202.87
     },
     {
       "name": "拓荆科技",
       "code": "688072",
-      "price": "734.0",
-      "pct": "-0.8108",
+      "price": "748.01",
+      "pct": "1.9087",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 4.385135,
-      "turnover": 3.16,
-      "amount_yi": 65.92,
-      "serenity_view": "18 半导体设备仍受材料与制程升级共振"
+      "amplitude": 7.779292,
+      "turnover": 2.935,
+      "amount_yi": 61.36
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "83.03",
-      "pct": "1.5533",
+      "price": "91.33",
+      "pct": "9.9964",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 5.528376,
-      "turnover": 13.081000000000001,
-      "amount_yi": 195.48,
-      "serenity_view": "6/20 11:52-12:01 将 holding co / NAV 折价框架扩展到 Priortech/$CAMT 与韩国 Daeduck/DB/Hyosung · 封测设备与 FC-BGA/Foundry/电网链条同步受益"
+      "amplitude": 6.90112,
+      "turnover": 13.257,
+      "amount_yi": 209.18
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "68.27",
-      "pct": "1.5620",
+      "price": "71.25",
+      "pct": "4.3650",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 4.403451,
-      "turnover": 10.764,
-      "amount_yi": 111.33,
-      "serenity_view": "6/20 11:52-12:01 将 holding co / NAV 折价框架扩展到 Priortech/$CAMT 与韩国 Daeduck/DB/Hyosung · 封测设备与 FC-BGA/Foundry/电网链条同步受益"
+      "amplitude": 6.43035,
+      "turnover": 13.524,
+      "amount_yi": 143.41
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "65.16",
-      "pct": "2.1317",
+      "price": "70.22",
+      "pct": "7.7655",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.388715,
-      "turnover": 9.661999999999999,
-      "amount_yi": 66.39,
-      "serenity_view": "18 电子特气 / 外延片链仍是 AI 供应链延伸主线"
+      "amplitude": 9.054635,
+      "turnover": 9.099,
+      "amount_yi": 66.84
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "164.7",
-      "pct": "-0.8608",
+      "price": "172.02",
+      "pct": "4.4444",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 13.83856,
-      "turnover": 15.095,
-      "amount_yi": 55.61,
-      "serenity_view": "21:11 $LPK NASDAQ 上市+70% 份额+TAM 上修 · 设备卖铲人催化"
+      "amplitude": 10.321797,
+      "turnover": 13.719000000000001,
+      "amount_yi": 52.91
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "1367.88",
-      "pct": "7.1914",
+      "price": "1382.33",
+      "pct": "1.0564",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 7.8182920000000005,
-      "turnover": 2.572,
-      "amount_yi": 381.77,
-      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
+      "amplitude": 5.373278,
+      "turnover": 2.5260000000000002,
+      "amount_yi": 386.44
     },
     {
       "name": "中船特气",
       "code": "688146",
-      "price": "364.0",
-      "pct": "7.1534",
+      "price": "389.99",
+      "pct": "7.1401",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 12.257875,
-      "turnover": 10.782,
-      "amount_yi": 53.64,
-      "serenity_view": "18 电子特气 / 外延片链仍是 AI 供应链延伸主线"
+      "amplitude": 9.203297000000001,
+      "turnover": 12.102,
+      "amount_yi": 67.28
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "581.48",
-      "pct": "4.2303",
+      "price": "579.97",
+      "pct": "-0.2597",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 6.5999859999999995,
-      "turnover": 3.418,
-      "amount_yi": 247.4,
-      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
+      "amplitude": 5.331224,
+      "turnover": 3.6290000000000004,
+      "amount_yi": 263.06
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "30.27",
-      "pct": "-2.8874",
+      "price": "32.81",
+      "pct": "8.3911",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 3.5290340000000002,
-      "turnover": 7.696,
-      "amount_yi": 12.48
+      "amplitude": 9.084903,
+      "turnover": 11.122,
+      "amount_yi": 19.28
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "390.8",
-      "pct": "-1.1134",
+      "price": "391.98",
+      "pct": "0.3019",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 3.527328,
-      "turnover": 5.426,
-      "amount_yi": 52.1,
-      "serenity_view": "6/21 19:04-19:30 $SIVE 被定位为下一代光互联架构 laser supplier · $JBL 1.6T + $NVDA CPO 生态潜在映射 · $LITE 市值重估类比"
-    },
-    {
-      "name": "顺络电子",
-      "code": "002138",
-      "price": "—",
-      "pct": "—",
-      "sector": "mlcc",
-      "sector_label": "🔌 MLCC / 被动元件",
-      "amplitude": 0,
-      "turnover": 0,
-      "amount_yi": 0,
-      "serenity_view": "20:55 复盘 MLCC 瓶颈——2月内太阳诱电+211%/$VSH+146%/村田+155% · A股高端 MLCC 龙头"
-    },
-    {
-      "name": "三环集团",
-      "code": "300408",
-      "price": "—",
-      "pct": "—",
-      "sector": "mlcc",
-      "sector_label": "🔌 MLCC / 被动元件",
-      "amplitude": 0,
-      "turnover": 0,
-      "amount_yi": 0,
-      "serenity_view": "20:55 复盘 MLCC 瓶颈——AI/HPC 用量暴增+产能扩建 18-24 月=供给紧缺 · A股 MLCC 陶瓷封装基座龙头"
-    },
-    {
-      "name": "风华高科",
-      "code": "000636",
-      "price": "—",
-      "pct": "—",
-      "sector": "mlcc",
-      "sector_label": "🔌 MLCC / 被动元件",
-      "amplitude": 0,
-      "turnover": 0,
-      "amount_yi": 0,
-      "serenity_view": "20:55 复盘 MLCC 瓶颈——被动元件供给刚性紧缺 · A股 MLCC 片式电容龙头"
-    },
-    {
-      "name": "深南电路",
-      "code": "002916",
-      "price": "—",
-      "pct": "—",
-      "sector": "fc-bga",
-      "sector_label": "🔲 FC-BGA / 封装基板",
-      "amplitude": 0,
-      "turnover": 0,
-      "amount_yi": 0,
-      "serenity_view": "6/22 09:25-09:31 Palliser 入股 Ajinomoto 2 个月后 ABF 涨价 30% 案例 + 6/20 12:01 拆解韩国 holding co Daeduck（353200）底层资产~3.8x MC · FC-BGA+MLB 封装基板受益标的"
-    },
-    {
-      "name": "兴森科技",
-      "code": "002436",
-      "price": "—",
-      "pct": "—",
-      "sector": "fc-bga",
-      "sector_label": "🔲 FC-BGA / 封装基板",
-      "amplitude": 0,
-      "turnover": 0,
-      "amount_yi": 0,
-      "serenity_view": "6/22 09:25-09:31 ABF 涨价模板对 IC 载板定价权映射 + 6/20 12:01 Daeduck FC-BGA/MLB 底层资产折价逻辑 · IC载板对标"
-    },
-    {
-      "name": "沪电股份",
-      "code": "002463",
-      "price": "—",
-      "pct": "—",
-      "sector": "pcb",
-      "sector_label": "🟢 AI DC PCB",
-      "amplitude": 0,
-      "turnover": 0,
-      "amount_yi": 0,
-      "serenity_view": "6/22 09:20 WUS TW（8292）3 连板——其持股 WUS Kunshan 即沪电股份（11.4%×42.04亿=$4.79B），NAV 折价 + AI DC 独立增长双驱动映射标的"
-    },
-    {
-      "name": "胜宏科技",
-      "code": "300476",
-      "price": "—",
-      "pct": "—",
-      "sector": "pcb",
-      "sector_label": "🟢 AI DC PCB",
-      "amplitude": 0,
-      "turnover": 0,
-      "amount_yi": 0,
-      "serenity_view": "6/22 09:20 WUS TW AI DC PCB 增长叙事对标——A 股 AI 服务器高多层 PCB 龙头"
+      "amplitude": 6.632549,
+      "turnover": 6.605999999999999,
+      "amount_yi": 63.13
     }
   ],
   "etf_top": [
     {
-      "code": "159022.SZ",
-      "name": "富国中证科创创业人工智能etf",
-      "price": "1.300",
-      "pct": 11.684
+      "code": "516980.SH",
+      "name": "华富中证证券公司先锋策略etf",
+      "price": "1.115",
+      "pct": 9.529
     },
     {
-      "code": "159142.SZ",
-      "name": "景顺长城中证科创创业人工智能etf",
-      "price": "1.490",
-      "pct": 6.05
+      "code": "159016.SZ",
+      "name": "广发中证证券公司30etf",
+      "price": "1.065",
+      "pct": 9.007
     },
     {
-      "code": "159141.SZ",
-      "name": "科创创业人工智能etf永赢",
-      "price": "1.465",
-      "pct": 6.006
+      "code": "516730.SH",
+      "name": "浦银安盛中证证券公司30etf",
+      "price": "1.038",
+      "pct": 8.577
     },
     {
-      "code": "515980.SH",
-      "name": "华富中证人工智能产业etf",
-      "price": "1.230",
-      "pct": 5.761
+      "code": "159692.SZ",
+      "name": "证券etf东财",
+      "price": "1.273",
+      "pct": 8.34
     },
     {
-      "code": "159140.SZ",
-      "name": "易方达中证科创创业人工智能etf",
-      "price": "1.546",
-      "pct": 5.7459999999999996
+      "code": "159993.SZ",
+      "name": "龙头券商",
+      "price": "1.232",
+      "pct": 7.976
     }
   ],
   "etf_bottom": [
     {
-      "code": "512070.SH",
-      "name": "易方达沪深300非银etf",
-      "price": "0.756",
-      "pct": -4.183
+      "code": "159022.SZ",
+      "name": "富国中证科创创业人工智能etf",
+      "price": "1.249",
+      "pct": -3.923
     },
     {
-      "code": "513750.SH",
-      "name": "广发中证港股通非银etf",
-      "price": "1.457",
-      "pct": -4.082
+      "code": "159206.SZ",
+      "name": "卫星etf永赢",
+      "price": "1.656",
+      "pct": -2.646
     },
     {
-      "code": "515630.SH",
-      "name": "保险证券",
-      "price": "1.210",
-      "pct": -3.739
+      "code": "512970.SH",
+      "name": "粤港澳大湾区etf",
+      "price": "1.704",
+      "pct": -2.5170000000000003
     },
     {
-      "code": "561560.SH",
-      "name": "华泰柏瑞中证全指电力公用事业etf",
-      "price": "1.324",
-      "pct": -3.499
+      "code": "588850.SH",
+      "name": "嘉实上证科创板工业机械etf",
+      "price": "2.228",
+      "pct": -2.409
     },
     {
-      "code": "562960.SH",
-      "name": "易方达中证绿色电力etf",
-      "price": "1.189",
-      "pct": -3.49
+      "code": "518860.SH",
+      "name": "建信上海金etf",
+      "price": "8.739",
+      "pct": -2.2159999999999997
     }
   ],
   "macro": {
