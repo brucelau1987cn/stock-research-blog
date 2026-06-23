@@ -1,273 +1,268 @@
 {
-  "as_of": "2026-06-23 15:00:00 BJT (serenity narrative refresh; price snapshot from 2026-06-22 17:30 HKT)",
-  "trading_day": "2026-06-22",
+  "as_of": "2026-06-23 17:30:34 HKT",
+  "trading_day": "2026-06-23",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "393.31",
-      "pct": "-3.6029",
+      "price": "378.53",
+      "pct": "-3.7578",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 9.663979000000001,
-      "turnover": 10.602,
-      "amount_yi": 76.81
+      "amplitude": 7.332637999999999,
+      "turnover": 6.968000000000001,
+      "amount_yi": 48.57
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "165.18",
-      "pct": "10.0027",
+      "price": "157.32",
+      "pct": "-4.7584",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 8.204582,
-      "turnover": 10.903,
-      "amount_yi": 55.2
+      "amplitude": 7.628042,
+      "turnover": 11.023,
+      "amount_yi": 56.5
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "19.29",
-      "pct": "9.9772",
+      "price": "19.83",
+      "pct": "2.7994",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 3.477765,
-      "turnover": 7.474,
-      "amount_yi": 71.59
+      "amplitude": 7.724209,
+      "turnover": 11.144,
+      "amount_yi": 110.06
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "110.48",
-      "pct": "9.9960",
+      "price": "111.9",
+      "pct": "1.2853",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 5.057746,
-      "turnover": 5.399,
-      "amount_yi": 38.55
+      "amplitude": 10.409124,
+      "turnover": 19.927,
+      "amount_yi": 147.39
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "68.71",
-      "pct": "-2.1225",
+      "price": "66.5",
+      "pct": "-3.2164",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 10.05698,
-      "turnover": 12.639,
-      "amount_yi": 66.16
+      "amplitude": 6.6220349999999994,
+      "turnover": 9.075999999999999,
+      "amount_yi": 47.19
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "745.0",
-      "pct": "3.3230",
+      "price": "747.49",
+      "pct": "0.3342",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 4.788916,
-      "turnover": 1.485,
-      "amount_yi": 79.64
+      "amplitude": 5.503356,
+      "turnover": 1.376,
+      "amount_yi": 74.07
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "33.9",
-      "pct": "5.2795",
+      "price": "32.22",
+      "pct": "-4.9558",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 6.6149070000000005,
-      "turnover": 9.254,
-      "amount_yi": 84.36
+      "amplitude": 7.2566370000000004,
+      "turnover": 6.3740000000000006,
+      "amount_yi": 56.06
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "326.12",
-      "pct": "-3.1135",
+      "price": "311.06",
+      "pct": "-4.6179",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 6.806298,
-      "turnover": 5.6899999999999995,
-      "amount_yi": 202.87,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y + $5.6B annualized off $12.8B MC 定量锚点（CPO 赛道估值合理化，光器件间接受益）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（CW laser 紧缺延伸至光器件封装端，天孚通信光器件封装环节受益）"
+      "amplitude": 5.482644,
+      "turnover": 4.211,
+      "amount_yi": 144.3
     },
     {
       "name": "拓荆科技",
       "code": "688072",
-      "price": "748.01",
-      "pct": "1.9087",
+      "price": "770.0",
+      "pct": "2.9398",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 7.779292,
-      "turnover": 2.935,
-      "amount_yi": 61.36
+      "amplitude": 10.192377,
+      "turnover": 3.2910000000000004,
+      "amount_yi": 69.83
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "91.33",
-      "pct": "9.9964",
+      "price": "86.09",
+      "pct": "-5.6341",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 6.90112,
-      "turnover": 13.257,
-      "amount_yi": 209.18
+      "amplitude": 8.30867,
+      "turnover": 12.413,
+      "amount_yi": 195.26
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "71.25",
-      "pct": "4.3650",
+      "price": "68.42",
+      "pct": "-3.9719",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 6.43035,
-      "turnover": 13.524,
-      "amount_yi": 143.41
+      "amplitude": 5.922807,
+      "turnover": 9.393,
+      "amount_yi": 98.64
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "70.22",
-      "pct": "7.7655",
+      "price": "66.34",
+      "pct": "-5.5255",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.054635,
-      "turnover": 9.099,
-      "amount_yi": 66.84
+      "amplitude": 9.997152,
+      "turnover": 8.133,
+      "amount_yi": 60.21
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "172.02",
-      "pct": "4.4444",
+      "price": "172.15",
+      "pct": "0.0756",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 10.321797,
-      "turnover": 13.719000000000001,
-      "amount_yi": 52.91,
-      "serenity_view": "6/22 18:33 BJT $LPK 量价框架升级——fully ramp 合理市值 $3-5B，玻璃基板设备 TAM 锚点（A 股 TGV 本体唯一直接映射，$LPK 是设备端核心受益方）"
+      "amplitude": 11.783514,
+      "turnover": 13.547999999999998,
+      "amount_yi": 52.66
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "1382.33",
-      "pct": "1.0564",
+      "price": "1310.01",
+      "pct": "-5.2317",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 5.373278,
-      "turnover": 2.5260000000000002,
-      "amount_yi": 386.44,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y + $5.6B annualized off $12.8B MC（PS ≈ 2.3x）定量赛道锚点（A 股 CPO 龙头最直接对标，估值锚点有望上修）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（CPO 龙头最直接受益于 laser 紧缺 + 架构升级）"
+      "amplitude": 6.872454,
+      "turnover": 2.629,
+      "amount_yi": 389.64
     },
     {
       "name": "中船特气",
       "code": "688146",
       "price": "389.99",
-      "pct": "7.1401",
+      "pct": "0.0000",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.203297000000001,
-      "turnover": 12.102,
-      "amount_yi": 67.28
+      "amplitude": null,
+      "turnover": 0.0,
+      "amount_yi": null
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "579.97",
-      "pct": "-0.2597",
+      "price": "552.0",
+      "pct": "-4.8227",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 5.331224,
-      "turnover": 3.6290000000000004,
-      "amount_yi": 263.06,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y 定量赛道锚点（800G/1.6T 光模块龙头估值锚点有望上修）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（1.6T 光模块龙头，新易盛最直接受益于 laser 紧缺 + CPO 架构升级）"
+      "amplitude": 8.103867,
+      "turnover": 3.543,
+      "amount_yi": 248.86
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "32.81",
-      "pct": "8.3911",
+      "price": "34.45",
+      "pct": "4.9985",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.084903,
-      "turnover": 11.122,
-      "amount_yi": 19.28
+      "amplitude": 9.143554,
+      "turnover": 12.251,
+      "amount_yi": 22.19
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "391.98",
-      "pct": "0.3019",
+      "price": "384.52",
+      "pct": "-1.9032",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 6.632549,
-      "turnover": 6.605999999999999,
-      "amount_yi": 63.13,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y 定量赛道锚点（隔离器/激光器/铌酸锂 $SIVE 直接对标，CPO 上游最纯受益）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（$LITE 两年 $3B→$65B 类比，A 股 CW/EML laser 龙头光库科技 / 源杰科技 688498 最直接受益）；6/23 09:25 BJT OE Solutions（$138080.KQ）$215M MC M&A 候选，下游并购整合受益方"
+      "amplitude": 7.16108,
+      "turnover": 5.507,
+      "amount_yi": 52.6
     }
   ],
   "etf_top": [
     {
-      "code": "516980.SH",
-      "name": "华富中证证券公司先锋策略etf",
-      "price": "1.115",
-      "pct": 9.529
+      "code": "589120.SH",
+      "name": "汇添富上证科创板创新药etf",
+      "price": "0.742",
+      "pct": 3.6310000000000002
     },
     {
-      "code": "159016.SZ",
-      "name": "广发中证证券公司30etf",
-      "price": "1.065",
-      "pct": 9.007
+      "code": "159642.SZ",
+      "name": "大成中证上海环交所碳中和etf",
+      "price": "1.100",
+      "pct": 3.286
     },
     {
-      "code": "516730.SH",
-      "name": "浦银安盛中证证券公司30etf",
-      "price": "1.038",
-      "pct": 8.577
+      "code": "589720.SH",
+      "name": "国泰上证科创板创新药etf",
+      "price": "0.799",
+      "pct": 2.964
     },
     {
-      "code": "159692.SZ",
-      "name": "证券etf东财",
-      "price": "1.273",
-      "pct": 8.34
+      "code": "588250.SH",
+      "name": "鹏华上证科创板生物医药etf",
+      "price": "0.967",
+      "pct": 2.872
     },
     {
-      "code": "159993.SZ",
-      "name": "龙头券商",
-      "price": "1.232",
-      "pct": 7.976
+      "code": "159502.SZ",
+      "name": "嘉实标普生物科技精选行业etf(qdii)",
+      "price": "1.443",
+      "pct": 2.34
     }
   ],
   "etf_bottom": [
     {
-      "code": "159022.SZ",
-      "name": "富国中证科创创业人工智能etf",
-      "price": "1.249",
-      "pct": -3.923
+      "code": "159168.SZ",
+      "name": "富国中证工业有色金属主题etf",
+      "price": "0.937",
+      "pct": -9.029
     },
     {
-      "code": "159206.SZ",
-      "name": "卫星etf永赢",
-      "price": "1.656",
-      "pct": -2.646
+      "code": "159171.SZ",
+      "name": "博时中证工业有色金属主题etf",
+      "price": "0.860",
+      "pct": -8.898
     },
     {
-      "code": "512970.SH",
-      "name": "粤港澳大湾区etf",
-      "price": "1.704",
-      "pct": -2.5170000000000003
+      "code": "159690.SZ",
+      "name": "招商中证有色金属矿业主题etf",
+      "price": "2.041",
+      "pct": -8.884
     },
     {
-      "code": "588850.SH",
-      "name": "嘉实上证科创板工业机械etf",
-      "price": "2.228",
-      "pct": -2.409
+      "code": "159157.SZ",
+      "name": "天弘中证工业有色金属主题etf",
+      "price": "0.901",
+      "pct": -8.806
     },
     {
-      "code": "518860.SH",
-      "name": "建信上海金etf",
-      "price": "8.739",
-      "pct": -2.2159999999999997
+      "code": "159880.SZ",
+      "name": "有色50",
+      "price": "1.987",
+      "pct": -8.77
     }
   ],
   "macro": {
