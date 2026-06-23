@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-23 07:00:00 BJT (serenity narrative refresh; price snapshot from 2026-06-22 17:30 HKT)",
+  "as_of": "2026-06-23 15:00:00 BJT (serenity narrative refresh; price snapshot from 2026-06-22 17:30 HKT)",
   "trading_day": "2026-06-22",
   "stocks": [
     {
@@ -89,7 +89,7 @@
       "amplitude": 6.806298,
       "turnover": 5.6899999999999995,
       "amount_yi": 202.87,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y + $5.6B annualized off $12.8B MC 定量锚点（CPO 赛道估值合理化，光器件间接受益）"
+      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y + $5.6B annualized off $12.8B MC 定量锚点（CPO 赛道估值合理化，光器件间接受益）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（CW laser 紧缺延伸至光器件封装端，天孚通信光器件封装环节受益）"
     },
     {
       "name": "拓荆科技",
@@ -157,7 +157,7 @@
       "amplitude": 5.373278,
       "turnover": 2.5260000000000002,
       "amount_yi": 386.44,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y + $5.6B annualized off $12.8B MC（PS ≈ 2.3x）定量赛道锚点（A 股 CPO 龙头最直接对标，估值锚点有望上修）"
+      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y + $5.6B annualized off $12.8B MC（PS ≈ 2.3x）定量赛道锚点（A 股 CPO 龙头最直接对标，估值锚点有望上修）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（CPO 龙头最直接受益于 laser 紧缺 + 架构升级）"
     },
     {
       "name": "中船特气",
@@ -180,7 +180,7 @@
       "amplitude": 5.331224,
       "turnover": 3.6290000000000004,
       "amount_yi": 263.06,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y 定量赛道锚点（800G/1.6T 光模块龙头估值锚点有望上修）"
+      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y 定量赛道锚点（800G/1.6T 光模块龙头估值锚点有望上修）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（1.6T 光模块龙头，新易盛最直接受益于 laser 紧缺 + CPO 架构升级）"
     },
     {
       "name": "金宏气体",
@@ -203,7 +203,7 @@
       "amplitude": 6.632549,
       "turnover": 6.605999999999999,
       "amount_yi": 63.13,
-      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y 定量赛道锚点（隔离器/激光器/铌酸锂 $SIVE 直接对标，CPO 上游最纯受益）"
+      "serenity_view": "6/22 22:19 BJT $AAOI 800%+ Y/Y 定量赛道锚点（隔离器/激光器/铌酸锂 $SIVE 直接对标，CPO 上游最纯受益）；6/23 11:16 BJT 🔥 Photonics + CW laser chokepoint = goated 顶级机会（$LITE 两年 $3B→$65B 类比，A 股 CW/EML laser 龙头光库科技 / 源杰科技 688498 最直接受益）；6/23 09:25 BJT OE Solutions（$138080.KQ）$215M MC M&A 候选，下游并购整合受益方"
     }
   ],
   "etf_top": [
