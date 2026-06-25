@@ -149,7 +149,7 @@ def main():
                          textcoords="offset points", 
                          ha='center', 
                          va='bottom', 
-                         color='#ffffff', # Pure white text for ultimate contrast
+                         color='#ff3366', # Match the coral red line color
                          fontsize=10, 
                          fontweight='bold')
                          
