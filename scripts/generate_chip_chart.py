@@ -81,7 +81,7 @@ def main():
                     if profit_ratio is None and 'chip_distribution' in d and isinstance(d['chip_distribution'], dict):
                         profit_ratio = d['chip_distribution'].get('profit_ratio')
                 
-                if price is not None and profit_ratio is not None:
+                if profit_ratio is not None:
                     # Filter for BJT afternoon close runs (hour >= 15)
                     dt = parse_time(ts)
                     if dt != datetime.min and dt.hour >= 15:
@@ -128,7 +128,7 @@ def main():
         ax1.grid(True, color='#2d2d2d', linestyle='--', alpha=0.5)
         
         # Axis 1: Profit Ratio (Only Y)
-        color_profit = '#00e676' # Bright green
+        color_profit = '#38bdf8' # Stripe-style electric sky blue
         ax1.set_xlabel('日期', color='#e0e0e0', labelpad=10)
         ax1.set_ylabel('获利盘比例 (%)', color=color_profit, labelpad=10)
         
@@ -148,7 +148,7 @@ def main():
                          textcoords="offset points", 
                          ha='center', 
                          va='bottom', 
-                         color='#00e676', 
+                         color='#ffffff', # White text for high visibility
                          fontsize=10, 
                          fontweight='bold')
                          
