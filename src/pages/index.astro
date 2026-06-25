@@ -40,11 +40,11 @@ const stockInfo = (title: string) => {
       .pillar-header h2 { margin: 0 0 0.35rem; font-size: 1.45rem; display: flex; align-items: center; gap: 0.6rem; }
       .pillar-header p { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
       .pillar-list { display: grid; gap: 0; }
-      .pillar-item { display: block; padding: 1rem 1.5rem; color: rgb(var(--gray-dark)); text-decoration: none; border-top: 1px solid var(--border); }
-      .pillar-item:hover { background: var(--warm-2); }
-      .pillar-item h3 { margin: 0 0 0.25rem; font-size: 1.05rem; }
-      .pillar-item .desc { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; line-height: 1.5; }
-      .pillar-item .date { color: rgb(var(--gray)); font-size: 0.8rem; margin-top: 0.35rem; }
+      .pillar-item { display: block; padding: 1.1rem 1.5rem; color: rgb(var(--gray-dark)); text-decoration: none; border-top: 1px solid var(--border); transition: all 0.2s ease; }
+      .pillar-item:hover { background: var(--warm-2); padding-left: 1.85rem; }
+      .pillar-item h3 { margin: 0 0 0.25rem; font-size: 1.05rem; color: rgb(var(--black)); font-weight: 700; transition: color 0.2s ease; }
+      .pillar-item:hover h3 { color: var(--accent); }
+      .pillar-item .date { color: rgb(var(--gray)); font-size: 0.8rem; margin-top: 0.25rem; }
       .pillar-more { padding: 0.75rem 1.5rem; border-top: 1px solid var(--border); text-align: center; }
       .pillar-more a { color: var(--accent); font-weight: 800; text-decoration: none; font-size: 0.92rem; }
 
@@ -80,10 +80,9 @@ const stockInfo = (title: string) => {
             {latestStock.length > 0 ? latestStock.map(post => (
               <a class="pillar-item" href={getPostUrl(post)}>
                 <h3>{stockInfo(post.data.title)}</h3>
-                <p class="desc">{post.data.description}</p>
                 <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
               </a>
-            )) : <div class="pillar-item"><p class="desc" style="margin:0;color:rgb(var(--gray))">个股分析文章即将上线。</p></div>}
+            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">个股分析文章即将上线。</p></div>}
           </div>
           <div class="pillar-more"><a href="/stock-analysis/">全部个股分析 →</a></div>
         </div>
@@ -98,10 +97,9 @@ const stockInfo = (title: string) => {
             {latestSerenity.length > 0 ? latestSerenity.map(post => (
               <a class="pillar-item" href={getPostUrl(post)}>
                 <h3>{post.data.title}</h3>
-                <p class="desc">{post.data.description}</p>
                 <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
               </a>
-            )) : <div class="pillar-item"><p class="desc" style="margin:0;color:rgb(var(--gray))">白发股神专栏即将上线，定时同步 Serenity 最新推文与投资解读。</p></div>}
+            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">白发股神专栏即将上线，定时同步 Serenity 最新推文与投资解读。</p></div>}
           </div>
           <div class="pillar-more"><a href="/serenity/">全部白发股神文章 →</a></div>
         </div>
