@@ -120,6 +120,7 @@ def main():
     try:
         plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei', 'DejaVu Sans', 'Arial']
         plt.rcParams['axes.unicode_minus'] = False
+        plt.rcParams['svg.fonttype'] = 'none' # Render text as text tags in SVG!
         
         fig, ax1 = plt.subplots(figsize=(10, 4.5), facecolor='#1e1e1e')
         ax1.set_facecolor('#121212')
@@ -128,7 +129,7 @@ def main():
         ax1.grid(True, color='#2d2d2d', linestyle='--', alpha=0.5)
         
         # Axis 1: Profit Ratio (Only Y)
-        color_profit = '#38bdf8' # Stripe-style electric sky blue
+        color_profit = '#ff3366' # Vibrant Neon Coral Red
         ax1.set_xlabel('日期', color='#e0e0e0', labelpad=10)
         ax1.set_ylabel('获利盘比例 (%)', color=color_profit, labelpad=10)
         
@@ -148,7 +149,7 @@ def main():
                          textcoords="offset points", 
                          ha='center', 
                          va='bottom', 
-                         color='#ffffff', # White text for high visibility
+                         color='#ffffff', # Pure white text for ultimate contrast
                          fontsize=10, 
                          fontweight='bold')
                          
