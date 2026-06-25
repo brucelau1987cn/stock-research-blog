@@ -1,8 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -26,47 +24,6 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
 const pageTitle = `个股分析 | ${SITE_TITLE}`;
 const pageDesc = '个人股票分析：聚焦A股个股中短线判断，围绕盘口强弱、上涨/下跌逻辑、关键价位、仓位动作与复盘清单展开。';
 
-// Read market-pulse.json (built-time snapshot, refreshed by scripts/market_pulse_refresh.sh)
-const __dataDir = resolve(process.cwd(), 'src/data');
-let pulse: any = { as_of: '', trading_day: '', stocks: [], etf_top: [], etf_bottom: [], macro: {} };
-try {
-  const raw = readFileSync(resolve(__dataDir, 'market-pulse.json'), 'utf-8');
-  pulse = JSON.parse(raw);
-} catch (e) {
-  console.warn('[stock-analysis] market-pulse.json missing or invalid:', (e as Error).message);
-}
-
-const pulseIsLive = pulse && pulse.trading_day && pulse.trading_day !== '1970-01-01';
-const fmtPct = (v: any) => {
-  if (v === null || v === undefined || v === '—' || v === '') return '—';
-  const n = Number(v);
-  if (Number.isNaN(n)) return '—';
-  return `${n >= 0 ? '+' : ''}${n.toFixed(2)}%`;
-};
-const tagClass = (v: any) => {
-  if (v === null || v === undefined || v === '—' || v === '') return 'flat';
-  const n = Number(v);
-  if (Number.isNaN(n) || n === 0) return 'flat';
-  return n > 0 ? 'up' : 'dn';
-};
-
-// 按 sector 分组（frontmatter 提前算好，模板里只渲染）
-const SECTOR_ORDER = ['cpo', 'tgv', 'robot', 'packaging', 'gas_epi', 'mat', 'equip', '_ungrouped'];
-const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: number | null }> = (() => {
-  const groups = new Map<string, { label: string; items: any[] }>();
-  for (const s of (pulse.stocks || [])) {
-    const key = s.sector || '_ungrouped';
-    const label = s.sector_label || (key === '_ungrouped' ? '📦 未分组' : key);
-    if (!groups.has(key)) groups.set(key, { label, items: [] });
-    groups.get(key)!.items.push(s);
-  }
-  return SECTOR_ORDER.filter(k => groups.has(k)).map((k) => {
-    const g = groups.get(k)!;
-    const valid = g.items.map((s: any) => Number(s.pct)).filter((n: number) => !Number.isNaN(n));
-    const avg = valid.length > 0 ? valid.reduce((a: number, b: number) => a + b, 0) / valid.length : null;
-    return { key: k, label: g.label, items: g.items, avg };
-  });
-})();
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -245,86 +202,7 @@ const pulseSectors: Array<{ key: string; label: string; items: any[]; avg: numbe
         })();
       </script>
 
-      <section class="market-pulse" aria-label="Serenity推文关联股票本周市场速写">
-        <div class="market-pulse-head">
-          <h2>📡 本周市场速写</h2>
-          <span class="pulse-source">Serenity 推文关联股票</span>
-          <span class="asof">
-            {pulseIsLive
-              ? `数据截至 ${pulse.trading_day} 收盘 · 自动刷新于 ${pulse.as_of}`
-              : '数据尚未刷新（首个交易日 15:30 后自动更新）'}
-          </span>
-        </div>
-        {pulseIsLive ? (
-          <>
-            {pulse.macro && (pulse.macro.cpi_yoy?.value !== null || pulse.macro.pmi?.value !== null) ? (
-              <p>
-                宏观背景：
-                {pulse.macro.cpi_yoy?.value !== null && pulse.macro.cpi_yoy?.value !== undefined ? (
-                  <>CPI 同比 <strong>{fmtPct(pulse.macro.cpi_yoy.value)}</strong>（{pulse.macro.cpi_yoy.date || ''}）</>
-                ) : null}
-                {pulse.macro.cpi_yoy?.value !== null && pulse.macro.pmi?.value !== null ? ' · ' : null}
-                {pulse.macro.pmi?.value !== null && pulse.macro.pmi?.value !== undefined ? (
-                  <>制造业 PMI <strong>{pulse.macro.pmi.value}</strong>（{pulse.macro.pmi.date || ''}）</>
-                ) : null}
-                。Serenity 主线标的今日表现：
-              </p>
-            ) : (
-              <p>Serenity 主线标的今日表现：</p>
-            )}
-            {pulseSectors.length > 0 ? (
-              <div class="pulse-sectors">
-                {pulseSectors.map((sector) => (
-                  <div class="pulse-sector">
-                    <div class="pulse-sector-head">
-                      <span class="pulse-sector-label">{sector.label}</span>
-                      {sector.items.length > 1 ? (
-                        <span class={`pulse-tag ${tagClass(sector.avg)}`}>
-                          板块均值 {fmtPct(sector.avg)}
-                        </span>
-                      ) : null}
-                    </div>
-                    <ul class="pulse-sector-list">
-                      {sector.items.map((s: any) => (
-                        <li>
-                          <span class={`pulse-tag ${tagClass(s.pct)}`}>{fmtPct(s.pct)}</span>
-                          <strong>{s.name} {s.code}</strong>
-                          {s.price && s.price !== '—' ? <> · 最新价 {s.price}</> : null}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-            {pulse.etf_top && pulse.etf_top.length > 0 ? (
-              <>
-                <p style="margin-top:0.9rem;">板块 ETF 涨幅榜（场内）：</p>
-                <ul>
-                  {pulse.etf_top.map((e: any) => (
-                    <li>
-                      <span class={`pulse-tag ${tagClass(e.pct)}`}>{fmtPct(e.pct)}</span>
-                      <strong>{e.name || e.code}</strong>
-                      {e.price ? <> · {e.price}</> : null}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ) : null}
-          </>
-        ) : (
-          <>
-            <p>SemiAnalysis 报告把 CPO 商用推迟到 2028-2029，引发美股光模块单日 -8%~-17% 急跌；NVDA 公开反驳，A 股 CPO 板块同步回调。但板块内部分化明显：</p>
-            <ul>
-              <li><span class="pulse-tag up">+33.99%</span><strong>沃格光电 603773</strong> · 6 月累计涨幅，TGV 玻璃基板主线下与 CPO 脱钩，独立性最强</li>
-              <li><span class="pulse-tag dn">-13.44%</span><strong>绿的谐波 688017</strong> · 单日大跌，机器人板块独立走弱信号，需观察次日是否企稳</li>
-              <li><span class="pulse-tag dn">-2.20%</span><strong>通富微电 002156</strong> · 封测板块跌幅小于 CPO 主线，可作对冲头寸观察</li>
-              <li><span class="pulse-tag dn">-2.84%</span><strong>长电科技 600584</strong> · 封测同步走弱，但相对 CPO 仍具防御性</li>
-              <li><span class="pulse-tag dn">-4.55%</span><strong>新易盛 300502</strong> · A 股 CPO 龙头单日回落，板块情绪受 SemiAnalysis 报告冲击</li>
-            </ul>
-          </>
-        )}
-      </section>
+      
 
     </main>
     <Footer />
