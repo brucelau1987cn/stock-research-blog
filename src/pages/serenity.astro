@@ -59,8 +59,8 @@ const pageDesc = '白发股神 Serenity (@aleabitoreddit) — AI / 半导体供�
 
       ul { display: grid; grid-template-columns: 1fr; gap: 1rem; list-style-type: none; margin: 0; padding: 0; }
       ul li:first-child { grid-column: 1; }
-      .post-card { display: grid; grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; color: rgb(var(--gray-dark)); text-decoration: none; min-height: 13rem; }
-      ul li:first-child .post-card { min-height: 13rem; background: linear-gradient(135deg, #fff, var(--accent-soft)); }
+      .post-card { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.2rem; color: rgb(var(--gray-dark)); text-decoration: none; border-radius: 12px; border: 1px solid var(--border); background: white; }
+      ul li:first-child .post-card { background: linear-gradient(135deg, #fff, var(--accent-soft)); }
       .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
       .post-card .title { margin: 0; color: rgb(var(--black)); }
       .post-card .date { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
@@ -359,7 +359,6 @@ const pageDesc = '白发股神 Serenity (@aleabitoreddit) — AI / 半导体供�
                   <span class="pill pill-red">白发股神</span>
                   <h2 class="title">{post.data.title}</h2>
                 </div>
-                <p class="description">{post.data.description}</p>
                 <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
               </a>
             </li>
