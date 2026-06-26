@@ -11,8 +11,18 @@ type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage, tags, headings = [] } = Astro.props;
 const isSerenity = tags?.includes('白发股神');
-const tagLabel = isSerenity ? '白发股神' : 'A股分析';
-const tagPill = isSerenity ? 'pill-red' : '';
+let tagLabel = 'A股分析';
+let tagPill = '';
+if (isSerenity) {
+  tagLabel = '白发股神';
+  tagPill = 'pill-red';
+} else if (tags?.includes('美股分析')) {
+  tagLabel = '美股分析';
+  tagPill = 'pill-blue';
+} else if (tags?.includes('港股分析')) {
+  tagLabel = '港股分析';
+  tagPill = 'pill-purple';
+}
 const tweetHeadings = headings.filter((heading) => heading.depth === 3 && heading.text.startsWith('Tweet '));
 const extractDateTime = (text: string) => {
   // 兼容两种 heading 格式：
@@ -104,7 +114,7 @@ const hasStockHeading = (text: string) => stockHeadings.some((heading) => headin
 const stockDashboardLinks = [
   { label: '关键价位', href: '#关键价位', enabled: hasStockHeading('关键价位') },
   { label: '跟踪记录', href: '#跟踪记录', enabled: hasStockHeading('跟踪记录') },
-  { label: '仓位动作', href: '#持仓者动作', enabled: hasStockHeading('持仓者动作') || hasStockHeading('分批买入 / 减仓计划') },
+  { label: '仓位动作', href: '#持仓者动作', enabled: hasStockHeading('持仓者动作 (分批买入 / 减仓计划)') || hasStockHeading('分批买入 / 减仓计划') },
   { label: '风险点', href: '#风险点', enabled: hasStockHeading('风险点') || hasStockHeading('三个风险') },
 ].filter((item) => item.enabled);
 ---
@@ -120,6 +130,8 @@ const stockDashboardLinks = [
       .prose { min-width: 0; padding: 0; color: rgb(var(--gray-dark)); }
       .title { margin: 2.5rem 0 1.5rem; padding: clamp(1.2rem, 4vw, 2rem); border-radius: 24px; border: 1px solid var(--border); background: linear-gradient(135deg, #fff 0%, var(--warm-2) 58%, var(--accent-soft) 100%); box-shadow: var(--box-shadow); }
       .title.serenity { background: linear-gradient(135deg, #fff 0%, var(--accent-soft) 42%, #fff1ee 100%); border-color: rgba(214,61,46,0.18); }
+      .pill-blue { background: rgba(13, 71, 161, 0.08); color: #0d47a1; border: 1px solid rgba(13, 71, 161, 0.15); }
+      .pill-purple { background: rgba(123, 31, 162, 0.08); color: #7b1fa2; border: 1px solid rgba(123, 31, 162, 0.15); }
       .title h1 { max-width: 850px; margin: 0.75rem 0; font-size: clamp(2.15rem, 4.8vw, 3.45rem); word-break: keep-all; overflow-wrap: normal; text-wrap: balance; }
       .description { max-width: 760px; color: rgb(var(--gray)); font-size: 1.08rem; }
       .meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
@@ -175,7 +187,7 @@ const stockDashboardLinks = [
           {updatedDate && <div class="last-updated-on">更新：<FormattedDate date={updatedDate} showTime={true} /></div>}
         </div>
         {!isSerenity && (
-          <section class="stock-dashboard" aria-label="A股分析摘要">
+          <section class="stock-dashboard" aria-label="核心逻辑摘要">
             <div class="dashboard-grid">
               <div class="dashboard-card">
                 <p class="eyebrow">Latest View</p>
@@ -189,10 +201,10 @@ const stockDashboardLinks = [
               </div>
               <div class="dashboard-card">
                 <p class="eyebrow">Next Session</p>
-                <h2>明日看盘</h2>
+                <h2>明日看盘 / 后市策略</h2>
                 <ul>
                   <li>先看关键价位是否突破或失守。</li>
-                  <li>再看量能、盘口强弱和板块联动。</li>
+                  <li>再看量能、基本面拐点和板块联动。</li>
                   <li>最后回到仓位计划，不追临盘情绪。</li>
                 </ul>
               </div>
@@ -247,11 +259,10 @@ const stockDashboardLinks = [
                 {stockHeadings.length === 0 && (
                   <>
                     <a href="#结论先行">结论先行</a>
-                    <a href="#上涨-下跌逻辑">上涨/下跌逻辑</a>
-                    <a href="#适合加仓还是减仓">操作优先级</a>
+                    <a href="#上涨--下跌逻辑">上涨 / 下跌逻辑</a>
+                    <a href="#操作优先级">操作优先级</a>
                     <a href="#关键价位">关键价位</a>
                     <a href="#风险点">风险点</a>
-                    <a href="#持仓者动作">持仓者动作</a>
                   </>
                 )}
               </>
