@@ -359,3 +359,13 @@ th { text-align: left; background: var(--warm); color: rgb(var(--black)); }
 	clip-path: inset(50%);
 	white-space: nowrap;
 }
+
+/* Stock Data Highlights */
+.profit-ratio {
+  color: #ff3366;
+  font-weight: bold;
+}
+.avg-cost {
+  color: #0d47a1;
+  font-weight: bold;
+}
