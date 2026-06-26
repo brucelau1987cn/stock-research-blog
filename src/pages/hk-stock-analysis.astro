@@ -1,0 +1,239 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+import { getPostUrl } from '../utils/postUrl';
+
+const stockPosts = (await getCollection('blog'))
+  .filter((post) => post.data.tags?.includes('港股分析'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featuredStockPosts = stockPosts;
+const FEATURED_PAGE_SIZE = 6;
+// 解析 frontmatter title
+const parseStockTitle = (title: string): { code: string; name: string } => {
+  const m = title.match(/^([0-9]{4,5})\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
+  if (!m) return { code: title, name: '' };
+  return { code: m[1], name: m[2].trim() };
+};
+
+const pageTitle = `港股分析 | ${SITE_TITLE}`;
+const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金面共振与中概股估值修复逻辑。';
+
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={pageTitle} description={pageDesc} />
+    <style>
+
+      .stock-hero { padding: 2.5rem 0 1rem; }
+      .stock-hero-card { display: flex; align-items: center; gap: 1.25rem; }
+      .stock-profile-avatar { width: clamp(5rem, 9vw, 7.5rem); height: clamp(5rem, 9vw, 7.5rem); border-radius: 24px; object-fit: cover; flex-shrink: 0; border: 1px solid var(--border); box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); background: white; }
+      .stock-hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.04em; }
+      .stock-hero .subtitle { font-size: 1.08rem; color: rgb(var(--gray)); line-height: 1.7; margin-top: 0.5rem; max-width: 760px; }
+
+      .intro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; }
+      .tweet { margin: 0; border: 1px solid var(--border); border-radius: 18px; background: white; overflow: hidden; }
+      .tweet-header { display: flex; align-items: center; gap: 0.65rem; padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); background: var(--warm-2); }
+      .tweet-avatar { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; background: rgb(var(--black)); color: white; font-weight: 800; font-size: 0.95rem; flex-shrink: 0; }
+      .tweet-body { padding: 1.2rem; font-size: 1rem; line-height: 1.72; }
+      .tweet-body p { margin-bottom: 0.75rem; margin-top: 0; }
+      .tweet-body p:last-child { margin-bottom: 0; }
+
+      .analysis-section { margin: 2rem 0 1rem; }
+      .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+      .analysis-section-head h2 { margin: 0; }
+      .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
+      .analysis-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+      .analysis-card { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem; border-radius: 12px; border: 1px solid var(--border); background: white; text-decoration: none; color: rgb(var(--gray-dark)); }
+      .analysis-card:hover { transform: translateY(-1.5px); transition: transform 0.18s ease; background: var(--warm); border-color: rgba(214,61,46,0.18); box-shadow: 0 4px 12px rgba(214,61,46,0.05); }
+      .analysis-card-title { display: flex; align-items: baseline; gap: 0.4rem; color: rgb(var(--black)); margin: 0; line-height: 1; }
+      .analysis-card .stock-name { color: rgb(var(--black)); font-weight: 800; font-size: 1.1rem; }
+      .analysis-card .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.95em; font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; }
+      .analysis-card .meta { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
+      .analysis-pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; flex-wrap: wrap; }
+      .analysis-pagination button { display: inline-flex; align-items: center; min-height: 2.45rem; padding: 0.48rem 0.98rem; border-radius: 999px; border: 1px solid var(--border); background: linear-gradient(180deg, #fff, #fafafa); color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+      .analysis-pagination button:hover:not(:disabled) { background: var(--warm-2); border-color: rgba(214,61,46,0.18); }
+      .analysis-pagination button:disabled { opacity: 0.38; cursor: not-allowed; box-shadow: none; }
+      .analysis-pagination .page-info { color: rgb(var(--gray)); font-size: 0.88rem; font-weight: 700; padding: 0 0.2rem; }
+      .analysis-pagination .page-dot { width: 0.45rem; height: 0.45rem; border-radius: 999px; background: rgba(214,61,46,0.45); }
+
+      .section-divider { margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 1rem; }
+      .section-divider h2 { margin: 0; white-space: nowrap; }
+      .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+      .market-pulse { margin: 1.5rem 0 0; padding: 1.2rem 1.3rem; border-radius: 18px; border: 1px solid var(--border); background: linear-gradient(135deg, #fff, var(--accent-soft)); }
+      .market-pulse-head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+      .market-pulse-head h2 { margin: 0; font-size: 1.18rem; }
+      .market-pulse-head .pulse-source { display: inline-flex; align-items: center; min-height: 1.9rem; padding: 0.1rem 0.55rem; border-radius: 999px; background: rgba(214,61,46,0.1); color: rgb(180, 50, 40); font-size: 0.8rem; font-weight: 800; }
+      .market-pulse-head .asof { color: rgb(var(--gray)); font-size: 0.85rem; }
+      .market-pulse p { margin: 0.4rem 0; color: rgb(var(--gray-dark)); line-height: 1.7; font-size: 0.96rem; }
+      .market-pulse ul { display: block; list-style: none; margin: 0.5rem 0 0; padding: 0; }
+      .market-pulse li { padding: 0.3rem 0; color: rgb(var(--gray-dark)); line-height: 1.65; font-size: 0.95rem; }
+      .market-pulse li strong { color: rgb(var(--black)); }
+      .pulse-sector { margin: 0.65rem 0 0; padding: 0.6rem 0.85rem 0.7rem; border-radius: 12px; background: rgba(0, 0, 0, 0.025); border-left: 3px solid var(--border); }
+      .pulse-sector-head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.35rem; }
+      .pulse-sector-label { color: rgb(var(--black)); font-weight: 800; font-size: 0.98rem; }
+      .pulse-sector-list { list-style: none; padding: 0; margin: 0.15rem 0 0; display: block !important; }
+      .pulse-sector-list li { display: block !important; padding: 0.18rem 0; color: rgb(var(--gray-dark)); line-height: 1.55; font-size: 0.92rem; }
+      .pulse-tag { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.78rem; font-weight: 800; margin-right: 0.4rem; }
+      .pulse-tag.up { background: rgba(34, 197, 94, 0.12); color: #15803d; }
+      .pulse-tag.dn { background: rgba(239, 68, 68, 0.12); color: #b91c1c; }
+      .pulse-tag.flat { background: rgba(100, 116, 139, 0.12); color: #475569; }
+
+      ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; list-style-type: none; margin: 0; padding: 0; }
+      ul li:first-child { grid-column: 1 / -1; }
+      .post-card { display: grid; grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; color: rgb(var(--gray-dark)); text-decoration: none; min-height: 13rem; }
+      ul li:first-child .post-card { min-height: 15rem; background: linear-gradient(135deg, #fff, var(--warm-2)); }
+      .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
+      .post-card .title { margin: 0; color: rgb(var(--black)); }
+      .post-card .title .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
+      .post-card .title .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
+      .post-card .date { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
+      .post-card .description { margin: 0; color: rgb(var(--gray)); }
+      .empty { text-align: center; padding: 3rem 1rem; color: rgb(var(--gray)); }
+
+      @media (max-width: 820px) { .intro-grid, ul { grid-template-columns: 1fr; } ul li:first-child { grid-column: 1; } }
+      @media (max-width: 560px) { 
+        .stock-hero-card { flex-direction: column; align-items: center; text-align: center; } 
+        .stock-profile-avatar { width: 6rem; height: 6rem; border-radius: 20px; } 
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section class="stock-hero">
+        <div class="stock-hero-card">
+          <img class="stock-profile-avatar" src="/images/hk-stock-avatar.png" alt="港股分析专栏" loading="eager" decoding="async" />
+          <div>
+            <span class="pill">🇭🇰 港股分析 专栏</span>
+            <h1>港股分析</h1>
+            <p class="subtitle">{pageDesc}</p>
+            <p class="subtitle" style="margin-top:0.6rem;font-size:0.95rem;">
+              <strong>核心领域：</strong>互联网巨头 · 高股息资产 · 创新药
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="intro-grid">
+        <div class="tweet">
+          <div class="tweet-header">
+            <span class="tweet-avatar">N</span>
+            <div><strong>南向资金跟踪</strong></div>
+          </div>
+          <div class="tweet-body">
+            <p>紧盯南向资金（内资）净流入趋势与定价权转移路径。</p>
+            <p>捕捉内资外资博弈节点，挖掘在流动性拐点中估值率先修复的龙头标的。</p>
+          </div>
+        </div>
+        
+        <div class="tweet">
+          <div class="tweet-header">
+            <span class="tweet-avatar">D</span>
+            <div><strong>高股息与红利防御</strong></div>
+          </div>
+          <div class="tweet-body">
+            <p>聚焦能源、电信、金融等高分红资产。</p>
+            <p>在宏观不确定性中，通过“股息率 + 港股通红利税预期减免”构建绝对收益安全垫。</p>
+          </div>
+        </div>
+
+        <div class="tweet">
+          <div class="tweet-header">
+            <span class="tweet-avatar">I</span>
+            <div><strong>互联网与创新药反转</strong></div>
+          </div>
+          <div class="tweet-body">
+            <p>关注腾讯、美团等恒生科技核心成分股的业绩超预期修复。</p>
+            <p>跟踪创新药出海进展，捕捉高弹性赛道的超跌反弹Beta收益。</p>
+          </div>
+        </div>
+      </div>
+
+
+      <section class="analysis-section" aria-label="本次个股分析总览">
+        <div class="analysis-section-head">
+          <h2>🧭 个股分析</h2>
+          <p>每篇单独点击查看详情；这里先给结论总览。</p>
+        </div>
+        {featuredStockPosts.length > 0 ? (
+          <>
+          <div class="analysis-grid" id="analysis-grid">
+            {featuredStockPosts.map((post) => {
+              const s = parseStockTitle(post.data.title);
+              return (
+                <a class="analysis-card analysis-card-item" href={getPostUrl(post)}>
+                  <strong class="analysis-card-title">
+                    {s.name ? <span class="stock-name">{s.name}</span> : null}
+                    <span class="stock-code">{s.code}</span>
+                  </strong>
+                  <div class="meta">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></div>
+                </a>
+              );
+            })}
+          </div>
+          {featuredStockPosts.length > FEATURED_PAGE_SIZE ? (
+            <div class="analysis-pagination" aria-label="个股分析分页">
+              <button type="button" id="analysis-prev" disabled>← 上一页</button>
+              <span class="page-info" id="analysis-page-info"></span>
+              <button type="button" id="analysis-next">下一页 →</button>
+            </div>
+          ) : null}
+          </>
+        ) : (
+          <div class="empty">暂无个股分析文章。</div>
+        )}
+      </section>
+
+      <script is:inline>
+        (() => {
+          const pageSize = 6;
+          const cards = Array.from(document.querySelectorAll('.analysis-card-item'));
+          const prev = document.getElementById('analysis-prev');
+          const next = document.getElementById('analysis-next');
+          const info = document.getElementById('analysis-page-info');
+          if (!cards.length || !prev || !next || !info) return;
+          const totalPages = Math.max(1, Math.ceil(cards.length / pageSize));
+          let page = 1;
+
+          const render = () => {
+            cards.forEach((card, index) => {
+              const visible = Math.floor(index / pageSize) + 1 === page;
+              card.style.display = visible ? '' : 'none';
+            });
+            prev.disabled = page <= 1;
+            next.style.display = page >= totalPages ? 'none' : '';
+            info.innerHTML = `${page}/${totalPages}`;
+          };
+
+          prev.addEventListener('click', () => {
+            if (page > 1) {
+              page -= 1;
+              render();
+              document.querySelector('.analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+          next.addEventListener('click', () => {
+            if (page < totalPages) {
+              page += 1;
+              render();
+              document.querySelector('.analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+
+          render();
+        })();
+      </script>
+
+      
+
+    </main>
+    <Footer />
+  </body>
+</html>

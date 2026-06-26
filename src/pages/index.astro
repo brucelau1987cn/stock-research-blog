@@ -64,17 +64,19 @@ const stockInfo = (title: string) => {
         <h1>AI选股</h1>
         <p class="subtitle">个人股票分析与交易复盘：聚焦A股个股研究、关键位判断和仓位动作。</p>
         <div class="actions">
-          <a class="btn primary" href="/stock-analysis/">📊 个股分析</a>
+          <a class="btn primary" href="/stock-analysis/">📊 A股分析</a>
+          <a class="btn primary" style="background:#0d47a1;" href="/us-stock-analysis/">🗽 美股分析</a>
+          <a class="btn primary" style="background:#7b1fa2;" href="/hk-stock-analysis/">🇭🇰 港股分析</a>
           <a class="btn secondary" href="/serenity/">👩‍🦳 白发股神</a>
         </div>
       </section>
 
       <section class="pillars">
-        <!-- 个股分析 专栏 -->
+        <!-- A股分析 专栏 -->
         <div class="pillar">
           <div class="pillar-header">
-            <h2>📊 个股分析</h2>
-            <p>个人股票分析 · 盘口强弱 · 关键价位 · 仓位动作 · 交易复盘</p>
+            <h2>📊 A股分析</h2>
+            <p>A股市场量价研判 · 筹码结构 · 关键边界动态阻击</p>
           </div>
           <div class="pillar-list">
             {latestStock.length > 0 ? latestStock.map(post => (
@@ -82,9 +84,33 @@ const stockInfo = (title: string) => {
                 <h3>{stockInfo(post.data.title)}</h3>
                 <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
               </a>
-            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">个股分析文章即将上线。</p></div>}
+            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">A股分析文章即将上线。</p></div>}
           </div>
-          <div class="pillar-more"><a href="/stock-analysis/">全部个股分析 →</a></div>
+          <div class="pillar-more"><a href="/stock-analysis/">全部 A股分析 →</a></div>
+        </div>
+
+        <!-- 美股分析 专栏 -->
+        <div class="pillar" style="border-color: rgba(13,71,161,0.18);">
+          <div class="pillar-header" style="background: rgba(13,71,161,0.05);">
+            <h2>🗽 美股分析</h2>
+            <p>半导体 · AI 算力 · 大语言模型基建 · 纳斯达克科技龙头</p>
+          </div>
+          <div class="pillar-list">
+            <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">美股分析文章即将上线。</p></div>
+          </div>
+          <div class="pillar-more"><a href="/us-stock-analysis/" style="color:#0d47a1;">全部 美股分析 →</a></div>
+        </div>
+
+        <!-- 港股分析 专栏 -->
+        <div class="pillar" style="border-color: rgba(123,31,162,0.18);">
+          <div class="pillar-header" style="background: rgba(123,31,162,0.05);">
+            <h2>🇭🇰 港股分析</h2>
+            <p>南向资金流动 · 互联网巨头反转 · 高股息红利防御</p>
+          </div>
+          <div class="pillar-list">
+            <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">港股分析文章即将上线。</p></div>
+          </div>
+          <div class="pillar-more"><a href="/hk-stock-analysis/" style="color:#7b1fa2;">全部 港股分析 →</a></div>
         </div>
 
         <!-- 白发股神 专栏 -->
