@@ -11,7 +11,7 @@ type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, pubDate, updatedDate, heroImage, tags, headings = [] } = Astro.props;
 const isSerenity = tags?.includes('白发股神');
-const tagLabel = isSerenity ? '白发股神' : '个股分析';
+const tagLabel = isSerenity ? '白发股神' : 'A股分析';
 const tagPill = isSerenity ? 'pill-red' : '';
 const tweetHeadings = headings.filter((heading) => heading.depth === 3 && heading.text.startsWith('Tweet '));
 const extractDateTime = (text: string) => {
@@ -68,7 +68,7 @@ const groupTweetHeadingsByDate = () => {
 
 const tweetGroupsByDate = groupTweetHeadingsByDate();
 
-// 个股分析页跟踪段（H3 "跟踪 YYYY-MM-DD HH:MM BJT"）按日期分组，跳转当日最新一条
+// A股分析页跟踪段（H3 "跟踪 YYYY-MM-DD HH:MM BJT"）按日期分组，跳转当日最新一条
 // 多个 H2 时取第一个作为「跟踪段容器」
 // 硬约束：sidebar 只显示近 TRACK_DAYS_WINDOW 个交易日（默认 5）；旧段在文章里仍保留
 const TRACK_DAYS_WINDOW = 5;
@@ -98,7 +98,7 @@ const groupStockTrackByDate = () => {
 };
 const stockTrackGroupsByDate = groupStockTrackByDate();
 
-// 个股分析页 H2 全部列出（不截断），保持与正文 H2 顺序一致
+// A股分析页 H2 全部列出（不截断），保持与正文 H2 顺序一致
 const stockHeadings = headings.filter((heading) => heading.depth === 2);
 const hasStockHeading = (text: string) => stockHeadings.some((heading) => heading.text === text);
 const stockDashboardLinks = [
@@ -175,7 +175,7 @@ const stockDashboardLinks = [
           {updatedDate && <div class="last-updated-on">更新：<FormattedDate date={updatedDate} showTime={true} /></div>}
         </div>
         {!isSerenity && (
-          <section class="stock-dashboard" aria-label="个股分析摘要">
+          <section class="stock-dashboard" aria-label="A股分析摘要">
             <div class="dashboard-grid">
               <div class="dashboard-card">
                 <p class="eyebrow">Latest View</p>
@@ -219,7 +219,7 @@ const stockDashboardLinks = [
             ) : (
               <>
                 <h2>快捷目录</h2>
-                {/* 个股分析页 sidebar：保持与正文 H2 顺序一致。
+                {/* A股分析页 sidebar：保持与正文 H2 顺序一致。
                     「跟踪记录」H2 不直接渲染，在「关键价位」之后插 section-link + 分组日期，
                     位置 = 正文 H2 第 3 位（紧跟"关键价位"之后、"近1个月行情"之前）。 */}
                 {stockHeadings

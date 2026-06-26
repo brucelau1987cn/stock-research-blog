@@ -62,7 +62,7 @@ const stockInfo = (title: string) => {
     <main>
       <section class="hero">
         <h1>AI选股</h1>
-        <p class="subtitle">个人股票分析与交易复盘：聚焦A股个股研究、关键位判断和仓位动作。</p>
+        <p class="subtitle">个人股票分析与交易复盘：聚焦A股分析、关键位判断和仓位动作。</p>
         <div class="actions">
           <a class="btn primary" href="/stock-analysis/">📊 A股分析</a>
           <a class="btn primary" style="background:#0d47a1;" href="/us-stock-analysis/">🗽 美股分析</a>
@@ -83,10 +83,10 @@ const stockInfo = (title: string) => {
               <a class="pillar-item" href={getPostUrl(post)}>
                 <h3>{stockInfo(post.data.title)}</h3>
                 <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
-              </a>
-            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">A股分析文章即将上线。</p></div>}
-          </div>
-          <div class="pillar-more"><a href="/stock-analysis/">全部 A股分析 →</a></div>
+                  </a>
+                )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">A股分析文章即将上线。</p></div>}
+                </div>
+                <div class="pillar-more"><a href="/stock-analysis/">全部 A股分析 →</a></div>
         </div>
 
         <!-- 美股分析 专栏 -->
