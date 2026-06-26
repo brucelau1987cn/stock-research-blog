@@ -44,14 +44,13 @@ const pageDesc = 'A股个股实战量价研判与交易执行日志：结论先�
       .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
       .analysis-section-head h2 { margin: 0; }
       .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
-      .analysis-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-      .analysis-card { display: block; padding: 1rem 1.1rem; border-radius: 18px; border: 1px solid var(--border); background: white; box-shadow: var(--box-shadow); text-decoration: none; color: rgb(var(--gray-dark)); }
-      .analysis-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; }
-      .analysis-card strong { display: block; color: rgb(var(--black)); margin-bottom: 0.45rem; line-height: 1.45; }
-      .analysis-card .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
-      .analysis-card .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
-      .analysis-card p { margin: 0; color: rgb(var(--gray)); line-height: 1.6; font-size: 0.92rem; }
-      .analysis-card .meta { margin-top: 0.6rem; color: rgb(var(--gray)); font-size: 0.82rem; }
+      .analysis-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+      .analysis-card { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem; border-radius: 12px; border: 1px solid var(--border); background: white; text-decoration: none; color: rgb(var(--gray-dark)); }
+      .analysis-card:hover { transform: translateY(-1.5px); transition: transform 0.18s ease; background: var(--warm); border-color: rgba(214,61,46,0.18); box-shadow: 0 4px 12px rgba(214,61,46,0.05); }
+      .analysis-card-title { display: flex; align-items: baseline; gap: 0.4rem; color: rgb(var(--black)); margin: 0; line-height: 1; }
+      .analysis-card .stock-name { color: rgb(var(--black)); font-weight: 800; font-size: 1.1rem; }
+      .analysis-card .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.95em; font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; }
+      .analysis-card .meta { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
       .analysis-pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; flex-wrap: wrap; }
       .analysis-pagination button { display: inline-flex; align-items: center; min-height: 2.45rem; padding: 0.48rem 0.98rem; border-radius: 999px; border: 1px solid var(--border); background: linear-gradient(180deg, #fff, #fafafa); color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
       .analysis-pagination button:hover:not(:disabled) { background: var(--warm-2); border-color: rgba(214,61,46,0.18); }
