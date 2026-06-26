@@ -361,11 +361,35 @@ th { text-align: left; background: var(--warm); color: rgb(var(--black)); }
 }
 
 /* Stock Data Highlights */
+
+/* Stock Highlight Elements */
 .profit-ratio {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 51, 102, 0.1);
   color: #ff3366;
-  font-weight: bold;
+  font-weight: 800;
+  padding: 0 0.25rem;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
 }
 .avg-cost {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(13, 71, 161, 0.1);
   color: #0d47a1;
-  font-weight: bold;
+  font-weight: 800;
+  padding: 0 0.25rem;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* Fix SVG sizing on mobile */
+.prose img[src$=".svg"] {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin: 1.5rem 0;
+  border: 1px solid rgba(0,0,0,0.04);
 }
