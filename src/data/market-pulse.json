@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-06-26 17:30:51 HKT",
+  "as_of": "2026-06-29 09:20:00 HKT",
   "trading_day": "2026-06-26",
   "stocks": [
     {
@@ -8,10 +8,11 @@
       "price": "369.46",
       "pct": "-5.5090",
       "sector": "robot",
-      "sector_label": "🤖 人形机器人",
+      "sector_label": "🤖 人形机器人 + 🏎️ 汽车 Tier-1 切 humanoid",
       "amplitude": 7.112532000000001,
       "turnover": 6.617000000000001,
-      "amount_yi": 46.05
+      "amount_yi": 46.05,
+      "view": "🟡 6/28 17:32 BJT Schaeffler $SHA0 教科书案例（45 家 humanoid 客户），A 股低估值汽零+人形机器人双击范式核心标的；6/27 16:42 Robotics is next（互动 19,325）强化"
     },
     {
       "name": "雅克科技",
@@ -199,6 +200,54 @@
       "amplitude": 8.794821,
       "turnover": 5.779999999999999,
       "amount_yi": 53.35
+    },
+    {
+      "name": "双林股份",
+      "code": "300100",
+      "price": "TBD",
+      "pct": "TBD",
+      "sector": "humanoid",
+      "sector_label": "🤖 人形机器人 / 汽车 Tier-1",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "view": "🟡 6/28 17:32 BJT Schaeffler $SHA0 教科书案例 A 股映射——轴承+关节总成（汽车 Tier-1 切 humanoid 范式）"
+    },
+    {
+      "name": "鸣志电器",
+      "code": "603728",
+      "price": "TBD",
+      "pct": "TBD",
+      "sector": "humanoid",
+      "sector_label": "🤖 人形机器人 / 执行器 + 电机",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "view": "🟡 6/28 17:32 BJT Schaeffler 执行器环节 A 股对标；6/28 16:53 Unitree 国内看好 — 宇树供应链 A 股映射"
+    },
+    {
+      "name": "寒武纪",
+      "code": "688256",
+      "price": "TBD",
+      "pct": "TBD",
+      "sector": "ai_asic",
+      "sector_label": "🧠 国产 AI ASIC / 美国算力自主",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "view": "🟡 6/28 11:34 BJT WSJ 中国 Zhipu AI 追平 Anthropic + 6/27 14:22 $CBRS 首次建仓（Cerebras 跑 OpenAI 5.6 Sol frontier model）——国产 AI ASIC 估值锚重估（PS > 50x，追高风险高）"
+    },
+    {
+      "name": "海光信息",
+      "code": "688041",
+      "price": "TBD",
+      "pct": "TBD",
+      "sector": "ai_asic",
+      "sector_label": "🧠 国产 AI ASIC / x86 + DCU",
+      "amplitude": 0,
+      "turnover": 0,
+      "amount_yi": 0,
+      "view": "🟡 6/28 11:34 BJT WSJ 中国 AI 追平海外 + 6/27 $CBRS 推理芯片新主题——海光 x86 + DCU 国产替代承接美国算力限制 → 国产需求逻辑"
     }
   ],
   "etf_top": [
