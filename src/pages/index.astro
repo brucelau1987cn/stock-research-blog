@@ -7,17 +7,29 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getPostUrl } from '../utils/postUrl';
 
-const allPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const allPosts = (await getCollection('blog')).sort((a, b) => {
+  const aDate = a.data.updatedDate ?? a.data.pubDate;
+  const bDate = b.data.updatedDate ?? b.data.pubDate;
+  return bDate.valueOf() - aDate.valueOf();
+});
 const serenityPosts = allPosts.filter(p => p.data.tags?.includes('白发股神'));
 const stockPosts = allPosts.filter(p => p.data.tags?.includes('个股分析'));
+const usStockPosts = allPosts.filter(p => p.data.tags?.includes('美股分析'));
 const latestSerenity = serenityPosts.slice(0, 3);
 const latestStock = stockPosts.slice(0, 3);
+const latestUsStock = usStockPosts.slice(0, 3);
 const stockInfo = (title: string) => {
   const match = title.match(/^(\d{6})\s+([^：:]+?)(?=[:：]|$)/);
   const code = match?.[1] ?? title.match(/^(\d{6})/)?.[1] ?? title;
   const name = match?.[2] ?? title;
   const board = code.startsWith('68') ? '科创' : code.startsWith('30') ? '创业' : '主板';
   return `${name} ${code}（${board}）`;
+};
+const usStockInfo = (title: string) => {
+  const match = title.match(/^([A-Za-z0-9]+)\s+([^：:]+?)(?=[:：]|$)/);
+  const code = match?.[1] ?? title.match(/^([A-Za-z0-9]+)/)?.[1] ?? title;
+  const name = match?.[2] ?? title.replace(/^([A-Za-z0-9]+)\s*/, '');
+  return name && name !== title ? `${name} ${code}` : title;
 };
 ---
 
@@ -96,7 +108,12 @@ const stockInfo = (title: string) => {
             <p>半导体 · AI 算力 · 大语言模型基建 · 纳斯达克科技龙头</p>
           </div>
           <div class="pillar-list">
-            <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">美股分析文章即将上线。</p></div>
+            {latestUsStock.length > 0 ? latestUsStock.map(post => (
+              <a class="pillar-item" href={getPostUrl(post)}>
+                <h3>{usStockInfo(post.data.title)}</h3>
+                <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
+              </a>
+            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">美股分析文章即将上线。</p></div>}
           </div>
           <div class="pillar-more"><a href="/us-stock-analysis/" style="color:#0d47a1;">全部 美股分析 →</a></div>
         </div>
