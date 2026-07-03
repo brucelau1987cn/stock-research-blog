@@ -78,6 +78,8 @@ def main():
                     price = d.get('price') or d.get('close')
                 if profit_ratio is None:
                     profit_ratio = d.get('chip_profit_ratio')
+                    if profit_ratio is None:
+                        profit_ratio = d.get('profit_ratio')
                     if profit_ratio is None and 'chip_distribution' in d and isinstance(d['chip_distribution'], dict):
                         profit_ratio = d['chip_distribution'].get('profit_ratio')
                 
