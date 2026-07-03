@@ -225,7 +225,7 @@ const stockDashboardLinks = [
                 {tweetGroupsByDate.length > 0 && tweetGroupsByDate.map((tweet) => (
                   <a class="tweet-link" href={`#${tweet.slug}`}>
                     <span class="toc-date">{tweet.date} {tweet.latestTime}</span>
-                    {tweet.count > 1 && <span class="toc-count">{tweet.count}</span>}
+                    <span class="toc-count">{tweet.count}</span>
                   </a>
                 ))}
                 <a class="section-link" href="#全局风险提示">全局风险提示</a>
