@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
@@ -32,7 +31,7 @@ const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金�
 
       .stock-hero { padding: 2.5rem 0 1rem; }
       .stock-hero-card { display: flex; align-items: center; gap: 1.25rem; }
-      .stock-profile-avatar { width: clamp(5rem, 9vw, 7.5rem); height: clamp(5rem, 9vw, 7.5rem); border-radius: 24px; object-fit: cover; flex-shrink: 0; border: 1px solid var(--border); box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); background: white; }
+      .stock-profile-icon { display: inline-flex; align-items: center; justify-content: center; width: clamp(5rem, 9vw, 7.5rem); height: clamp(5rem, 9vw, 7.5rem); border-radius: 24px; flex-shrink: 0; border: 1px solid rgba(123, 31, 162, 0.16); box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); background: linear-gradient(135deg, #fff, rgba(123,31,162,0.08)); font-size: clamp(2.4rem, 5vw, 3.8rem); }
       .stock-hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.04em; }
       .stock-hero .subtitle { font-size: 1.08rem; color: rgb(var(--gray)); line-height: 1.7; margin-top: 0.5rem; max-width: 760px; }
 
@@ -100,7 +99,7 @@ const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金�
       @media (max-width: 820px) { .intro-grid, ul { grid-template-columns: 1fr; } ul li:first-child { grid-column: 1; } }
       @media (max-width: 560px) { 
         .stock-hero-card { flex-direction: column; align-items: center; text-align: center; } 
-        .stock-profile-avatar { width: 6rem; height: 6rem; border-radius: 20px; } 
+        .stock-profile-icon { width: 6rem; height: 6rem; border-radius: 20px; } 
       }
     </style>
   </head>
@@ -109,7 +108,7 @@ const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金�
     <main>
       <section class="stock-hero">
         <div class="stock-hero-card">
-          <img class="stock-profile-avatar" src="/images/hk-stock-avatar.png" alt="港股分析专栏" loading="eager" decoding="async" />
+          <div class="stock-profile-icon" aria-hidden="true">🇭🇰</div>
           <div>
             <span class="pill">🇭🇰 港股分析 专栏</span>
             <h1>港股分析</h1>
@@ -124,7 +123,7 @@ const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金�
       <div class="intro-grid">
         <div class="tweet">
           <div class="tweet-header">
-            <span class="tweet-avatar">N</span>
+            <span class="tweet-avatar">🔁</span>
             <div><strong>南向资金跟踪</strong></div>
           </div>
           <div class="tweet-body">
@@ -135,7 +134,7 @@ const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金�
         
         <div class="tweet">
           <div class="tweet-header">
-            <span class="tweet-avatar">D</span>
+            <span class="tweet-avatar">💰</span>
             <div><strong>高股息与红利防御</strong></div>
           </div>
           <div class="tweet-body">
@@ -146,7 +145,7 @@ const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金�
 
         <div class="tweet">
           <div class="tweet-header">
-            <span class="tweet-avatar">I</span>
+            <span class="tweet-avatar">💊</span>
             <div><strong>互联网与创新药反转</strong></div>
           </div>
           <div class="tweet-body">
@@ -159,7 +158,7 @@ const pageDesc = '港股互联网巨头与高股息资产追踪：南向资金�
 
       <section class="analysis-section" aria-label="本次个股分析总览">
         <div class="analysis-section-head">
-          <h2>🧭 个股分析</h2>
+          <h2>🇭🇰 港股分析</h2>
           <p>每篇单独点击查看详情；这里先给结论总览。</p>
         </div>
         {featuredStockPosts.length > 0 ? (

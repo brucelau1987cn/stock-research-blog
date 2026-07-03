@@ -1,5 +1,5 @@
 ---
-import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+import { SITE_AUTHOR, SITE_AUTHOR_URL, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 ---
 
@@ -15,7 +15,7 @@ import HeaderLink from './HeaderLink.astro';
       <HeaderLink href="/us-stock-analysis/">美股分析</HeaderLink>
       <HeaderLink href="/hk-stock-analysis/">港股分析</HeaderLink>
       <HeaderLink href="/serenity/">白发股神</HeaderLink>
-      <a class="author" href="https://github.com/brucelau1987cn" target="_blank" rel="noreferrer">{SITE_AUTHOR}</a>
+      <a class="author" href={SITE_AUTHOR_URL} target="_blank" rel="noreferrer">{SITE_AUTHOR}</a>
     </div>
   </nav>
 </header>

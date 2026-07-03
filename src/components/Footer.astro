@@ -1,5 +1,5 @@
 ---
-import { SITE_AUTHOR, SITE_TITLE } from '../consts';
+import { SITE_AUTHOR, SITE_AUTHOR_URL, SITE_TITLE } from '../consts';
 const today = new Date();
 ---
 
@@ -13,7 +13,7 @@ const today = new Date();
       <a href="/">首页</a>
       <a href="/stock-analysis/">个股分析</a>
       <a href="/serenity/">白发股神</a>
-      <a href="https://github.com/brucelau1987cn" target="_blank" rel="noreferrer">{SITE_AUTHOR}</a>
+      <a href={SITE_AUTHOR_URL} target="_blank" rel="noreferrer">{SITE_AUTHOR}</a>
     </div>
   </div>
   <div class="site-shell copyright">&copy; {today.getFullYear()} {SITE_AUTHOR}. Research notes only.</div>
