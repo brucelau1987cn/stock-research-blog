@@ -59,12 +59,12 @@ const groupTweetHeadingsByDate = () => {
       existing.count += 1;
       // 选时间更晚那条作为跳转锚点
       if (time > existing.latestTime) {
-        existing.slug = heading.slug;
+        existing.slug = parseChineseDateKey(dateOnly);
         existing.latestTime = time;
         existing.raw = full;
       }
     } else {
-      groups.push({ date: dateOnly, count: 1, slug: heading.slug, latestTime: time, raw: full });
+      groups.push({ date: dateOnly, count: 1, slug: parseChineseDateKey(dateOnly), latestTime: time, raw: full });
     }
   }
   groups.sort((a, b) => {
