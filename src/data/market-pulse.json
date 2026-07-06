@@ -1,102 +1,94 @@
 {
-  "as_of": "2026-07-03 17:31:15 HKT",
-  "trading_day": "2026-07-03",
+  "as_of": "2026-07-06 17:31:10 HKT",
+  "trading_day": "2026-07-06",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "488.0",
-      "pct": "18.1455",
+      "price": "453.98",
+      "pct": "-6.9713",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 19.23738,
-      "turnover": 14.697,
-      "amount_yi": 125.29,
-      "serenity_view": "7/6 Amazon生态催化机器人（类比TPU之于光芯片）；7/4 智元实测连续工作64小时验证工业落地；7/3 绿的谐波触及涨停创历史新高，回调分批低吸。"
+      "amplitude": 7.106557,
+      "turnover": 11.907,
+      "amount_yi": 102.96
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "199.5",
-      "pct": "-6.1088",
+      "price": "186.45",
+      "pct": "-6.5414",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 6.640625,
-      "turnover": 14.545,
-      "amount_yi": 93.69,
-      "serenity_view": "7/3 AXTI与COHR签订晶圆预付款协议，InP晶圆拉动上游材料供需偏紧；雅克科技承接电子特气与前驱体国产化替代逻辑。"
+      "amplitude": 12.030075,
+      "turnover": 12.882,
+      "amount_yi": 77.79
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "18.23",
-      "pct": "-4.2542",
+      "price": "17.35",
+      "pct": "-4.8272",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 6.144958,
-      "turnover": 5.439,
-      "amount_yi": 50.77,
-      "serenity_view": "7/3 AXTI三年晶圆预付款订单证实化合物材料紧缺，SIVE产能物料扩张拉动InP需求；三安光电承接化合物半导体国产化。"
+      "amplitude": 10.422381,
+      "turnover": 5.72,
+      "amount_yi": 50.76
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "105.07",
-      "pct": "-1.7027",
+      "price": "105.31",
+      "pct": "0.2284",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 6.923005,
-      "turnover": 8.587,
-      "amount_yi": 59.23,
-      "serenity_view": "7/3 AXTI与COHR签晶圆供应订单，Coherent预付2228万美元锁产能；云南锗业作为锗/InP材料上游直接受益，右侧跟进。"
+      "amplitude": 6.947749,
+      "turnover": 8.774,
+      "amount_yi": 60.85
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "64.67",
-      "pct": "-10.0056",
+      "price": "59.49",
+      "pct": "-8.0099",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 6.860562000000001,
-      "turnover": 11.14,
-      "amount_yi": 56.92,
-      "serenity_view": "7/3 上游材料签预付长约证实化合物晶圆供需偏紧；立昂微承接硅片与半导体外延片，关注下游代工厂产能利用率回升。"
+      "amplitude": 10.483996,
+      "turnover": 10.225,
+      "amount_yi": 48.11
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "816.0",
-      "pct": "-2.9796",
+      "price": "803.6",
+      "pct": "-1.5196",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 8.486908999999999,
-      "turnover": 2.287,
-      "amount_yi": 134.59,
-      "serenity_view": "7/5 存储龙头MU Hiroshima投产9.3亿美元扩产能，存储设备国产化需求凸显；北方华创作为国内前道设备龙头，回调分批低吸。"
+      "amplitude": 8.189950999999999,
+      "turnover": 2.102,
+      "amount_yi": 121.93
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "34.53",
-      "pct": "-7.7971",
+      "price": "34.61",
+      "pct": "0.2317",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 9.612817,
-      "turnover": 6.947,
-      "amount_yi": 71.23,
-      "serenity_view": "7/3 COHR预付锁晶圆产能拉动半导体材料链，存储龙头MU Hiroshima扩产9.3亿美元；沪硅产业承接大硅片与先进封装外延，等待企稳。"
+      "amplitude": 8.572256,
+      "turnover": 5.445,
+      "amount_yi": 53.31
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "250.1",
-      "pct": "-0.2672",
+      "price": "237.0",
+      "pct": "-5.2379",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 5.7782029999999995,
-      "turnover": 3.701,
-      "amount_yi": 102.08,
-      "serenity_view": "7/5 UDN曝光SemiAnalysis做空低吸；7/3 LITE售罄至2029，CW laser瓶颈加剧；天孚作为CPO/光器件核心，回调分批低吸。"
+      "amplitude": 9.012395,
+      "turnover": 4.255,
+      "amount_yi": 111.09
     },
     {
       "name": "拓荆科技",
@@ -107,180 +99,170 @@
       "sector_label": "⚙️ 半导体设备",
       "amplitude": null,
       "turnover": 0.0,
-      "amount_yi": null,
-      "serenity_view": "7/5 MU 1.5万亿日元广岛建厂及NAND紧缺至2027拉动设备Capex；拓荆科技承接PECVD/ALD等前道薄膜沉积设备国产化替代。"
+      "amount_yi": null
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "90.88",
-      "pct": "-5.3136",
+      "price": "95.09",
+      "pct": "4.6325",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 6.907689,
-      "turnover": 9.959999999999999,
-      "amount_yi": 164.08,
-      "serenity_view": "7/5 三星与住友化学玻璃基合资 GlaSSEM 成立推进先进封装量产；长电科技承接先进封装与 Chiplet 封测国产化映射。"
+      "amplitude": 7.7244720000000004,
+      "turnover": 11.648,
+      "amount_yi": 197.49
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "64.8",
-      "pct": "-3.8148",
+      "price": "66.18",
+      "pct": "2.1296",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 6.100638,
-      "turnover": 6.866,
-      "amount_yi": 68.63,
-      "serenity_view": "7/5 先进封装玻璃基板产业进程加速；7/3 Meta新算力需求与MU Hiroshima扩产确认；通富微电承接海外算力芯片封测代工需求。"
+      "amplitude": 6.435185000000001,
+      "turnover": 7.303,
+      "amount_yi": 73.73
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "76.01",
-      "pct": "-7.4967",
+      "price": "68.41",
+      "pct": "-9.9987",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 14.421322,
-      "turnover": 9.947000000000001,
-      "amount_yi": 82.74,
-      "serenity_view": "7/3 化合物半导体长协订单验证材料偏紧，算力DC应急供电BBU电芯显现短缺；电晶体长协拉动，昊华科技承接特气与氟化工映射。"
+      "amplitude": 14.98487,
+      "turnover": 8.953999999999999,
+      "amount_yi": 70.1
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "137.1",
-      "pct": "-0.5152",
+      "price": "123.39",
+      "pct": "-10.0000",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 7.328931,
-      "turnover": 9.128,
-      "amount_yi": 28.53,
-      "serenity_view": "7/3 三星电机与住友化学成立合资公司GlaSSEM，玻璃基板量产时间表落地；沃格光电为玻璃通孔（TGV）最直接映射，关注 qualification 验证。"
+      "amplitude": 10.940919000000001,
+      "turnover": 10.077,
+      "amount_yi": 28.93
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "1116.0",
-      "pct": "-2.3622",
+      "price": "1098.92",
+      "pct": "-1.5305",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 6.387577,
-      "turnover": 2.9610000000000003,
-      "amount_yi": 377.02,
-      "serenity_view": "7/5 UDN揭发SemiAnalysis做空砸盘后低吸；7/3 Meta Watermelon算力需求极速爆发证伪capex见顶；中际旭创承接CPO龙头估值，分批低吸。"
+      "amplitude": 7.227599,
+      "turnover": 2.843,
+      "amount_yi": 347.04
     },
     {
       "name": "中船特气",
       "code": "688146",
-      "price": "330.14",
-      "pct": "-9.5507",
+      "price": "302.8",
+      "pct": "-8.2813",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 13.865753,
-      "turnover": 8.987,
-      "amount_yi": 44.72,
-      "serenity_view": "7/3 化合物材料晶圆长约签订拉动特气需求，先进封装电芯短缺显现；中船特气承接电子特气国产化，关注产能释放。"
+      "amplitude": 13.006603,
+      "turnover": 9.205,
+      "amount_yi": 43.35
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "526.0",
-      "pct": "3.3399",
+      "price": "506.89",
+      "pct": "-3.6331",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 9.015716999999999,
-      "turnover": 4.262,
-      "amount_yi": 284.33,
-      "serenity_view": "7/5 澄清CPO延期谣言，光通信板块强劲估值修复；7/3 LITE sold out 且外购CW光源证实瓶颈；新易盛承接CPO高弹性，逢回调分批配置。"
+      "amplitude": 5.323194,
+      "turnover": 3.4419999999999997,
+      "amount_yi": 221.49
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "40.0",
-      "pct": "-16.2128",
+      "price": "36.89",
+      "pct": "-7.7750",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 15.458735,
-      "turnover": 18.451999999999998,
-      "amount_yi": 41.65,
-      "serenity_view": "7/3 化合物晶圆预付款订单证实材料供给偏紧，MU Hiroshima大幅追加设备采购；金宏气体承接电子大宗气体与特气映射。"
+      "amplitude": 10.925,
+      "turnover": 12.076,
+      "amount_yi": 24.42
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "312.25",
-      "pct": "-3.7454",
+      "price": "296.72",
+      "pct": "-4.9736",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 5.524044,
-      "turnover": 3.5770000000000004,
-      "amount_yi": 28.34,
-      "serenity_view": "7/3 AXTI与COHR预付晶圆协议验证InP材料紧张，SIVE代工量产融资验证CW DFB放量；光库科技承接铌酸锂与高功率器件映射。"
+      "amplitude": 7.714972,
+      "turnover": 3.8080000000000003,
+      "amount_yi": 28.46
     }
   ],
   "etf_top": [
     {
-      "code": "159050.SZ",
-      "name": "广发国证机器人产业etf",
-      "price": "1.143",
-      "pct": 10.01
+      "code": "159827.SZ",
+      "name": "农业50",
+      "price": "0.775",
+      "pct": 4.3069999999999995
     },
     {
-      "code": "159039.SZ",
-      "name": "华安国证机器人产业etf",
-      "price": "1.124",
-      "pct": 9.552
+      "code": "159027.SZ",
+      "name": "大成中证畜牧养殖产业etf",
+      "price": "0.898",
+      "pct": 4.297
     },
     {
-      "code": "159278.SZ",
-      "name": "鹏华国证机器人产业etf",
-      "price": "1.261",
-      "pct": 9.367
+      "code": "159020.SZ",
+      "name": "易方达中证畜牧养殖产业etf",
+      "price": "0.900",
+      "pct": 4.287
     },
     {
-      "code": "159272.SZ",
-      "name": "富国国证机器人产业etf",
-      "price": "1.075",
-      "pct": 9.248000000000001
+      "code": "515220.SH",
+      "name": "国泰中证煤炭etf",
+      "price": "1.162",
+      "pct": 4.215
     },
     {
-      "code": "159559.SZ",
-      "name": "景顺长城国证机器人产业etf",
-      "price": "1.594",
-      "pct": 8.806
+      "code": "159172.SZ",
+      "name": "汇添富中证畜牧养殖产业etf",
+      "price": "0.825",
+      "pct": 4.035
     }
   ],
   "etf_bottom": [
     {
-      "code": "517120.SH",
-      "name": "华泰柏瑞中证沪港深创新药产业etf",
-      "price": "0.704",
-      "pct": -8.214
+      "code": "159050.SZ",
+      "name": "广发国证机器人产业etf",
+      "price": "1.066",
+      "pct": -6.737
     },
     {
-      "code": "589180.SH",
-      "name": "汇添富上证科创板新材料etf",
-      "price": "2.291",
-      "pct": -4.78
+      "code": "159039.SZ",
+      "name": "华安国证机器人产业etf",
+      "price": "1.049",
+      "pct": -6.673
     },
     {
-      "code": "589020.SH",
-      "name": "鹏华科创板半导体材料设备主题etf",
-      "price": "2.911",
-      "pct": -4.149
+      "code": "159272.SZ",
+      "name": "富国国证机器人产业etf",
+      "price": "1.007",
+      "pct": -6.326
     },
     {
-      "code": "588010.SH",
-      "name": "博时上证科创板新材料etf",
-      "price": "1.402",
-      "pct": -4.104
+      "code": "159278.SZ",
+      "name": "鹏华国证机器人产业etf",
+      "price": "1.186",
+      "pct": -5.9479999999999995
     },
     {
-      "code": "588280.SH",
-      "name": "华安上证科创板50etf",
-      "price": "1.431",
-      "pct": -3.8309999999999995
+      "code": "159559.SZ",
+      "name": "景顺长城国证机器人产业etf",
+      "price": "1.500",
+      "pct": -5.897
     }
   ],
   "macro": {
