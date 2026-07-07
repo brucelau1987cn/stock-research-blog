@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-07-06 17:31:10 HKT",
-  "trading_day": "2026-07-06",
+  "as_of": "2026-07-07 17:30:00 HKT",
+  "trading_day": "2026-07-07",
   "stocks": [
     {
       "name": "绿的谐波",
@@ -11,7 +11,8 @@
       "sector_label": "🤖 人形机器人",
       "amplitude": 7.106557,
       "turnover": 11.907,
-      "amount_yi": 102.96
+      "amount_yi": 102.96,
+      "serenity_view": "7/7 Figure估值锚印证Agility洼地；7/6 Amazon生态催化机器人；7/4 智元64小时实测验证工业落地；7/3 绿的谐波触及涨停创历史新高，回调分批低吸。"
     },
     {
       "name": "雅克科技",
@@ -22,7 +23,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": 12.030075,
       "turnover": 12.882,
-      "amount_yi": 77.79
+      "amount_yi": 77.79,
+      "serenity_view": "7/6 Nomura报告InP及外延片大涨，拉动电子特气需求；7/3 AXTI与COHR签订晶圆预付款协议，InP晶圆拉动上游材料供需偏紧；雅克科技承接国产替代逻辑。"
     },
     {
       "name": "三安光电",
@@ -33,7 +35,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 10.422381,
       "turnover": 5.72,
-      "amount_yi": 50.76
+      "amount_yi": 50.76,
+      "serenity_view": "7/6 Kepler上调代工厂XFAB至买入评级，SiC/GaN结构性成长；7/3 AXTI晶圆预付款订单证实材料紧缺，三安光电承接化合物半导体国产化。"
     },
     {
       "name": "云南锗业",
@@ -44,7 +47,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 6.947749,
       "turnover": 8.774,
-      "amount_yi": 60.85
+      "amount_yi": 60.85,
+      "serenity_view": "7/6 Nomura报告InP衬底大涨42%-78%，InP瓶颈逻辑实锤；7/3 AXTI与COHR签预付款协议，云南锗业作为锗/InP材料上游直接受益，右侧跟进。"
     },
     {
       "name": "立昂微",
@@ -55,7 +59,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 10.483996,
       "turnover": 10.225,
-      "amount_yi": 48.11
+      "amount_yi": 48.11,
+      "serenity_view": "7/6 Nomura报告InP衬底大涨，三环及被动元件紧缺；7/3 上游材料签预付长约证实化合物晶圆供需偏紧；立昂微承接外延片，等待利用率回升。"
     },
     {
       "name": "北方华创",
@@ -66,7 +71,8 @@
       "sector_label": "⚙️ 半导体设备",
       "amplitude": 8.189950999999999,
       "turnover": 2.102,
-      "amount_yi": 121.93
+      "amount_yi": 121.93,
+      "serenity_view": "7/6 Terawulf与Anthropic签190亿租赁推高Colo/AI资本支出；7/5 存储龙头MU广岛追加投产扩产；北方华创作为前道设备龙头，回调分批低吸。"
     },
     {
       "name": "沪硅产业",
@@ -77,7 +83,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 8.572256,
       "turnover": 5.445,
-      "amount_yi": 53.31
+      "amount_yi": 53.31,
+      "serenity_view": "7/6 Nomura报告化合物衬底大涨，大摩预期NAND紧缺至2027年；沪硅产业承接大硅片与先进封装外延，等待企稳。"
     },
     {
       "name": "天孚通信",
@@ -88,7 +95,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 9.012395,
       "turnover": 4.255,
-      "amount_yi": 111.09
+      "amount_yi": 111.09,
+      "serenity_view": "7/7 NVDA辟谣Kyber延迟，扫清做空阴霾；7/5 UDN曝光SemiAnalysis做空砸盘后低吸；天孚作为CPO/光器件封装龙头，回调分批低吸。"
     },
     {
       "name": "拓荆科技",
@@ -99,7 +107,8 @@
       "sector_label": "⚙️ 半导体设备",
       "amplitude": null,
       "turnover": 0.0,
-      "amount_yi": null
+      "amount_yi": null,
+      "serenity_view": "7/6 Terawulf与Anthropic签190亿租赁，AI capex依然强劲；7/5 MU 1.5万亿日元广岛建厂；拓荆科技承接PECVD/ALD等设备国产化替代。"
     },
     {
       "name": "长电科技",
@@ -110,7 +119,8 @@
       "sector_label": "🔧 ASIC 封测",
       "amplitude": 7.7244720000000004,
       "turnover": 11.648,
-      "amount_yi": 197.49
+      "amount_yi": 197.49,
+      "serenity_view": "7/7 NVDA辟谣Kyber延迟，先进封装景气无虞；7/5 三星与住友化学玻璃基合资 GlaSSEM 成立推进量产；长电科技承接先进封装与Chiplet封测国产化。"
     },
     {
       "name": "通富微电",
@@ -121,7 +131,8 @@
       "sector_label": "🔧 ASIC 封测",
       "amplitude": 6.435185000000001,
       "turnover": 7.303,
-      "amount_yi": 73.73
+      "amount_yi": 73.73,
+      "serenity_view": "7/7 NVDA辟谣Kyber延迟，先进封装与封测修复；7/6 WULF签订190亿DC租赁提振服务器及GPU封测；通富微电承接海外算力芯片封测代工需求。"
     },
     {
       "name": "昊华科技",
@@ -132,7 +143,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": 14.98487,
       "turnover": 8.953999999999999,
-      "amount_yi": 70.1
+      "amount_yi": 70.1,
+      "serenity_view": "7/6 化合物半导体材料价格大涨，拉动电子特气；7/3 材料晶圆长约签订证实紧缺；昊华科技承接特气与氟化工，关注产能释放。"
     },
     {
       "name": "沃格光电",
@@ -143,7 +155,8 @@
       "sector_label": "🧊 TGV / 玻璃基板",
       "amplitude": 10.940919000000001,
       "turnover": 10.077,
-      "amount_yi": 28.93
+      "amount_yi": 28.93,
+      "serenity_view": "7/3 三星电机与住友化学成立合资公司GlaSSEM，玻璃基板量产时间表落地；沃格光电为玻璃通孔（TGV）最直接映射，关注资格认证。"
     },
     {
       "name": "中际旭创",
@@ -154,7 +167,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 7.227599,
       "turnover": 2.843,
-      "amount_yi": 347.04
+      "amount_yi": 347.04,
+      "serenity_view": "7/7 NVDA辟谣Kyber延迟，扫清做空阴霾；7/6 Sivers评为下个LITE并指明ELS/LRO量产；中际旭创承接全球CPO龙头估值，分批低吸。"
     },
     {
       "name": "中船特气",
@@ -165,7 +179,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": 13.006603,
       "turnover": 9.205,
-      "amount_yi": 43.35
+      "amount_yi": 43.35,
+      "serenity_view": "7/6 Nomura报告化合物半导体涨价拉动特气需求；7/3 化合物材料晶圆长约签订；中船特气承接电子特气国产化，关注产能释放。"
     },
     {
       "name": "新易盛",
@@ -176,7 +191,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.323194,
       "turnover": 3.4419999999999997,
-      "amount_yi": 221.49
+      "amount_yi": 221.49,
+      "serenity_view": "7/7 NVDA辟谣Kyber延迟，光通信板块强劲修复；7/6 Sivers评为下个LITE并指明JBL 1.6T LRO量产；新易盛CPO高弹性，逢回调配置。"
     },
     {
       "name": "金宏气体",
@@ -187,7 +203,8 @@
       "sector_label": "💨 电子特气 + 外延片",
       "amplitude": 10.925,
       "turnover": 12.076,
-      "amount_yi": 24.42
+      "amount_yi": 24.42,
+      "serenity_view": "7/6 Nomura报告化合物外延片价格大涨，拉动大宗及特气需求；7/5 MU广岛扩产增加设备与特气需求；金宏气体承接特气与大宗气体映射。"
     },
     {
       "name": "光库科技",
@@ -198,7 +215,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 7.714972,
       "turnover": 3.8080000000000003,
-      "amount_yi": 28.46
+      "amount_yi": 28.46,
+      "serenity_view": "7/7 NVDA辟谣Kyber延迟，板块强劲修复；7/6 Sivers与GF的SCALE及O-Net合作量产；光库科技承接铌酸锂与高功率光器件映射。"
     }
   ],
   "etf_top": [
