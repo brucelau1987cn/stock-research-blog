@@ -1,102 +1,94 @@
 {
-  "as_of": "2026-07-07 17:30:00 HKT",
+  "as_of": "2026-07-07 17:31:03 HKT",
   "trading_day": "2026-07-07",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "453.98",
-      "pct": "-6.9713",
+      "price": "465.07",
+      "pct": "2.4428",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 7.106557,
-      "turnover": 11.907,
-      "amount_yi": 102.96,
-      "serenity_view": "7/7 Figure估值锚印证Agility洼地；7/6 Amazon生态催化机器人；7/4 智元64小时实测验证工业落地；7/3 绿的谐波触及涨停创历史新高，回调分批低吸。"
+      "amplitude": 10.65906,
+      "turnover": 10.349,
+      "amount_yi": 87.56
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "186.45",
-      "pct": "-6.5414",
+      "price": "185.82",
+      "pct": "-0.3379",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 12.030075,
-      "turnover": 12.882,
-      "amount_yi": 77.79,
-      "serenity_view": "7/6 Nomura报告InP及外延片大涨，拉动电子特气需求；7/3 AXTI与COHR签订晶圆预付款协议，InP晶圆拉动上游材料供需偏紧；雅克科技承接国产替代逻辑。"
+      "amplitude": 6.613033,
+      "turnover": 9.119,
+      "amount_yi": 54.49
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "17.35",
-      "pct": "-4.8272",
+      "price": "17.78",
+      "pct": "2.4784",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 10.422381,
-      "turnover": 5.72,
-      "amount_yi": 50.76,
-      "serenity_view": "7/6 Kepler上调代工厂XFAB至买入评级，SiC/GaN结构性成长；7/3 AXTI晶圆预付款订单证实材料紧缺，三安光电承接化合物半导体国产化。"
+      "amplitude": 7.550432,
+      "turnover": 6.535,
+      "amount_yi": 57.48
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "105.31",
-      "pct": "0.2284",
+      "price": "110.0",
+      "pct": "4.4535",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 6.947749,
-      "turnover": 8.774,
-      "amount_yi": 60.85,
-      "serenity_view": "7/6 Nomura报告InP衬底大涨42%-78%，InP瓶颈逻辑实锤；7/3 AXTI与COHR签预付款协议，云南锗业作为锗/InP材料上游直接受益，右侧跟进。"
+      "amplitude": 5.906372,
+      "turnover": 10.073,
+      "amount_yi": 71.22
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "59.49",
-      "pct": "-8.0099",
+      "price": "60.53",
+      "pct": "1.7482",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 10.483996,
-      "turnover": 10.225,
-      "amount_yi": 48.11,
-      "serenity_view": "7/6 Nomura报告InP衬底大涨，三环及被动元件紧缺；7/3 上游材料签预付长约证实化合物晶圆供需偏紧；立昂微承接外延片，等待利用率回升。"
+      "amplitude": 6.421246999999999,
+      "turnover": 7.3389999999999995,
+      "amount_yi": 34.48
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "803.6",
-      "pct": "-1.5196",
+      "price": "806.39",
+      "pct": "0.3472",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 8.189950999999999,
-      "turnover": 2.102,
-      "amount_yi": 121.93,
-      "serenity_view": "7/6 Terawulf与Anthropic签190亿租赁推高Colo/AI资本支出；7/5 存储龙头MU广岛追加投产扩产；北方华创作为前道设备龙头，回调分批低吸。"
+      "amplitude": 7.008462,
+      "turnover": 1.806,
+      "amount_yi": 105.62
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "34.61",
-      "pct": "0.2317",
+      "price": "36.28",
+      "pct": "4.8252",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 8.572256,
-      "turnover": 5.445,
-      "amount_yi": 53.31,
-      "serenity_view": "7/6 Nomura报告化合物衬底大涨，大摩预期NAND紧缺至2027年；沪硅产业承接大硅片与先进封装外延，等待企稳。"
+      "amplitude": 10.863912000000001,
+      "turnover": 6.515,
+      "amount_yi": 67.62
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "237.0",
-      "pct": "-5.2379",
+      "price": "244.09",
+      "pct": "2.9916",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 9.012395,
-      "turnover": 4.255,
-      "amount_yi": 111.09,
-      "serenity_view": "7/7 NVDA辟谣Kyber延迟，扫清做空阴霾；7/5 UDN曝光SemiAnalysis做空砸盘后低吸；天孚作为CPO/光器件封装龙头，回调分批低吸。"
+      "amplitude": 4.995781,
+      "turnover": 3.897,
+      "amount_yi": 102.1
     },
     {
       "name": "拓荆科技",
@@ -107,180 +99,170 @@
       "sector_label": "⚙️ 半导体设备",
       "amplitude": null,
       "turnover": 0.0,
-      "amount_yi": null,
-      "serenity_view": "7/6 Terawulf与Anthropic签190亿租赁，AI capex依然强劲；7/5 MU 1.5万亿日元广岛建厂；拓荆科技承接PECVD/ALD等设备国产化替代。"
+      "amount_yi": null
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "95.09",
-      "pct": "4.6325",
+      "price": "100.99",
+      "pct": "6.2046",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 7.7244720000000004,
-      "turnover": 11.648,
-      "amount_yi": 197.49,
-      "serenity_view": "7/7 NVDA辟谣Kyber延迟，先进封装景气无虞；7/5 三星与住友化学玻璃基合资 GlaSSEM 成立推进量产；长电科技承接先进封装与Chiplet封测国产化。"
+      "amplitude": 11.652118999999999,
+      "turnover": 12.697,
+      "amount_yi": 225.79
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "66.18",
-      "pct": "2.1296",
+      "price": "68.21",
+      "pct": "3.0674",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 6.435185000000001,
-      "turnover": 7.303,
-      "amount_yi": 73.73,
-      "serenity_view": "7/7 NVDA辟谣Kyber延迟，先进封装与封测修复；7/6 WULF签订190亿DC租赁提振服务器及GPU封测；通富微电承接海外算力芯片封测代工需求。"
+      "amplitude": 8.763977,
+      "turnover": 8.307,
+      "amount_yi": 85.76
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "68.41",
-      "pct": "-9.9987",
+      "price": "65.57",
+      "pct": "-4.1514",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 14.98487,
-      "turnover": 8.953999999999999,
-      "amount_yi": 70.1,
-      "serenity_view": "7/6 化合物半导体材料价格大涨，拉动电子特气；7/3 材料晶圆长约签订证实紧缺；昊华科技承接特气与氟化工，关注产能释放。"
+      "amplitude": 6.431808,
+      "turnover": 6.5,
+      "amount_yi": 45.77
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "123.39",
-      "pct": "-10.0000",
+      "price": "120.69",
+      "pct": "-2.1882",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 10.940919000000001,
-      "turnover": 10.077,
-      "amount_yi": 28.93,
-      "serenity_view": "7/3 三星电机与住友化学成立合资公司GlaSSEM，玻璃基板量产时间表落地；沃格光电为玻璃通孔（TGV）最直接映射，关注资格认证。"
+      "amplitude": 5.867573999999999,
+      "turnover": 7.674,
+      "amount_yi": 20.97
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "1098.92",
-      "pct": "-1.5305",
+      "price": "1121.9",
+      "pct": "2.0911",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 7.227599,
-      "turnover": 2.843,
-      "amount_yi": 347.04,
-      "serenity_view": "7/7 NVDA辟谣Kyber延迟，扫清做空阴霾；7/6 Sivers评为下个LITE并指明ELS/LRO量产；中际旭创承接全球CPO龙头估值，分批低吸。"
+      "amplitude": 4.477123000000001,
+      "turnover": 2.6390000000000002,
+      "amount_yi": 327.09
     },
     {
       "name": "中船特气",
       "code": "688146",
-      "price": "302.8",
-      "pct": "-8.2813",
+      "price": "315.99",
+      "pct": "4.3560",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 13.006603,
-      "turnover": 9.205,
-      "amount_yi": 43.35,
-      "serenity_view": "7/6 Nomura报告化合物半导体涨价拉动特气需求；7/3 化合物材料晶圆长约签订；中船特气承接电子特气国产化，关注产能释放。"
+      "amplitude": 12.982166000000001,
+      "turnover": 10.362,
+      "amount_yi": 44.11
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "506.89",
-      "pct": "-3.6331",
+      "price": "510.1",
+      "pct": "0.6333",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 5.323194,
-      "turnover": 3.4419999999999997,
-      "amount_yi": 221.49,
-      "serenity_view": "7/7 NVDA辟谣Kyber延迟，光通信板块强劲修复；7/6 Sivers评为下个LITE并指明JBL 1.6T LRO量产；新易盛CPO高弹性，逢回调配置。"
+      "amplitude": 5.5455820000000005,
+      "turnover": 3.6220000000000003,
+      "amount_yi": 229.35
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "36.89",
-      "pct": "-7.7750",
+      "price": "37.08",
+      "pct": "0.5150",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 10.925,
-      "turnover": 12.076,
-      "amount_yi": 24.42,
-      "serenity_view": "7/6 Nomura报告化合物外延片价格大涨，拉动大宗及特气需求；7/5 MU广岛扩产增加设备与特气需求；金宏气体承接特气与大宗气体映射。"
+      "amplitude": 4.310111,
+      "turnover": 9.085,
+      "amount_yi": 17.89
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "296.72",
-      "pct": "-4.9736",
+      "price": "296.95",
+      "pct": "0.0775",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 7.714972,
-      "turnover": 3.8080000000000003,
-      "amount_yi": 28.46,
-      "serenity_view": "7/7 NVDA辟谣Kyber延迟，板块强劲修复；7/6 Sivers与GF的SCALE及O-Net合作量产；光库科技承接铌酸锂与高功率光器件映射。"
+      "amplitude": 5.668644,
+      "turnover": 3.7920000000000003,
+      "amount_yi": 27.54
     }
   ],
   "etf_top": [
     {
-      "code": "159827.SZ",
-      "name": "农业50",
-      "price": "0.775",
-      "pct": 4.3069999999999995
+      "code": "589020.SH",
+      "name": "鹏华科创板半导体材料设备主题etf",
+      "price": "2.999",
+      "pct": 3.628
     },
     {
-      "code": "159027.SZ",
-      "name": "大成中证畜牧养殖产业etf",
-      "price": "0.898",
-      "pct": 4.297
+      "code": "588710.SH",
+      "name": "华泰柏瑞上证科创板半导体材料设备主题etf",
+      "price": "3.815",
+      "pct": 3.556
     },
     {
-      "code": "159020.SZ",
-      "name": "易方达中证畜牧养殖产业etf",
-      "price": "0.900",
-      "pct": 4.287
+      "code": "159203.SZ",
+      "name": "博时国证大盘成长etf",
+      "price": "1.480",
+      "pct": 3.497
     },
     {
-      "code": "515220.SH",
-      "name": "国泰中证煤炭etf",
-      "price": "1.162",
-      "pct": 4.215
+      "code": "588170.SH",
+      "name": "华夏上证科创板半导体材料设备主题etf",
+      "price": "1.232",
+      "pct": 3.356
     },
     {
-      "code": "159172.SZ",
-      "name": "汇添富中证畜牧养殖产业etf",
-      "price": "0.825",
-      "pct": 4.035
+      "code": "588550.SH",
+      "name": "易方达上证科创板综合增强策略etf",
+      "price": "1.665",
+      "pct": 2.21
     }
   ],
   "etf_bottom": [
     {
-      "code": "159050.SZ",
-      "name": "广发国证机器人产业etf",
-      "price": "1.066",
-      "pct": -6.737
+      "code": "589720.SH",
+      "name": "国泰上证科创板创新药etf",
+      "price": "0.920",
+      "pct": -6.122
     },
     {
-      "code": "159039.SZ",
-      "name": "华安国证机器人产业etf",
-      "price": "1.049",
-      "pct": -6.673
+      "code": "589120.SH",
+      "name": "汇添富上证科创板创新药etf",
+      "price": "0.848",
+      "pct": -5.987
     },
     {
-      "code": "159272.SZ",
-      "name": "富国国证机器人产业etf",
-      "price": "1.007",
-      "pct": -6.326
+      "code": "588700.SH",
+      "name": "嘉实上证科创板生物医药etf",
+      "price": "1.010",
+      "pct": -4.896
     },
     {
-      "code": "159278.SZ",
-      "name": "鹏华国证机器人产业etf",
-      "price": "1.186",
-      "pct": -5.9479999999999995
+      "code": "517110.SH",
+      "name": "国泰中证沪港深创新药产业etf",
+      "price": "0.713",
+      "pct": -4.806
     },
     {
-      "code": "159559.SZ",
-      "name": "景顺长城国证机器人产业etf",
-      "price": "1.500",
-      "pct": -5.897
+      "code": "588250.SH",
+      "name": "鹏华上证科创板生物医药etf",
+      "price": "1.055",
+      "pct": -4.7829999999999995
     }
   ],
   "macro": {
