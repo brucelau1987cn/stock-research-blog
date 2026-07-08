@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-07-07 17:31:03 HKT",
+  "as_of": "2026-07-08 09:11:28 BJT (narrative-refresh; price snapshot from 2026-07-07 17:31:03 HKT)",
   "trading_day": "2026-07-07",
   "stocks": [
     {
@@ -11,7 +11,8 @@
       "sector_label": "🤖 人形机器人",
       "amplitude": 10.65906,
       "turnover": 10.349,
-      "amount_yi": 87.56
+      "amount_yi": 87.56,
+      "view": "7/8 中国 humanoid 年产 10万台预期显著上修；绿的谐波作为减速器核心映射，回调分批低吸。"
     },
     {
       "name": "雅克科技",
@@ -88,7 +89,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 4.995781,
       "turnover": 3.897,
-      "amount_yi": 102.1
+      "amount_yi": 102.1,
+      "view": "光模块/光器件核心映射，7/8 砸盘更像去杠杆而非基本面破坏。"
     },
     {
       "name": "拓荆科技",
@@ -154,7 +156,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 4.477123000000001,
       "turnover": 2.6390000000000002,
-      "amount_yi": 327.09
+      "amount_yi": 327.09,
+      "view": "7/8 Serenity 将 $META compute / CPO delay 砸盘定义为标题党误杀；$NVDA roadmap 与 Meta 算力需求未坏，CPO 核心回调分批低吸。"
     },
     {
       "name": "中船特气",
@@ -176,7 +179,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.5455820000000005,
       "turnover": 3.6220000000000003,
-      "amount_yi": 229.35
+      "amount_yi": 229.35,
+      "view": "同属 CPO 核心映射，承接 $NVDA 辟谣 + Meta 算力需求未弱 + 机构回补逻辑。"
     },
     {
       "name": "金宏气体",
@@ -198,7 +202,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.668644,
       "turnover": 3.7920000000000003,
-      "amount_yi": 27.54
+      "amount_yi": 27.54,
+      "view": "承接 $SIVE/CW laser chokepoint 与西方 lidar 光学供应链增量收入线索，右侧跟进。"
     }
   ],
   "etf_top": [
