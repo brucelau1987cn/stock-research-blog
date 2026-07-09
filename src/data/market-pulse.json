@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-07-08 17:30:50 HKT",
+  "as_of": "2026-07-09 09:18:00 HKT",
   "trading_day": "2026-07-08",
   "stocks": [
     {
@@ -11,7 +11,8 @@
       "sector_label": "🤖 人形机器人",
       "amplitude": 12.471241,
       "turnover": 10.737,
-      "amount_yi": 80.41
+      "amount_yi": 80.41,
+      "latest_view": "Serenity 7/9 尽可能增持 Agility Robotics，humanoid 被定位为 space/AI 后下一个大主题；回调分批低吸核心减速器映射。"
     },
     {
       "name": "雅克科技",
@@ -88,7 +89,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.325904,
       "turnover": 3.9739999999999998,
-      "amount_yi": 107.29
+      "amount_yi": 107.29,
+      "latest_view": "META 加拿大 $10B DC + $SIVE/Jabil 1.6T LRO qualification 窗口强化 CPO 需求。"
     },
     {
       "name": "拓荆科技",
@@ -154,7 +156,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.770568,
       "turnover": 2.859,
-      "amount_yi": 363.23
+      "amount_yi": 363.23,
+      "latest_view": "META 加拿大 $10B DC 证伪 capex 下修，CPO/光模块需求底不破；回调分批低吸。"
     },
     {
       "name": "中船特气",
@@ -176,7 +179,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 6.910410000000001,
       "turnover": 3.55,
-      "amount_yi": 230.33
+      "amount_yi": 230.33,
+      "latest_view": "META 加拿大 $10B DC 证伪 capex 下修，CPO/光模块链条维持右侧观察。"
     },
     {
       "name": "金宏气体",
@@ -198,7 +202,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 7.395184,
       "turnover": 6.026,
-      "amount_yi": 45.66
+      "amount_yi": 45.66,
+      "latest_view": "Serenity 百万股级持有 $SIVE，CW laser/IP acquisition TAM 继续强化光器件映射。"
     }
   ],
   "etf_top": [
