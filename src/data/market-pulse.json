@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-07-09 17:30:52 HKT",
+  "as_of": "2026-07-10 02:50:03 HKT",
   "trading_day": "2026-07-09",
   "stocks": [
     {
@@ -9,6 +9,7 @@
       "pct": "4.4194",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
+      "latest_view": "7/10 Serenity: 美国 humanoid 拐点出现，$TSLA 量产追赶与 $CCXI 本土供应链路径并行，机器人零部件映射延续。",
       "amplitude": 6.386189000000001,
       "turnover": 7.473000000000001,
       "amount_yi": 54.52
@@ -86,6 +87,7 @@
       "pct": "10.5096",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
+      "latest_view": "7/10 Serenity: $META fiber optics LTA + 7GW compute infra 强化 CPO/光模块需求底；回调按 capex 误杀后的右侧验证处理。",
       "amplitude": 9.935689,
       "turnover": 5.109,
       "amount_yi": 144.67
@@ -152,6 +154,7 @@
       "pct": "5.8980",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
+      "latest_view": "7/10 Serenity: $META memory/fiber LTA 与 $SIVE 内部人买入共同证伪 CPO/AI capex 砸盘叙事，回调分批低吸。",
       "amplitude": 7.354101,
       "turnover": 3.2329999999999997,
       "amount_yi": 416.09
@@ -174,6 +177,7 @@
       "pct": "6.7849",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
+      "latest_view": "7/10 Serenity: $META 2026 年 7GW compute、2027 翻倍，叠加 $SIVE CEO 买入，光模块需求底继续确认。",
       "amplitude": 7.826325000000001,
       "turnover": 3.923,
       "amount_yi": 261.01
@@ -196,6 +200,7 @@
       "pct": "3.5688",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
+      "latest_view": "7/10 Serenity: $SIVE NASDAQ listing 用于融资/IP 收购/TAM expansion，光器件/CW laser 平台化估值逻辑强化。",
       "amplitude": 15.138879999999999,
       "turnover": 7.8020000000000005,
       "amount_yi": 57.44
