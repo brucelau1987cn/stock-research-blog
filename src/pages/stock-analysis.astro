@@ -1,240 +1,35 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
-import { SITE_TITLE } from '../consts';
-import { getPostUrl } from '../utils/postUrl';
+import MarketAnalysisPage from '../components/MarketAnalysisPage.astro';
 
-const stockPosts = (await getCollection('blog'))
+const posts = (await getCollection('blog'))
   .filter((post) => post.data.tags?.includes('个股分析'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const featuredStockPosts = stockPosts;
-const FEATURED_PAGE_SIZE = 6;
-// 解析 frontmatter title，格式：'002026 山东威达：12.06 元...'
-// 返回 { code, name } 两段；拿不到 name 时降级为 code
-const parseStockTitle = (title: string): { code: string; name: string } => {
-  const m = title.match(/^(\d{6})\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
-  if (!m) return { code: title, name: '' };
-  return { code: m[1], name: m[2].trim() };
-};
+  .sort((a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf());
 
-const pageTitle = `A股分析 | ${SITE_TITLE}`;
-const pageDesc = 'A股分析实战量价研判与交易执行日志：结论先行，动态跟踪多空边界与筹码演变，杜绝情绪化盘中决策。';
-
+const methods = [
+  {
+    icon: '🧭',
+    title: '交易框架',
+    lines: ['先给操作定性与优先级，再展开基本面逻辑。', '用成交密集区划定支撑、阻力和防守位。'],
+  },
+  {
+    icon: '📊',
+    title: '数据底座',
+    lines: ['同花顺问财与东方财富妙想双源对账。', '持续跟踪量价、资金与筹码结构。'],
+  },
+  {
+    icon: '🛡️',
+    title: '纪律风控',
+    lines: ['使用 IF-THEN 条件计划。', '跌破失效位退出，放量确认后再增加仓位。'],
+  },
+];
 ---
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <BaseHead title={pageTitle} description={pageDesc} />
-    <style>
 
-      .stock-hero { padding: 2.5rem 0 1rem; }
-      .stock-hero-card { display: flex; align-items: center; gap: 1.25rem; }
-      .stock-profile-icon { display: inline-flex; align-items: center; justify-content: center; width: clamp(5rem, 9vw, 7.5rem); height: clamp(5rem, 9vw, 7.5rem); border-radius: 24px; flex-shrink: 0; border: 1px solid rgba(214, 61, 46, 0.16); box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12); background: linear-gradient(135deg, #fff, var(--accent-soft)); font-size: clamp(2.4rem, 5vw, 3.8rem); }
-      .stock-hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.04em; }
-      .stock-hero .subtitle { font-size: 1.08rem; color: rgb(var(--gray)); line-height: 1.7; margin-top: 0.5rem; max-width: 760px; }
-
-      .intro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; }
-      .tweet { margin: 0; border: 1px solid var(--border); border-radius: 18px; background: white; overflow: hidden; }
-      .tweet-header { display: flex; align-items: center; gap: 0.65rem; padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); background: var(--warm-2); }
-      .tweet-avatar { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; background: rgb(var(--black)); color: white; font-weight: 800; font-size: 0.95rem; flex-shrink: 0; }
-      .tweet-body { padding: 1.2rem; font-size: 1rem; line-height: 1.72; }
-      .tweet-body p { margin-bottom: 0.75rem; margin-top: 0; }
-      .tweet-body p:last-child { margin-bottom: 0; }
-
-      .analysis-section { margin: 2rem 0 1rem; }
-      .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
-      .analysis-section-head h2 { margin: 0; }
-      .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
-      .analysis-grid { display: flex; flex-direction: column; gap: 0.5rem; }
-      .analysis-card { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem; border-radius: 12px; border: 1px solid var(--border); background: white; text-decoration: none; color: rgb(var(--gray-dark)); }
-      .analysis-card:hover { transform: translateY(-1.5px); transition: transform 0.18s ease; background: var(--warm); border-color: rgba(214,61,46,0.18); box-shadow: 0 4px 12px rgba(214,61,46,0.05); }
-      .analysis-card-title { display: flex; align-items: baseline; gap: 0.4rem; color: rgb(var(--black)); margin: 0; line-height: 1; }
-      .analysis-card .stock-name { color: rgb(var(--black)); font-weight: 800; font-size: 1.1rem; }
-      .analysis-card .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.95em; font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace; }
-      .analysis-card .meta { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
-      .analysis-pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; flex-wrap: wrap; }
-      .analysis-pagination button { display: inline-flex; align-items: center; min-height: 2.45rem; padding: 0.48rem 0.98rem; border-radius: 999px; border: 1px solid var(--border); background: linear-gradient(180deg, #fff, #fafafa); color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
-      .analysis-pagination button:hover:not(:disabled) { background: var(--warm-2); border-color: rgba(214,61,46,0.18); }
-      .analysis-pagination button:disabled { opacity: 0.38; cursor: not-allowed; box-shadow: none; }
-      .analysis-pagination .page-info { color: rgb(var(--gray)); font-size: 0.88rem; font-weight: 700; padding: 0 0.2rem; }
-      .analysis-pagination .page-dot { width: 0.45rem; height: 0.45rem; border-radius: 999px; background: rgba(214,61,46,0.45); }
-
-      .section-divider { margin: 2.5rem 0 1rem; display: flex; align-items: center; gap: 1rem; }
-      .section-divider h2 { margin: 0; white-space: nowrap; }
-      .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-      .market-pulse { margin: 1.5rem 0 0; padding: 1.2rem 1.3rem; border-radius: 18px; border: 1px solid var(--border); background: linear-gradient(135deg, #fff, var(--accent-soft)); }
-      .market-pulse-head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
-      .market-pulse-head h2 { margin: 0; font-size: 1.18rem; }
-      .market-pulse-head .pulse-source { display: inline-flex; align-items: center; min-height: 1.9rem; padding: 0.1rem 0.55rem; border-radius: 999px; background: rgba(214,61,46,0.1); color: rgb(180, 50, 40); font-size: 0.8rem; font-weight: 800; }
-      .market-pulse-head .asof { color: rgb(var(--gray)); font-size: 0.85rem; }
-      .market-pulse p { margin: 0.4rem 0; color: rgb(var(--gray-dark)); line-height: 1.7; font-size: 0.96rem; }
-      .market-pulse ul { display: block; list-style: none; margin: 0.5rem 0 0; padding: 0; }
-      .market-pulse li { padding: 0.3rem 0; color: rgb(var(--gray-dark)); line-height: 1.65; font-size: 0.95rem; }
-      .market-pulse li strong { color: rgb(var(--black)); }
-      .pulse-sector { margin: 0.65rem 0 0; padding: 0.6rem 0.85rem 0.7rem; border-radius: 12px; background: rgba(0, 0, 0, 0.025); border-left: 3px solid var(--border); }
-      .pulse-sector-head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.35rem; }
-      .pulse-sector-label { color: rgb(var(--black)); font-weight: 800; font-size: 0.98rem; }
-      .pulse-sector-list { list-style: none; padding: 0; margin: 0.15rem 0 0; display: block !important; }
-      .pulse-sector-list li { display: block !important; padding: 0.18rem 0; color: rgb(var(--gray-dark)); line-height: 1.55; font-size: 0.92rem; }
-      .pulse-tag { display: inline-block; padding: 0.1rem 0.55rem; border-radius: 999px; font-size: 0.78rem; font-weight: 800; margin-right: 0.4rem; }
-      .pulse-tag.up { background: rgba(34, 197, 94, 0.12); color: #15803d; }
-      .pulse-tag.dn { background: rgba(239, 68, 68, 0.12); color: #b91c1c; }
-      .pulse-tag.flat { background: rgba(100, 116, 139, 0.12); color: #475569; }
-
-      ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; list-style-type: none; margin: 0; padding: 0; }
-      ul li:first-child { grid-column: 1 / -1; }
-      .post-card { display: grid; grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; color: rgb(var(--gray-dark)); text-decoration: none; min-height: 13rem; }
-      ul li:first-child .post-card { min-height: 15rem; background: linear-gradient(135deg, #fff, var(--warm-2)); }
-      .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
-      .post-card .title { margin: 0; color: rgb(var(--black)); }
-      .post-card .title .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
-      .post-card .title .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.92em; }
-      .post-card .date { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
-      .post-card .description { margin: 0; color: rgb(var(--gray)); }
-      .empty { text-align: center; padding: 3rem 1rem; color: rgb(var(--gray)); }
-
-      @media (max-width: 820px) { .intro-grid, ul { grid-template-columns: 1fr; } ul li:first-child { grid-column: 1; } }
-      @media (max-width: 560px) { 
-        .stock-hero-card { flex-direction: column; align-items: center; text-align: center; } 
-        .stock-profile-icon { width: 6rem; height: 6rem; border-radius: 20px; } 
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <section class="stock-hero">
-        <div class="stock-hero-card">
-          <div class="stock-profile-icon" aria-hidden="true">📈</div>
-          <div>
-            <span class="pill">📈 A股分析 专栏</span>
-            <h1>A股分析</h1>
-            <p class="subtitle">{pageDesc}</p>
-            <p class="subtitle" style="margin-top:0.6rem;font-size:0.95rem;">
-              <strong>核心理念：</strong>结论先行 · 动态跟踪 · 量化纪律执行
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div class="intro-grid">
-        <div class="tweet">
-          <div class="tweet-header">
-            <span class="tweet-avatar">🧭</span>
-            <div><strong>交易框架</strong></div>
-          </div>
-          <div class="tweet-body">
-            <p>每篇首发<strong>操作定性与优先级</strong>，先立交易计划，后讲基本逻辑故事。</p>
-            <p>用成交密集区划定支撑/阻力/防守位，依据客观<strong>多空边界</strong>判断盘口强弱，杜绝情绪化临盘决策。</p>
-          </div>
-        </div>
-        
-        <div class="tweet">
-          <div class="tweet-header">
-            <span class="tweet-avatar">📊</span>
-            <div><strong>数据底座</strong></div>
-          </div>
-          <div class="tweet-body">
-            <p>采用<strong>双源数据对账</strong>进行动态监控（同花顺问财 + 东方财富妙想），确保量价与筹码数据的准确性。</p>
-            <p><strong>红下蓝上策略</strong>：监控极值获利盘与套牢盘变动，抓捕破位点与情绪拐点。</p>
-          </div>
-        </div>
-
-        <div class="tweet">
-          <div class="tweet-header">
-            <span class="tweet-avatar">🛡️</span>
-            <div><strong>纪律风控</strong></div>
-          </div>
-          <div class="tweet-body">
-            <p>强制<strong>条件执行计划（IF-THEN）</strong>：</p>
-            <p>IF 跌破风控支撑位，无条件清仓出局，绝不被动扛单。</p>
-            <p>IF 放量站稳攻击线，分批右侧加仓。交易就是机械的信号执行器。</p>
-          </div>
-        </div>
-      </div>
-
-
-      <section class="analysis-section" aria-label="本次个股分析总览">
-        <div class="analysis-section-head">
-          <h2>📈 A股分析</h2>
-          <p>每篇单独点击查看详情；这里先给结论总览。</p>
-        </div>
-        {featuredStockPosts.length > 0 ? (
-          <>
-          <div class="analysis-grid" id="analysis-grid">
-            {featuredStockPosts.map((post) => {
-              const s = parseStockTitle(post.data.title);
-              return (
-                <a class="analysis-card analysis-card-item" href={getPostUrl(post)}>
-                  <strong class="analysis-card-title">
-                    {s.name ? <span class="stock-name">{s.name}</span> : null}
-                    <span class="stock-code">{s.code}</span>
-                  </strong>
-                  <div class="meta">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></div>
-                </a>
-              );
-            })}
-          </div>
-          {featuredStockPosts.length > FEATURED_PAGE_SIZE ? (
-            <div class="analysis-pagination" aria-label="A股分析分页">
-              <button type="button" id="analysis-prev" disabled>← 上一页</button>
-              <span class="page-info" id="analysis-page-info"></span>
-              <button type="button" id="analysis-next">下一页 →</button>
-            </div>
-          ) : null}
-          </>
-        ) : (
-          <div class="empty">暂无A股分析文章。</div>
-        )}
-      </section>
-
-      <script is:inline>
-        (() => {
-          const pageSize = 6;
-          const cards = Array.from(document.querySelectorAll('.analysis-card-item'));
-          const prev = document.getElementById('analysis-prev');
-          const next = document.getElementById('analysis-next');
-          const info = document.getElementById('analysis-page-info');
-          if (!cards.length || !prev || !next || !info) return;
-          const totalPages = Math.max(1, Math.ceil(cards.length / pageSize));
-          let page = 1;
-
-          const render = () => {
-            cards.forEach((card, index) => {
-              const visible = Math.floor(index / pageSize) + 1 === page;
-              card.style.display = visible ? '' : 'none';
-            });
-            prev.disabled = page <= 1;
-            next.style.display = page >= totalPages ? 'none' : '';
-            info.innerHTML = `${page}/${totalPages}`;
-          };
-
-          prev.addEventListener('click', () => {
-            if (page > 1) {
-              page -= 1;
-              render();
-              document.querySelector('.analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          });
-          next.addEventListener('click', () => {
-            if (page < totalPages) {
-              page += 1;
-              render();
-              document.querySelector('.analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          });
-
-          render();
-        })();
-      </script>
-
-      
-
-    </main>
-    <Footer />
-  </body>
-</html>
+<MarketAnalysisPage
+  posts={posts}
+  title="A股分析"
+  icon="📈"
+  description="A股量价研判与交易执行日志：结论先行，动态跟踪多空边界与筹码演变。"
+  focus="核心框架：结论先行 · 双源校验 · 条件执行"
+  methods={methods}
+/>

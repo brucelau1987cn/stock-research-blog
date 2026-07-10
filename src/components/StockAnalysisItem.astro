@@ -1,0 +1,71 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { getPostUrl } from '../utils/postUrl';
+
+type Props = {
+  post: CollectionEntry<'blog'>;
+  code: string;
+  name: string;
+  class?: string;
+};
+
+const { post, code, name, class: className = '' } = Astro.props;
+const decision = post.data.decision;
+const formatPrice = (value: number) => {
+  if (!decision) return String(value);
+  const digits = decision.currency === 'USD' ? 3 : 2;
+  const number = value.toFixed(digits).replace(/0+$/, '').replace(/\.$/, '');
+  return decision.currency === 'USD' ? `$${number}` : `${number} ${decision.currency}`;
+};
+---
+
+<a class:list={['analysis-card', 'analysis-card-item', className]} href={getPostUrl(post)}>
+  <div class="analysis-main">
+    <div class="analysis-title-row">
+      <strong class="analysis-card-title">
+        {name ? <span class="stock-name">{name}</span> : null}
+        <span class="stock-code">{code}</span>
+      </strong>
+      {decision && <span class="status-tag">{decision.status}</span>}
+    </div>
+    {decision ? (
+      <>
+        <p class="analysis-action">{decision.action}</p>
+        <div class="analysis-levels">
+          <span>现价 <strong>{formatPrice(decision.currentPrice)}</strong></span>
+          <span>{decision.resistance.label} <strong>{formatPrice(decision.resistance.value)}</strong></span>
+          <span>{decision.support.label} <strong>{formatPrice(decision.support.value)}</strong></span>
+        </div>
+      </>
+    ) : (
+      <p class="analysis-action legacy">{post.data.description}</p>
+    )}
+  </div>
+  <div class="analysis-side">
+    <span class="meta">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></span>
+    <span class="open-label" aria-hidden="true">查看分析 →</span>
+  </div>
+</a>
+
+<style>
+  .analysis-card { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.25rem; padding: 1rem 1.1rem; border-radius: 8px; border: 1px solid var(--border); background: white; text-decoration: none; color: rgb(var(--gray-dark)); }
+  .analysis-card:hover { transform: translateY(-1px); background: var(--warm); border-color: rgba(214,61,46,0.18); box-shadow: 0 4px 12px rgba(214,61,46,0.05); }
+  .analysis-main { min-width: 0; flex: 1; }
+  .analysis-title-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .analysis-card-title { display: flex; align-items: baseline; gap: 0.4rem; color: rgb(var(--black)); margin: 0; line-height: 1; }
+  .stock-name { color: rgb(var(--black)); font-weight: 800; font-size: 1.05rem; }
+  .stock-code { color: rgb(var(--gray)); font-weight: 700; font-size: 0.9em; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .status-tag { padding: 0.18rem 0.45rem; border-radius: 4px; background: var(--accent-soft); color: var(--accent-dark); font-size: 0.74rem; font-weight: 800; }
+  .analysis-action { margin: 0.5rem 0 0; color: rgb(var(--gray-dark)); font-size: 0.9rem; line-height: 1.5; }
+  .analysis-action.legacy { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; color: rgb(var(--gray)); }
+  .analysis-levels { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.55rem; color: rgb(var(--gray)); font-size: 0.8rem; }
+  .analysis-levels strong { color: rgb(var(--black)); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .analysis-side { display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem; flex-shrink: 0; }
+  .analysis-side .meta { color: rgb(var(--gray)); font-size: 0.8rem; }
+  .open-label { color: var(--accent); font-size: 0.8rem; font-weight: 800; }
+  @media (max-width: 820px) {
+    .analysis-card { flex-direction: column; }
+    .analysis-side { align-items: flex-start; }
+  }
+</style>

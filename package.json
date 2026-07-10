@@ -7,7 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "python3 scripts/generate_og_images.py && astro build",
+    "test": "node --test tests/*.test.mjs",
+    "validate:decisions": "node scripts/validate-decisions.mjs",
+    "generate:og": "python3 scripts/generate_og_images.py",
+    "build": "npm run validate:decisions && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -16,6 +19,7 @@
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^6.4.2",
-    "sharp": "^0.34.3"
+    "sharp": "^0.34.3",
+    "yaml": "^2.9.0"
   }
 }

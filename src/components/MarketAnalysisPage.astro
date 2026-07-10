@@ -1,0 +1,134 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from './BaseHead.astro';
+import Footer from './Footer.astro';
+import Header from './Header.astro';
+import StockAnalysisItem from './StockAnalysisItem.astro';
+import { SITE_TITLE } from '../consts';
+
+type Method = { icon: string; title: string; lines: string[] };
+type Props = {
+  posts: CollectionEntry<'blog'>[];
+  title: string;
+  icon: string;
+  description: string;
+  focus: string;
+  methods: Method[];
+};
+
+const { posts, title, icon, description, focus, methods } = Astro.props;
+const PAGE_SIZE = 6;
+const parseTitle = (value: string) => {
+  const match = value.match(/^(\S+)\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
+  return match ? { code: match[1], name: match[2].trim() } : { code: value, name: '' };
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} />
+    <style>
+      .market-head { display: flex; align-items: center; gap: 1rem; padding: 1.4rem 0 0.6rem; }
+      .market-icon { display: inline-flex; align-items: center; justify-content: center; width: 4.5rem; height: 4.5rem; border-radius: 8px; border: 1px solid var(--border); background: var(--warm-2); font-size: 2.2rem; flex-shrink: 0; }
+      .market-head h1 { margin: 0.3rem 0; font-size: clamp(1.8rem, 4vw, 2.45rem); letter-spacing: 0; }
+      .market-head p { margin: 0; max-width: 760px; color: rgb(var(--gray)); line-height: 1.6; }
+      .focus { margin-top: 0.35rem !important; font-size: 0.9rem; font-weight: 700; }
+      .analysis-section { margin: 1.4rem 0 1rem; }
+      .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+      .analysis-section-head h2 { margin: 0; font-size: 1.35rem; }
+      .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
+      .analysis-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+      .pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; }
+      .pagination button { min-height: 2.4rem; padding: 0.45rem 0.9rem; border-radius: 6px; border: 1px solid var(--border); background: #fff; color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; }
+      .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+      .page-info { color: rgb(var(--gray)); font-size: 0.85rem; font-weight: 700; }
+      .method-details { margin: 1.2rem 0 2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .method-details summary { padding: 0.85rem 0; cursor: pointer; color: rgb(var(--gray-dark)); font-weight: 800; }
+      .methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; padding-bottom: 1rem; }
+      .method { padding: 1rem; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+      .method h3 { margin: 0 0 0.6rem; font-size: 0.95rem; }
+      .method p { margin: 0.35rem 0; color: rgb(var(--gray)); font-size: 0.88rem; line-height: 1.55; }
+      .empty { padding: 1.2rem 0; color: rgb(var(--gray)); }
+      @media (max-width: 720px) {
+        .market-head { align-items: flex-start; }
+        .market-icon { width: 3.5rem; height: 3.5rem; font-size: 1.8rem; }
+        .methods { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section class="market-head">
+        <div class="market-icon" aria-hidden="true">{icon}</div>
+        <div>
+          <span class="pill">{icon} {title}专栏</span>
+          <h1>{title}</h1>
+          <p>{description}</p>
+          <p class="focus">{focus}</p>
+        </div>
+      </section>
+
+      <section class="analysis-section" aria-label={`${title}文章列表`}>
+        <div class="analysis-section-head">
+          <h2>最新{title}</h2>
+          <p>按最后更新时间排序，先看结论、关键位与动作。</p>
+        </div>
+        {posts.length ? (
+          <>
+            <div class="analysis-grid" id="analysis-grid">
+              {posts.map((post) => {
+                const parsed = parseTitle(post.data.title);
+                return <StockAnalysisItem post={post} code={parsed.code} name={parsed.name} />;
+              })}
+            </div>
+            {posts.length > PAGE_SIZE && (
+              <div class="pagination" aria-label={`${title}分页`}>
+                <button type="button" id="analysis-prev" disabled>← 上一页</button>
+                <span class="page-info" id="analysis-page-info"></span>
+                <button type="button" id="analysis-next">下一页 →</button>
+              </div>
+            )}
+          </>
+        ) : <div class="empty">暂无{title}文章，栏目将在有真实研究内容后展示。</div>}
+      </section>
+
+      <details class="method-details">
+        <summary>查看分析方法与数据口径</summary>
+        <div class="methods">
+          {methods.map((method) => (
+            <section class="method">
+              <h3>{method.icon} {method.title}</h3>
+              {method.lines.map((line) => <p>{line}</p>)}
+            </section>
+          ))}
+        </div>
+      </details>
+
+      {posts.length > PAGE_SIZE && (
+        <script is:inline define:vars={{ pageSize: PAGE_SIZE }}>
+          (() => {
+            const cards = [...document.querySelectorAll('.analysis-card-item')];
+            const prev = document.getElementById('analysis-prev');
+            const next = document.getElementById('analysis-next');
+            const info = document.getElementById('analysis-page-info');
+            if (!prev || !next || !info) return;
+            const total = Math.ceil(cards.length / pageSize);
+            let page = 1;
+            const render = () => {
+              cards.forEach((card, index) => card.toggleAttribute('hidden', Math.floor(index / pageSize) + 1 !== page));
+              prev.disabled = page === 1;
+              next.hidden = page === total;
+              info.textContent = `${page}/${total}`;
+            };
+            prev.addEventListener('click', () => { if (page > 1) { page -= 1; render(); } });
+            next.addEventListener('click', () => { if (page < total) { page += 1; render(); } });
+            render();
+          })();
+        </script>
+      )}
+    </main>
+    <Footer />
+  </body>
+</html>

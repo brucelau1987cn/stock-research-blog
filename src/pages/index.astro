@@ -4,7 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getPostUrl } from '../utils/postUrl';
 
 const allPosts = (await getCollection('blog')).sort((a, b) => {
@@ -12,25 +12,27 @@ const allPosts = (await getCollection('blog')).sort((a, b) => {
   const bDate = b.data.updatedDate ?? b.data.pubDate;
   return bDate.valueOf() - aDate.valueOf();
 });
-const serenityPosts = allPosts.filter(p => p.data.tags?.includes('白发股神'));
-const stockPosts = allPosts.filter(p => p.data.tags?.includes('个股分析'));
-const usStockPosts = allPosts.filter(p => p.data.tags?.includes('美股分析'));
-const latestSerenity = serenityPosts.slice(0, 3);
-const latestStock = stockPosts.slice(0, 3);
-const latestUsStock = usStockPosts.slice(0, 3);
-const stockInfo = (title: string) => {
-  const match = title.match(/^(\d{6})\s+([^：:]+?)(?=[:：]|$)/);
-  const code = match?.[1] ?? title.match(/^(\d{6})/)?.[1] ?? title;
-  const name = match?.[2] ?? title;
-  const board = code.startsWith('68') ? '科创' : code.startsWith('30') ? '创业' : '主板';
-  return `${name} ${code}（${board}）`;
+const serenityPosts = allPosts.filter((post) => post.data.tags?.includes('白发股神'));
+const stockPosts = allPosts.filter((post) => post.data.tags?.includes('个股分析'));
+const usStockPosts = allPosts.filter((post) => post.data.tags?.includes('美股分析'));
+const hkStockPosts = allPosts.filter((post) => post.data.tags?.includes('港股分析'));
+const latestResearch = allPosts
+  .filter((post) => post.data.tags?.some((tag) => ['个股分析', '美股分析', '港股分析'].includes(tag)))
+  .slice(0, 5);
+
+const shortTitle = (post: (typeof allPosts)[number]) => {
+  if (post.data.decision) return `${post.data.decision.name} ${post.data.decision.ticker}`;
+  return post.data.title.split(/[：:]/)[0];
 };
-const usStockInfo = (title: string) => {
-  const match = title.match(/^([A-Za-z0-9]+)\s+([^：:]+?)(?=[:：]|$)/);
-  const code = match?.[1] ?? title.match(/^([A-Za-z0-9]+)/)?.[1] ?? title;
-  const name = match?.[2] ?? title.replace(/^([A-Za-z0-9]+)\s*/, '');
-  return name && name !== title ? `${name} ${code}` : title;
+const shortSummary = (post: (typeof allPosts)[number]) => {
+  const text = post.data.decision?.action ?? post.data.description;
+  return text.length > 76 ? `${text.slice(0, 76).replace(/[，；、\s]+$/, '')}…` : text;
 };
+const pillars = [
+  { title: '📈 A股分析', description: '量价、筹码与关键边界', href: '/stock-analysis/', posts: stockPosts.slice(0, 3), className: '' },
+  { title: '🗽 美股分析', description: '科技、金融科技与半导体', href: '/us-stock-analysis/', posts: usStockPosts.slice(0, 3), className: 'us' },
+  { title: '👩‍🦳 白发股神', description: 'Serenity 动态追踪与 A股映射', href: '/serenity/', posts: serenityPosts.slice(0, 3), className: 'serenity' },
+];
 ---
 
 <!doctype html>
@@ -38,34 +40,38 @@ const usStockInfo = (title: string) => {
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
-      .hero { padding: clamp(2rem, 7vw, 4.5rem) 0 2rem; text-align: center; }
-      .hero h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); letter-spacing: -0.05em; margin-bottom: 0.8rem; }
-      .hero .subtitle { color: rgb(var(--gray)); font-size: clamp(1.05rem, 2vw, 1.24rem); max-width: 640px; margin: 0 auto 1.8rem; line-height: 1.7; }
-      .hero .actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-      .btn { display: inline-flex; align-items: center; min-height: 2.6rem; padding: 0.6rem 1.1rem; border-radius: 999px; font-weight: 800; text-decoration: none; }
-      .btn.primary { background: rgb(var(--black)); color: white; }
-      .btn.secondary { background: white; color: rgb(var(--black)); border: 1px solid var(--border); }
-
-      .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2.5rem 0 3rem; }
-      .pillar { border-radius: 24px; border: 1px solid var(--border); overflow: hidden; background: white; box-shadow: var(--box-shadow); }
-      .pillar-header { padding: 1.5rem 1.5rem 1rem; }
-      .pillar-header h2 { margin: 0 0 0.35rem; font-size: 1.45rem; display: flex; align-items: center; gap: 0.6rem; }
-      .pillar-header p { margin: 0; color: rgb(var(--gray)); font-size: 0.92rem; }
-      .pillar-list { display: grid; gap: 0; }
-      .pillar-item { display: block; padding: 1.1rem 1.5rem; color: rgb(var(--gray-dark)); text-decoration: none; border-top: 1px solid var(--border); transition: all 0.2s ease; }
-      .pillar-item:hover { background: var(--warm-2); padding-left: 1.85rem; }
-      .pillar-item h3 { margin: 0 0 0.25rem; font-size: 1.05rem; color: rgb(var(--black)); font-weight: 700; transition: color 0.2s ease; }
-      .pillar-item:hover h3 { color: var(--accent); }
-      .pillar-item .date { color: rgb(var(--gray)); font-size: 0.8rem; margin-top: 0.25rem; }
-      .pillar-more { padding: 0.75rem 1.5rem; border-top: 1px solid var(--border); text-align: center; }
-      .pillar-more a { color: var(--accent); font-weight: 800; text-decoration: none; font-size: 0.92rem; }
-
-      .pillar-ser { border-color: rgba(214,61,46,0.18); }
-      .pillar-ser .pillar-header { background: var(--accent-soft); }
-
+      .hero { padding: clamp(1.5rem, 4vw, 2.8rem) 0 1rem; }
+      .hero h1 { margin: 0 0 0.55rem; font-size: clamp(2.2rem, 5vw, 3.5rem); letter-spacing: 0; }
+      .subtitle { max-width: 720px; margin: 0 0 1.1rem; color: rgb(var(--gray)); font-size: 1.05rem; line-height: 1.65; }
+      .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+      .btn { display: inline-flex; align-items: center; min-height: 2.5rem; padding: 0.55rem 0.9rem; border-radius: 6px; border: 1px solid var(--border); background: #fff; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
+      .btn.primary { background: rgb(var(--black)); color: #fff; border-color: rgb(var(--black)); }
+      .latest { margin: 1.2rem 0 2rem; }
+      .section-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; }
+      .section-head h2 { margin: 0; font-size: 1.35rem; }
+      .section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
+      .latest-list { border-top: 1px solid var(--border); }
+      .latest-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--border); color: inherit; text-decoration: none; }
+      .latest-title { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
+      .latest-title strong { color: rgb(var(--black)); }
+      .status { padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--accent-soft); color: var(--accent-dark); font-size: 0.72rem; font-weight: 800; }
+      .latest-summary { margin: 0.35rem 0 0; color: rgb(var(--gray)); font-size: 0.88rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+      .latest-date { color: rgb(var(--gray)); font-size: 0.78rem; white-space: nowrap; }
+      .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0 3rem; align-items: start; }
+      .pillar { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
+      .pillar-header { padding: 1.1rem 1.2rem 0.8rem; background: var(--warm-2); }
+      .pillar-header h2 { margin: 0 0 0.25rem; font-size: 1.2rem; }
+      .pillar-header p { margin: 0; color: rgb(var(--gray)); font-size: 0.85rem; }
+      .pillar-item { display: block; padding: 0.85rem 1.2rem; border-top: 1px solid var(--border); color: inherit; text-decoration: none; }
+      .pillar-item strong { color: rgb(var(--black)); }
+      .pillar-item p { margin: 0.25rem 0 0; color: rgb(var(--gray)); font-size: 0.78rem; }
+      .pillar-more { display: block; padding: 0.7rem 1.2rem; border-top: 1px solid var(--border); color: var(--accent); font-size: 0.85rem; font-weight: 800; text-decoration: none; }
+      .empty-market { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1rem; border: 1px dashed var(--border); border-radius: 8px; color: rgb(var(--gray)); }
+      .empty-market a { color: #7b1fa2; font-weight: 800; text-decoration: none; }
       @media (max-width: 820px) {
         .pillars { grid-template-columns: 1fr; }
-        .hero h1 { font-size: 2.2rem; }
+        .latest-item { grid-template-columns: 1fr; gap: 0.35rem; }
+        .latest-date { white-space: normal; }
       }
     </style>
   </head>
@@ -74,80 +80,55 @@ const usStockInfo = (title: string) => {
     <main>
       <section class="hero">
         <h1>AI选股</h1>
-        <p class="subtitle">个人股票分析与交易复盘：聚焦A股分析、关键位判断和仓位动作。</p>
+        <p class="subtitle">A股、美股与港股个股研究：先给结论、关键价位和条件动作，再展开跟踪与复盘。</p>
         <div class="actions">
-          <a class="btn primary" href="/stock-analysis/">📈 A股分析</a>
-          <a class="btn primary" style="background:#0d47a1;" href="/us-stock-analysis/">🗽 美股分析</a>
-          <a class="btn primary" style="background:#7b1fa2;" href="/hk-stock-analysis/">🇭🇰 港股分析</a>
-          <a class="btn secondary" href="/serenity/">👩‍🦳 白发股神</a>
+          <a class="btn" href="/stock-analysis/">📈 A股分析</a>
+          <a class="btn" href="/us-stock-analysis/">🗽 美股分析</a>
+          <a class="btn" href="/hk-stock-analysis/">🇭🇰 港股分析</a>
+          <a class="btn" href="/serenity/">👩‍🦳 白发股神</a>
         </div>
       </section>
 
-      <section class="pillars">
-        <!-- A股分析 专栏 -->
-        <div class="pillar">
-          <div class="pillar-header">
-            <h2>📈 A股分析</h2>
-            <p>A股市场量价研判 · 筹码结构 · 关键边界动态阻击</p>
-          </div>
-          <div class="pillar-list">
-            {latestStock.length > 0 ? latestStock.map(post => (
-              <a class="pillar-item" href={getPostUrl(post)}>
-                <h3>{stockInfo(post.data.title)}</h3>
-                <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
-                  </a>
-                )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">A股分析文章即将上线。</p></div>}
+      <section class="latest" aria-label="最新研究">
+        <div class="section-head"><h2>最新研究</h2><p>按最后更新时间跨市场排序</p></div>
+        <div class="latest-list">
+          {latestResearch.map((post) => (
+            <a class="latest-item" href={getPostUrl(post)}>
+              <div>
+                <div class="latest-title">
+                  <strong>{shortTitle(post)}</strong>
+                  {post.data.decision && <span class="status">{post.data.decision.status}</span>}
                 </div>
-                <div class="pillar-more"><a href="/stock-analysis/">全部 A股分析 →</a></div>
-        </div>
-
-        <!-- 美股分析 专栏 -->
-        <div class="pillar" style="border-color: rgba(13,71,161,0.18);">
-          <div class="pillar-header" style="background: rgba(13,71,161,0.05);">
-            <h2>🗽 美股分析</h2>
-            <p>半导体 · AI 算力 · 大语言模型基建 · 纳斯达克科技龙头</p>
-          </div>
-          <div class="pillar-list">
-            {latestUsStock.length > 0 ? latestUsStock.map(post => (
-              <a class="pillar-item" href={getPostUrl(post)}>
-                <h3>{usStockInfo(post.data.title)}</h3>
-                <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
-              </a>
-            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">美股分析文章即将上线。</p></div>}
-          </div>
-          <div class="pillar-more"><a href="/us-stock-analysis/" style="color:#0d47a1;">全部 美股分析 →</a></div>
-        </div>
-
-        <!-- 港股分析 专栏 -->
-        <div class="pillar" style="border-color: rgba(123,31,162,0.18);">
-          <div class="pillar-header" style="background: rgba(123,31,162,0.05);">
-            <h2>🇭🇰 港股分析</h2>
-            <p>南向资金流动 · 互联网巨头反转 · 高股息红利防御</p>
-          </div>
-          <div class="pillar-list">
-            <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">港股分析文章即将上线。</p></div>
-          </div>
-          <div class="pillar-more"><a href="/hk-stock-analysis/" style="color:#7b1fa2;">全部 港股分析 →</a></div>
-        </div>
-
-        <!-- 白发股神 专栏 -->
-        <div class="pillar pillar-ser">
-          <div class="pillar-header">
-            <h2>👩‍🦳 白发股神</h2>
-            <p>白发股神 Serenity (@aleabitoreddit) 推文追踪 · 每4小时自动同步 · 含投资解读与A股映射</p>
-          </div>
-          <div class="pillar-list">
-            {latestSerenity.length > 0 ? latestSerenity.map(post => (
-              <a class="pillar-item" href={getPostUrl(post)}>
-                <h3>{post.data.title}</h3>
-                <p class="date">更新：<FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
-              </a>
-            )) : <div class="pillar-item"><p style="margin:0;color:rgb(var(--gray))">白发股神专栏即将上线，定时同步 Serenity 最新推文与投资解读。</p></div>}
-          </div>
-          <div class="pillar-more"><a href="/serenity/">全部白发股神文章 →</a></div>
+                <p class="latest-summary">{shortSummary(post)}</p>
+              </div>
+              <span class="latest-date"><FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></span>
+            </a>
+          ))}
         </div>
       </section>
 
+      <div class="section-head"><h2>分类浏览</h2><p>按市场与跟踪主题查看</p></div>
+      <section class="pillars">
+        {pillars.map((pillar) => (
+          <section class:list={['pillar', pillar.className]}>
+            <div class="pillar-header"><h2>{pillar.title}</h2><p>{pillar.description}</p></div>
+            {pillar.posts.map((post) => (
+              <a class="pillar-item" href={getPostUrl(post)}>
+                <strong>{shortTitle(post)}</strong>
+                <p><FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
+              </a>
+            ))}
+            <a class="pillar-more" href={pillar.href}>查看全部 →</a>
+          </section>
+        ))}
+        {hkStockPosts.length ? (
+          <section class="pillar">
+            <div class="pillar-header"><h2>🇭🇰 港股分析</h2><p>互联网、创新药与高股息资产</p></div>
+            {hkStockPosts.slice(0, 3).map((post) => <a class="pillar-item" href={getPostUrl(post)}><strong>{shortTitle(post)}</strong></a>)}
+            <a class="pillar-more" href="/hk-stock-analysis/">查看全部 →</a>
+          </section>
+        ) : <div class="empty-market"><span>🇭🇰 港股分析暂无已发布研究</span><a href="/hk-stock-analysis/">查看栏目 →</a></div>}
+      </section>
     </main>
     <Footer />
   </body>
