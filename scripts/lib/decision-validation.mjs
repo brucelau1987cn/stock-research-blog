@@ -1,5 +1,5 @@
 const NOT_CLEARED = /未突破|未收复|暂未收复|未站稳/;
-const SUPPORT_HELD = /已站稳|已收复|守稳|支撑有效/;
+const SUPPORT_HELD = /已站稳|已收复|暂时收复|守稳|支撑有效/;
 
 function number(value) {
   const parsed = Number(value);

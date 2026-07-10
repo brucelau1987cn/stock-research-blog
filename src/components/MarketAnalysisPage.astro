@@ -116,14 +116,19 @@ const parseTitle = (value: string) => {
             if (!prev || !next || !info) return;
             const total = Math.ceil(cards.length / pageSize);
             let page = 1;
-            const render = () => {
+            const render = (moveFocus = false) => {
               cards.forEach((card, index) => card.toggleAttribute('hidden', Math.floor(index / pageSize) + 1 !== page));
               prev.disabled = page === 1;
-              next.hidden = page === total;
+              next.disabled = page === total;
               info.textContent = `${page}/${total}`;
+              if (moveFocus) {
+                const firstVisible = cards.find((card) => !card.hidden);
+                firstVisible?.focus({ preventScroll: true });
+                document.getElementById('analysis-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
             };
-            prev.addEventListener('click', () => { if (page > 1) { page -= 1; render(); } });
-            next.addEventListener('click', () => { if (page < total) { page += 1; render(); } });
+            prev.addEventListener('click', () => { if (page > 1) { page -= 1; render(true); } });
+            next.addEventListener('click', () => { if (page < total) { page += 1; render(true); } });
             render();
           })();
         </script>

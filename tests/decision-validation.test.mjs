@@ -35,6 +35,14 @@ test('rejects a support marked recovered above the current price', () => {
   assert.match(validateDecision(decision, 'test.md').join('\n'), /现价.*低于.*已站稳/);
 });
 
+test('rejects a support marked temporarily recovered above the current price', () => {
+  const decision = {
+    ...base,
+    support: { label: '防守线', value: 10.5, state: '暂时收复' },
+  };
+  assert.match(validateDecision(decision, 'test.md').join('\n'), /现价.*低于.*暂时收复/);
+});
+
 test('rejects a change percentage inconsistent with current and previous close', () => {
   const decision = { ...base, previousClose: 9, changePct: 0 };
   assert.match(validateDecision(decision, 'test.md').join('\n'), /涨跌幅.*计算值/);
