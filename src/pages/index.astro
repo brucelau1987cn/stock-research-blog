@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { compactSummary } from '../utils/article-summary.mjs';
 import { getPostUrl } from '../utils/postUrl';
 
 const allPosts = (await getCollection('blog')).sort((a, b) => {
@@ -24,10 +25,10 @@ const shortTitle = (post: (typeof allPosts)[number]) => {
   if (post.data.decision) return `${post.data.decision.name} ${post.data.decision.ticker}`;
   return post.data.title.split(/[：:]/)[0];
 };
-const shortSummary = (post: (typeof allPosts)[number]) => {
-  const text = post.data.decision?.action ?? post.data.description;
-  return text.length > 76 ? `${text.slice(0, 76).replace(/[，；、\s]+$/, '')}…` : text;
-};
+const shortSummary = (post: (typeof allPosts)[number]) => compactSummary(
+  post.data.decision?.action ?? post.data.description,
+  76,
+);
 const pillars = [
   { title: '📈 A股分析', description: '量价、筹码与关键边界', href: '/stock-analysis/', posts: stockPosts.slice(0, 3), className: '' },
   { title: '🗽 美股分析', description: '科技、金融科技与半导体', href: '/us-stock-analysis/', posts: usStockPosts.slice(0, 3), className: 'us' },

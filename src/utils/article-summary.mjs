@@ -4,6 +4,14 @@ const STATUS_PATTERNS = [
   ['偏空', /偏空|看空|破位|失效/],
 ];
 
+export function buildSearchIndex(code, name, title) {
+  return [code, name, title]
+    .map((value) => String(value ?? '').trim())
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+/g, ' ');
+}
+
 export function compactSummary(value, maxLength = 72) {
   const text = String(value ?? '')
     .replace(/^最新结论[：:]/, '')
