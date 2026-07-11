@@ -72,12 +72,12 @@ const groupTweetHeadingsByDate = () => {
       existing.count += 1;
       // 选时间更晚那条作为跳转锚点
       if (time > existing.latestTime) {
-        existing.slug = parseChineseDateKey(dateOnly);
+        existing.slug = heading.slug;
         existing.latestTime = time;
         existing.raw = full;
       }
     } else {
-      groups.push({ date: dateOnly, count: 1, slug: parseChineseDateKey(dateOnly), latestTime: time, raw: full });
+      groups.push({ date: dateOnly, count: 1, slug: heading.slug, latestTime: time, raw: full });
     }
   }
   groups.sort((a, b) => {
@@ -123,13 +123,13 @@ const stockTrackGroupsByDate = groupStockTrackByDate();
 
 // A股分析页 H2 全部列出（不截断），保持与正文 H2 顺序一致
 const stockHeadings = headings.filter((heading) => heading.depth === 2);
-const hasStockHeading = (text: string) => stockHeadings.some((heading) => heading.text === text);
+const headingLink = (...texts: string[]) => stockHeadings.find((heading) => texts.includes(heading.text));
 const stockDashboardLinks = [
-  { label: '关键价位', href: '#关键价位', enabled: hasStockHeading('关键价位') },
-  { label: '跟踪记录', href: '#跟踪记录', enabled: hasStockHeading('跟踪记录') },
-  { label: '仓位动作', href: '#持仓者动作', enabled: hasStockHeading('持仓者动作 (分批买入 / 减仓计划)') || hasStockHeading('分批买入 / 减仓计划') },
-  { label: '风险点', href: '#风险点', enabled: hasStockHeading('风险点') || hasStockHeading('三个风险') },
-].filter((item) => item.enabled);
+  { label: '关键价位', heading: headingLink('关键价位') },
+  { label: '跟踪记录', heading: headingLink('跟踪记录') },
+  { label: '仓位动作', heading: headingLink('持仓者动作 (分批买入 / 减仓计划)', '分批买入 / 减仓计划') },
+  { label: '风险点', heading: headingLink('风险点', '三个风险') },
+].filter((item) => item.heading).map((item) => ({ label: item.label, href: `#${item.heading!.slug}` }));
 const formatDecisionPrice = (value: number) => {
   if (!decision) return String(value);
   const digits = decision.currency === 'USD' ? 3 : 2;
@@ -145,7 +145,14 @@ const formatDistance = (value: number) => {
 
 <html lang="zh-CN">
   <head>
-    <BaseHead title={title} description={description} image={image} />
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      type="article"
+      publishedTime={pubDate}
+      modifiedTime={updatedDate ?? pubDate}
+    />
     <script type="application/ld+json" set:html={articleJsonLdText} />
     <style>
       main { width: min(1040px, calc(100% - 2rem)); }
@@ -379,14 +386,14 @@ const formatDistance = (value: number) => {
             {isSerenity ? (
               <>
                 <h2>快捷目录</h2>
-                <a class="section-link" href="#结论先行">结论先行</a>
+                {stockHeadings.find((heading) => heading.text === '结论先行') && <a class="section-link" href={`#${stockHeadings.find((heading) => heading.text === '结论先行')!.slug}`}>结论先行</a>}
                 {tweetGroupsByDate.length > 0 && tweetGroupsByDate.map((tweet) => (
                   <a class="tweet-link" href={`#${tweet.slug}`}>
                     <span class="toc-date">{tweet.date} {tweet.latestTime}</span>
                     <span class="toc-count">{tweet.count}</span>
                   </a>
                 ))}
-                <a class="section-link" href="#全局风险提示">全局风险提示</a>
+                {stockHeadings.find((heading) => heading.text === '全局风险提示') && <a class="section-link" href={`#${stockHeadings.find((heading) => heading.text === '全局风险提示')!.slug}`}>全局风险提示</a>}
               </>
             ) : (
               <>
@@ -475,7 +482,15 @@ const formatDistance = (value: number) => {
             legacyHeading.before(details);
             details.append(summary, body);
             let item = legacyHeading;
-            while (item) {
+            const legacySections = new Set([
+              '结论先行',
+              '持仓者动作 (分批买入 / 减仓计划)',
+              '分批买入 / 减仓计划',
+              '上涨 / 下跌逻辑 (行业与基本面锚点)',
+              '风险点',
+              '三个风险',
+            ]);
+            while (item && (item.tagName !== 'H2' || legacySections.has((item.textContent || '').trim()))) {
               const next = item.nextElementSibling;
               body.append(item);
               item = next;

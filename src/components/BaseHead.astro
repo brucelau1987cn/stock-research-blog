@@ -11,11 +11,14 @@ interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata | string;
+	type?: 'website' | 'article';
+	publishedTime?: Date;
+	modifiedTime?: Date;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description, image = FallbackImage, type = 'website', publishedTime, modifiedTime } = Astro.props;
 const imageSrc = typeof image === 'string' ? image : image.src;
 const ogImageUrl = new URL(imageSrc, Astro.url);
 ---
@@ -45,11 +48,13 @@ const ogImageUrl = new URL(imageSrc, Astro.url);
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageUrl} />
+{type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
