@@ -38,6 +38,13 @@ const parseTitle = (value: string) => {
       .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
       .analysis-section-head h2 { margin: 0; font-size: 1.35rem; }
       .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
+      .analysis-controls { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0 0 0.85rem; }
+      .analysis-search, .analysis-filter { min-height: 2.4rem; border: 1px solid var(--border); border-radius: 6px; background: #fff; color: rgb(var(--gray-dark)); font: inherit; }
+      .analysis-search { flex: 1 1 15rem; padding: 0.45rem 0.7rem; }
+      .analysis-filter { padding: 0.4rem 0.55rem; font-size: 0.9rem; }
+      .result-count { color: rgb(var(--gray)); font-size: 0.82rem; font-weight: 700; }
+      .no-results { display: none; margin: 0.85rem 0; color: rgb(var(--gray)); }
+      .no-results.visible { display: block; }
       .analysis-grid { display: flex; flex-direction: column; gap: 0.5rem; }
       .pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; }
       .pagination button { min-height: 2.4rem; padding: 0.45rem 0.9rem; border-radius: 6px; border: 1px solid var(--border); background: #fff; color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; }
@@ -75,6 +82,17 @@ const parseTitle = (value: string) => {
           <h2>最新{title}</h2>
           <p>按最后更新时间排序，先看结论、关键位与动作。</p>
         </div>
+        <div class="analysis-controls" role="search">
+          <input id="analysis-search" class="analysis-search" type="search" placeholder="搜索代码或名称" aria-label={`搜索${title}代码或名称`} />
+          <select id="analysis-filter" class="analysis-filter" aria-label="按研究倾向筛选">
+            <option value="">全部倾向</option>
+            <option value="偏多">偏多</option>
+            <option value="观望/防守">观望/防守</option>
+            <option value="偏空">偏空</option>
+            <option value="跟踪中">跟踪中</option>
+          </select>
+          <span id="analysis-result-count" class="result-count" aria-live="polite"></span>
+        </div>
         {posts.length ? (
           <>
             <div class="analysis-grid" id="analysis-grid">
@@ -83,6 +101,7 @@ const parseTitle = (value: string) => {
                 return <StockAnalysisItem post={post} code={parsed.code} name={parsed.name} />;
               })}
             </div>
+            <p id="analysis-no-results" class="no-results">没有匹配的研究记录。</p>
             {posts.length > PAGE_SIZE && (
               <div class="pagination" aria-label={`${title}分页`}>
                 <button type="button" id="analysis-prev" disabled>← 上一页</button>
@@ -106,29 +125,58 @@ const parseTitle = (value: string) => {
         </div>
       </details>
 
-      {posts.length > PAGE_SIZE && (
+      {posts.length > 0 && (
         <script is:inline define:vars={{ pageSize: PAGE_SIZE }}>
           (() => {
             const cards = [...document.querySelectorAll('.analysis-card-item')];
+            const search = document.getElementById('analysis-search');
+            const filter = document.getElementById('analysis-filter');
+            const resultCount = document.getElementById('analysis-result-count');
+            const noResults = document.getElementById('analysis-no-results');
+            const pagination = document.querySelector('.pagination');
             const prev = document.getElementById('analysis-prev');
             const next = document.getElementById('analysis-next');
             const info = document.getElementById('analysis-page-info');
-            if (!prev || !next || !info) return;
-            const total = Math.ceil(cards.length / pageSize);
             let page = 1;
+
+            const matches = (card) => {
+              const query = search?.value.trim().toLowerCase() ?? '';
+              const sentiment = filter?.value ?? '';
+              return (!query || card.dataset.search?.toLowerCase().includes(query))
+                && (!sentiment || card.dataset.sentiment === sentiment);
+            };
+
             const render = (moveFocus = false) => {
-              cards.forEach((card, index) => card.toggleAttribute('hidden', Math.floor(index / pageSize) + 1 !== page));
-              prev.disabled = page === 1;
-              next.disabled = page === total;
-              info.textContent = `${page}/${total}`;
+              const visible = cards.filter(matches);
+              const isFiltered = Boolean(search?.value.trim() || filter?.value);
+              const total = Math.max(1, Math.ceil(visible.length / pageSize));
+              page = Math.min(page, total);
+              cards.forEach((card) => {
+                const index = visible.indexOf(card);
+                card.hidden = index === -1 || (!isFiltered && Math.floor(index / pageSize) + 1 !== page);
+              });
+              if (pagination) pagination.hidden = isFiltered || visible.length <= pageSize;
+              if (prev && next && info) {
+                prev.disabled = page === 1;
+                next.disabled = page === total;
+                info.textContent = `${page}/${total}`;
+              }
+              if (resultCount) resultCount.textContent = `共 ${visible.length} 篇`;
+              noResults?.classList.toggle('visible', visible.length === 0);
               if (moveFocus) {
                 const firstVisible = cards.find((card) => !card.hidden);
                 firstVisible?.focus({ preventScroll: true });
                 document.getElementById('analysis-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
             };
-            prev.addEventListener('click', () => { if (page > 1) { page -= 1; render(true); } });
-            next.addEventListener('click', () => { if (page < total) { page += 1; render(true); } });
+
+            search?.addEventListener('input', () => { page = 1; render(); });
+            filter?.addEventListener('change', () => { page = 1; render(); });
+            prev?.addEventListener('click', () => { if (page > 1) { page -= 1; render(true); } });
+            next?.addEventListener('click', () => {
+              const visible = cards.filter(matches);
+              if (page < Math.ceil(visible.length / pageSize)) { page += 1; render(true); }
+            });
             render();
           })();
         </script>

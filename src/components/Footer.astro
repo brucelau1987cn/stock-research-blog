@@ -8,6 +8,7 @@ const today = new Date();
     <div>
       <strong>{SITE_TITLE}</strong>
       <p>个股分析 + 白发股神 Serenity 动态追踪，由 {SITE_AUTHOR} 维护。</p>
+      <p class="disclaimer">个人研究笔记，不构成投资建议。数据可能延迟或有误，过往表现不代表未来。</p>
     </div>
     <div class="footer-links">
       <a href="/">首页</a>
@@ -15,6 +16,7 @@ const today = new Date();
       <a href="/us-stock-analysis/">美股分析</a>
       <a href="/hk-stock-analysis/">港股分析</a>
       <a href="/serenity/">白发股神</a>
+      <a href="https://etf.peekabo.cc" target="_blank" rel="noreferrer">ETF花园</a>
       <a href={SITE_AUTHOR_URL} target="_blank" rel="noreferrer">{SITE_AUTHOR}</a>
     </div>
   </div>
@@ -25,6 +27,7 @@ const today = new Date();
   .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; }
   footer strong { color: rgb(var(--black)); }
   footer p { margin: 0.35rem 0 0; font-size: 0.92rem; }
+  footer .disclaimer { max-width: 39rem; color: rgb(var(--gray)); font-size: 0.8rem; line-height: 1.55; }
   .footer-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: flex-end; }
   .footer-links a { color: rgb(var(--gray-dark)); text-decoration: none; font-size: 0.92rem; font-weight: 700; }
   .footer-links a:hover { color: var(--accent); }

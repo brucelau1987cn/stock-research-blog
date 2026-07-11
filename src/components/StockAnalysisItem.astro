@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 import { getPostUrl } from '../utils/postUrl';
+import { compactSummary, inferSentiment } from '../utils/article-summary.mjs';
 
 type Props = {
   post: CollectionEntry<'blog'>;
@@ -12,6 +13,8 @@ type Props = {
 
 const { post, code, name, class: className = '' } = Astro.props;
 const decision = post.data.decision;
+const summary = compactSummary(decision?.action ?? post.data.description);
+const sentiment = inferSentiment(decision, post.data.description);
 const formatPrice = (value: number) => {
   if (!decision) return String(value);
   const digits = decision.currency === 'USD' ? 3 : 2;
@@ -20,7 +23,12 @@ const formatPrice = (value: number) => {
 };
 ---
 
-<a class:list={['analysis-card', 'analysis-card-item', className]} href={getPostUrl(post)}>
+<a
+  class:list={['analysis-card', 'analysis-card-item', className]}
+  href={getPostUrl(post)}
+  data-search={`${code} ${name} ${post.data.title} ${post.data.description}`}
+  data-sentiment={sentiment}
+>
   <div class="analysis-main">
     <div class="analysis-title-row">
       <strong class="analysis-card-title">
@@ -31,7 +39,7 @@ const formatPrice = (value: number) => {
     </div>
     {decision ? (
       <>
-        <p class="analysis-action">{decision.action}</p>
+        <p class="analysis-action">{summary}</p>
         <div class="analysis-levels">
           <span>现价 <strong>{formatPrice(decision.currentPrice)}</strong></span>
           <span>{decision.resistance.label} <strong>{formatPrice(decision.resistance.value)}</strong></span>
@@ -39,7 +47,7 @@ const formatPrice = (value: number) => {
         </div>
       </>
     ) : (
-      <p class="analysis-action legacy">{post.data.description}</p>
+      <p class="analysis-action legacy">{summary}</p>
     )}
   </div>
   <div class="analysis-side">
