@@ -17,9 +17,12 @@ const serenityPosts = allPosts.filter((post) => post.data.tags?.includes('白发
 const stockPosts = allPosts.filter((post) => post.data.tags?.includes('个股分析'));
 const usStockPosts = allPosts.filter((post) => post.data.tags?.includes('美股分析'));
 const hkStockPosts = allPosts.filter((post) => post.data.tags?.includes('港股分析'));
-const latestResearch = allPosts
-  .filter((post) => post.data.tags?.some((tag) => ['个股分析', '美股分析', '港股分析'].includes(tag)))
-  .slice(0, 5);
+const marketResearch = allPosts.filter((post) =>
+  post.data.tags?.some((tag) => ['个股分析', '美股分析', '港股分析'].includes(tag)),
+);
+const latestResearch = marketResearch.slice(0, 5);
+const currentPost = marketResearch.find((post) => post.data.decision);
+const currentDecision = currentPost?.data.decision;
 
 const shortTitle = (post: (typeof allPosts)[number]) => {
   if (post.data.decision) return `${post.data.decision.name} ${post.data.decision.ticker}`;
@@ -27,12 +30,13 @@ const shortTitle = (post: (typeof allPosts)[number]) => {
 };
 const shortSummary = (post: (typeof allPosts)[number]) => compactSummary(
   post.data.decision?.action ?? post.data.description,
-  76,
+  96,
 );
 const pillars = [
-  { title: '📈 A股分析', description: '量价、筹码与关键边界', href: '/stock-analysis/', posts: stockPosts.slice(0, 3), className: '' },
-  { title: '🗽 美股分析', description: '科技、金融科技与半导体', href: '/us-stock-analysis/', posts: usStockPosts.slice(0, 3), className: 'us' },
-  { title: '👩‍🦳 白发股神', description: 'Serenity 动态追踪与 A股映射', href: '/serenity/', posts: serenityPosts.slice(0, 3), className: 'serenity' },
+  { title: 'A股研究', description: '量价、筹码与关键边界', href: '/stock-analysis/', posts: stockPosts.slice(0, 3), tone: 'red' },
+  { title: '美股研究', description: '科技、金融科技与半导体', href: '/us-stock-analysis/', posts: usStockPosts.slice(0, 3), tone: 'green' },
+  { title: 'Serenity追踪', description: '供应链主题与A股产业映射', href: '/serenity/', posts: serenityPosts.slice(0, 3), tone: 'amber' },
+  ...(hkStockPosts.length ? [{ title: '港股研究', description: '互联网、创新药与高股息资产', href: '/hk-stock-analysis/', posts: hkStockPosts.slice(0, 3), tone: 'green' }] : []),
 ];
 ---
 
@@ -41,94 +45,101 @@ const pillars = [
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
-      .hero { padding: clamp(1.5rem, 4vw, 2.8rem) 0 1rem; }
-      .hero h1 { margin: 0 0 0.55rem; font-size: clamp(2.2rem, 5vw, 3.5rem); letter-spacing: 0; }
-      .subtitle { max-width: 720px; margin: 0 0 1.1rem; color: rgb(var(--gray)); font-size: 1.05rem; line-height: 1.65; }
-      .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-      .btn { display: inline-flex; align-items: center; min-height: 2.5rem; padding: 0.55rem 0.9rem; border-radius: 6px; border: 1px solid var(--border); background: #fff; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
+      .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; padding: 1rem 0 2.25rem; }
+      .hero-badges { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+      .hero h1 { max-width: 12em; margin: 0 0 0.8rem; font-size: clamp(2.2rem, 4.4vw, 3.05rem); line-height: 1.25; text-wrap: balance; }
+      .subtitle { max-width: 42rem; margin: 0 0 1.2rem; color: rgb(var(--gray)); font-size: 1rem; line-height: 1.7; }
+      .actions { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 2.85rem; padding: 0.62rem 1rem; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
       .btn.primary { background: rgb(var(--black)); color: #fff; border-color: rgb(var(--black)); }
-      .latest { margin: 1.2rem 0 2rem; }
-      .section-head { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.75rem; }
-      .section-head h2 { margin: 0; font-size: 1.35rem; }
-      .section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
-      .latest-list { border-top: 1px solid var(--border); }
-      .latest-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--border); color: inherit; text-decoration: none; }
+      .btn:hover { transform: translateY(-1px); box-shadow: var(--box-shadow); }
+      .market-brief { padding: 1.4rem; border: 1px solid #f3cec8; border-radius: 14px; background: #fff7f5; box-shadow: var(--box-shadow); }
+      .brief-meta { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+      .market-brief h2 { margin: 0 0 0.65rem; font-size: 1.65rem; }
+      .market-brief > p { color: rgb(var(--gray)); line-height: 1.65; }
+      .brief-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: 0.75rem; margin-top: 0.65rem; padding: 0.8rem 0.9rem; border: 1px solid rgba(214,61,46,0.14); border-radius: 10px; background: rgba(255,255,255,0.82); }
+      .brief-row span { color: rgb(var(--gray)); font-size: 0.82rem; font-weight: 750; }
+      .brief-row strong { font-size: 0.9rem; line-height: 1.55; }
+      .section { margin: 0 0 2.5rem; }
+      .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+      .section-head h2 { margin: 0; font-size: 1.65rem; }
+      .section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.9rem; }
+      .section-link { color: var(--accent); font-size: 0.9rem; font-weight: 800; text-decoration: none; white-space: nowrap; }
+      .latest-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; }
+      .latest-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; padding: 1rem 1.05rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; color: inherit; text-decoration: none; }
+      .latest-item:first-child { grid-column: 1 / -1; padding: 1.2rem; box-shadow: var(--box-shadow); }
+      .latest-item:hover { border-color: rgba(214,61,46,0.24); transform: translateY(-1px); }
       .latest-title { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
-      .latest-title strong { color: rgb(var(--black)); }
-      .status { padding: 0.14rem 0.4rem; border-radius: 4px; background: var(--accent-soft); color: var(--accent-dark); font-size: 0.72rem; font-weight: 800; }
-      .latest-summary { margin: 0.35rem 0 0; color: rgb(var(--gray)); font-size: 0.88rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+      .latest-title strong { color: rgb(var(--black)); font-size: 1.02rem; }
+      .status { padding: 0.16rem 0.42rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent-dark); font-size: 0.72rem; font-weight: 800; }
+      .latest-summary { margin: 0.35rem 0 0; color: rgb(var(--gray-dark)); font-size: 0.88rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
       .latest-date { color: rgb(var(--gray)); font-size: 0.78rem; white-space: nowrap; }
-      .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0 3rem; align-items: start; }
-      .pillar { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #fff; }
-      .pillar-header { padding: 1.1rem 1.2rem 0.8rem; background: var(--warm-2); }
-      .pillar-header h2 { margin: 0 0 0.25rem; font-size: 1.2rem; }
-      .pillar-header p { margin: 0; color: rgb(var(--gray)); font-size: 0.85rem; }
-      .pillar-item { display: block; padding: 0.85rem 1.2rem; border-top: 1px solid var(--border); color: inherit; text-decoration: none; }
-      .pillar-item strong { color: rgb(var(--black)); }
-      .pillar-item p { margin: 0.25rem 0 0; color: rgb(var(--gray)); font-size: 0.78rem; }
-      .pillar-more { display: block; padding: 0.7rem 1.2rem; border-top: 1px solid var(--border); color: var(--accent); font-size: 0.85rem; font-weight: 800; text-decoration: none; }
-      .empty-market { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1rem; border: 1px dashed var(--border); border-radius: 8px; color: rgb(var(--gray)); }
-      .empty-market a { color: #7b1fa2; font-weight: 800; text-decoration: none; }
-      @media (max-width: 820px) {
-        .pillars { grid-template-columns: 1fr; }
-        .latest-item { grid-template-columns: 1fr; gap: 0.35rem; }
-        .latest-date { white-space: normal; }
-      }
+      .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.85rem; }
+      .pillar { overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+      .pillar-header { padding: 1.05rem 1.1rem 0.85rem; border-bottom: 1px solid var(--border); background: var(--warm-2); }
+      .pillar-header h3 { margin: 0 0 0.2rem; font-size: 1.05rem; }
+      .pillar-header p { margin: 0; color: rgb(var(--gray)); font-size: 0.82rem; }
+      .pillar.red .pillar-header { background: #fff7f5; }
+      .pillar.green .pillar-header { background: #f2faf5; }
+      .pillar.amber .pillar-header { background: #fff8ed; }
+      .pillar-item { display: block; padding: 0.8rem 1.1rem; border-bottom: 1px solid var(--border); color: inherit; text-decoration: none; }
+      .pillar-item strong { color: rgb(var(--black)); font-size: 0.9rem; }
+      .pillar-item p { margin: 0.18rem 0 0; color: rgb(var(--gray)); font-size: 0.76rem; }
+      .pillar-more { display: block; padding: 0.75rem 1.1rem; color: var(--accent); font-size: 0.84rem; font-weight: 800; text-decoration: none; }
+      .empty-market { margin-top: 0.85rem; padding: 1rem; border: 1px dashed var(--border); border-radius: 12px; color: rgb(var(--gray)); }
+      @media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 2rem; } .pillars { grid-template-columns: 1fr; } }
+      @media (max-width: 680px) { .hero { padding-top: 1.25rem; } .hero h1 { font-size: 2.35rem; } .latest-grid { grid-template-columns: 1fr; } .latest-item:first-child { grid-column: 1; } .latest-item { grid-template-columns: 1fr; gap: 0.4rem; } .latest-date { white-space: normal; } .section-head { align-items: flex-start; } }
     </style>
   </head>
   <body>
     <Header />
     <main>
       <section class="hero">
-        <h1>AI选股</h1>
-        <p class="subtitle">A股、美股与港股个股研究：先给结论、关键价位和条件动作，再展开跟踪与复盘。</p>
-        <div class="actions">
-          <a class="btn" href="/stock-analysis/">📈 A股分析</a>
-          <a class="btn" href="/us-stock-analysis/">🗽 美股分析</a>
-          <a class="btn" href="/hk-stock-analysis/">🇭🇰 港股分析</a>
-          <a class="btn" href="/serenity/">👩‍🦳 白发股神</a>
+        <div>
+          <div class="hero-badges"><span class="pill pill-red">先看结论</span><span class="pill pill-green">再看条件动作</span></div>
+          <h1>先看当前动作，再读研究逻辑。</h1>
+          <p class="subtitle">AI选股把A股、美股和港股研究收敛为最新结论、关键价位与条件动作；历史跟踪保留用于验证，不混入当前建议。</p>
+          <div class="actions">
+            <a class="btn primary" href="/stock-analysis/">查看A股研究</a>
+            <a class="btn" href="/us-stock-analysis/">查看美股研究</a>
+            <a class="btn" href="/hk-stock-analysis/">查看港股研究</a>
+            <a class="btn" href="/serenity/">打开供应链追踪</a>
+          </div>
         </div>
+        <aside class="market-brief" aria-label="最新结构化研究摘要">
+          <div class="brief-meta"><span class="pill">{currentDecision ? `数据截至 ${currentDecision.asOf}` : '最新研究摘要'}</span><span class="pill pill-amber">跨市场研究</span></div>
+          <h2>{currentDecision ? `${currentDecision.name} · ${currentDecision.status}` : '先确认数据时效'}</h2>
+          <p>{currentDecision?.action ?? '详情页区分首次发布、最后更新和历史框架；没有结构化决策的文章不会被包装成当前建议。'}</p>
+          <div class="brief-row"><span>当前口径</span><strong>{currentDecision ? `${currentDecision.ticker} 最新价 ${currentDecision.currency === 'USD' ? '$' : ''}${currentDecision.currentPrice}` : '以详情页最新决策摘要为准'}</strong></div>
+          <div class="brief-row"><span>风险边界</span><strong>{currentDecision ? `${currentDecision.invalidation.label} ${currentDecision.invalidation.value}；${currentDecision.invalidation.action}` : '价格、日期与来源均需复核'}</strong></div>
+          {currentPost && <a class="section-link" href={getPostUrl(currentPost)}>打开最新结构化研究 →</a>}
+        </aside>
       </section>
 
-      <section class="latest" aria-label="最新研究">
-        <div class="section-head"><h2>最新研究</h2><p>按最后更新时间跨市场排序</p></div>
-        <div class="latest-list">
+      <section class="section" aria-label="最新研究">
+        <div class="section-head"><div><h2>最新研究</h2><p>按最后更新时间跨市场排序</p></div><a class="section-link" href="/archive/">查看全部 →</a></div>
+        <div class="latest-grid">
           {latestResearch.map((post) => (
             <a class="latest-item" href={getPostUrl(post)}>
-              <div>
-                <div class="latest-title">
-                  <strong>{shortTitle(post)}</strong>
-                  {post.data.decision && <span class="status">{post.data.decision.status}</span>}
-                </div>
-                <p class="latest-summary">{shortSummary(post)}</p>
-              </div>
+              <div><div class="latest-title"><strong>{shortTitle(post)}</strong>{post.data.decision && <span class="status">{post.data.decision.status}</span>}</div><p class="latest-summary">{shortSummary(post)}</p></div>
               <span class="latest-date"><FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></span>
             </a>
           ))}
         </div>
       </section>
 
-      <div class="section-head"><h2>分类浏览</h2><p>按市场与跟踪主题查看</p></div>
-      <section class="pillars">
-        {pillars.map((pillar) => (
-          <section class:list={['pillar', pillar.className]}>
-            <div class="pillar-header"><h2>{pillar.title}</h2><p>{pillar.description}</p></div>
-            {pillar.posts.map((post) => (
-              <a class="pillar-item" href={getPostUrl(post)}>
-                <strong>{shortTitle(post)}</strong>
-                <p><FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p>
-              </a>
-            ))}
-            <a class="pillar-more" href={pillar.href}>查看全部 →</a>
-          </section>
-        ))}
-        {hkStockPosts.length ? (
-          <section class="pillar">
-            <div class="pillar-header"><h2>🇭🇰 港股分析</h2><p>互联网、创新药与高股息资产</p></div>
-            {hkStockPosts.slice(0, 3).map((post) => <a class="pillar-item" href={getPostUrl(post)}><strong>{shortTitle(post)}</strong></a>)}
-            <a class="pillar-more" href="/hk-stock-analysis/">查看全部 →</a>
-          </section>
-        ) : <div class="empty-market"><span>🇭🇰 港股分析暂无已发布研究</span><a href="/hk-stock-analysis/">查看栏目 →</a></div>}
+      <section class="section">
+        <div class="section-head"><div><h2>分类浏览</h2><p>按市场和研究主题进入</p></div></div>
+        <div class="pillars">
+          {pillars.map((pillar) => (
+            <section class:list={['pillar', pillar.tone]}>
+              <div class="pillar-header"><h3>{pillar.title}</h3><p>{pillar.description}</p></div>
+              {pillar.posts.map((post) => <a class="pillar-item" href={getPostUrl(post)}><strong>{shortTitle(post)}</strong><p><FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></p></a>)}
+              <a class="pillar-more" href={pillar.href}>查看全部 →</a>
+            </section>
+          ))}
+        </div>
+        {!hkStockPosts.length && <div class="empty-market">港股栏目将在有真实研究内容后展示，不提供空壳内容。</div>}
       </section>
     </main>
     <Footer />

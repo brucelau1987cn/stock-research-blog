@@ -7,7 +7,7 @@ import HeaderLink from './HeaderLink.astro';
   <nav class="site-shell">
     <a class="brand" href="/" aria-label={SITE_TITLE}>
       <span class="mark">AI</span>
-      <span>{SITE_TITLE}</span>
+      <span class="brand-copy"><strong>{SITE_TITLE}</strong><small>个股研究与策略复盘</small></span>
     </a>
     <div class="internal-links">
       <HeaderLink href="/">首页</HeaderLink>
@@ -25,24 +25,29 @@ import HeaderLink from './HeaderLink.astro';
     top: 0;
     z-index: 10;
     margin: 0;
-    padding: 0.75rem 0;
-    background: rgba(255, 255, 255, 0.84);
+    padding: 0.7rem 0;
+    background: rgba(255, 255, 255, 0.96);
     border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(12px);
   }
   nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .brand { display: inline-flex; align-items: center; gap: 0.65rem; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
-  .mark { display: inline-flex; align-items: center; justify-content: center; width: 2.45rem; height: 2.45rem; border-radius: 12px; background: rgb(var(--black)); color: white; font-size: 1.2rem; }
-  .internal-links { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; justify-content: flex-end; }
-  nav a { color: rgb(var(--gray-dark)); text-decoration: none; font-size: 0.92rem; font-weight: 700; padding: 0.55rem 0.75rem; border-radius: 999px; }
+  .brand { display: inline-flex; align-items: center; gap: 0.65rem; padding: 0.35rem 0.75rem 0.35rem 0.35rem; border-radius: 14px; background: var(--accent-soft); color: rgb(var(--black)); text-decoration: none; flex-shrink: 0; }
+  .mark { display: inline-flex; align-items: center; justify-content: center; width: 2.35rem; height: 2.35rem; border-radius: 10px; background: rgb(var(--black)); color: white; font-size: 0.95rem; font-weight: 850; }
+  .brand-copy { display: grid; line-height: 1.15; }
+  .brand-copy strong { font-size: 0.95rem; }
+  .brand-copy small { margin-top: 0.18rem; color: rgb(var(--gray)); font-size: 0.68rem; font-weight: 650; }
+  .internal-links { display: flex; align-items: center; gap: 0.2rem; justify-content: flex-end; }
+  nav a { color: rgb(var(--gray-dark)); text-decoration: none; font-size: 0.88rem; font-weight: 700; padding: 0.55rem 0.68rem; border-radius: 8px; white-space: nowrap; }
   nav a.active { color: var(--accent-dark); background: var(--accent-soft); }
   nav a:hover { background: var(--warm); color: rgb(var(--black)); }
-  .author { background: var(--blue-soft); color: var(--blue); border: 1px solid rgba(0, 117, 222, 0.12); }
+  .author { margin-left: 0.2rem; border-left: 1px solid var(--border); border-radius: 0; color: rgb(var(--gray)); }
   @media (max-width: 720px) {
-    header { position: static; padding: 1rem 0; }
-    nav { align-items: stretch; flex-direction: column; gap: 1rem; }
-    .internal-links { justify-content: flex-start; width: 100%; gap: 0.5rem; flex-wrap: wrap; }
-    nav a { text-align: center; flex: 1 1 calc(33.333% - 0.5rem); padding: 0.65rem 0.5rem; font-size: 0.85rem; }
-    .author { flex: 1 1 100%; }
+    header { position: static; padding: 0.6rem 0 0; }
+    nav { align-items: flex-start; flex-direction: column; gap: 0.55rem; }
+    .internal-links { width: 100%; justify-content: flex-start; overflow-x: auto; padding: 0 0 0.55rem; scrollbar-width: thin; scrollbar-color: rgba(97, 93, 89, 0.4) transparent; }
+    .internal-links::-webkit-scrollbar { height: 3px; }
+    .internal-links::-webkit-scrollbar-thumb { background: rgba(97, 93, 89, 0.4); border-radius: 999px; }
+    nav a { flex: 0 0 auto; padding: 0.52rem 0.65rem; font-size: 0.82rem; }
+    .author { margin-left: 0; border-left: 0; }
   }
 </style>

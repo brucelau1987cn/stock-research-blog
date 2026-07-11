@@ -44,31 +44,31 @@ const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c
     <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} />
     <script type="application/ld+json" set:html={itemListJsonLdText} />
     <style>
-      .market-head { display: flex; align-items: center; gap: 1rem; padding: 1.4rem 0 0.6rem; }
-      .market-icon { display: inline-flex; align-items: center; justify-content: center; width: 4.5rem; height: 4.5rem; border-radius: 8px; border: 1px solid var(--border); background: var(--warm-2); font-size: 2.2rem; flex-shrink: 0; }
-      .market-head h1 { margin: 0.3rem 0; font-size: clamp(1.8rem, 4vw, 2.45rem); letter-spacing: 0; }
+      .market-head { display: flex; align-items: center; gap: 1rem; padding: 1rem 0 1.5rem; border-bottom: 1px solid var(--border); }
+      .market-icon { display: inline-flex; align-items: center; justify-content: center; width: 3.8rem; height: 3.8rem; border-radius: 12px; border: 1px solid var(--border); background: #fff; box-shadow: var(--box-shadow); font-size: 1.8rem; flex-shrink: 0; }
+      .market-head h1 { margin: 0.25rem 0; font-size: clamp(1.8rem, 4vw, 2.35rem); letter-spacing: 0; }
       .market-head p { margin: 0; max-width: 760px; color: rgb(var(--gray)); line-height: 1.6; }
       .focus { margin-top: 0.35rem !important; font-size: 0.9rem; font-weight: 700; }
-      .analysis-section { margin: 1.4rem 0 1rem; }
+      .analysis-section { margin: 2rem 0 1rem; }
       .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
-      .analysis-section-head h2 { margin: 0; font-size: 1.35rem; }
+      .analysis-section-head h2 { margin: 0; font-size: 1.6rem; }
       .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
       .analysis-controls { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0 0 0.85rem; }
-      .analysis-search, .analysis-filter { min-height: 2.4rem; border: 1px solid var(--border); border-radius: 6px; background: #fff; color: rgb(var(--gray-dark)); font: inherit; }
-      .analysis-search { flex: 1 1 15rem; padding: 0.45rem 0.7rem; }
+      .analysis-search, .analysis-filter { min-height: 2.65rem; border: 1px solid var(--border); border-radius: 10px; background: #fff; color: rgb(var(--gray-dark)); font: inherit; }
+      .analysis-search { flex: 1 1 15rem; padding: 0.5rem 0.8rem; }
       .analysis-filter { padding: 0.4rem 0.55rem; font-size: 0.9rem; }
       .result-count { color: rgb(var(--gray)); font-size: 0.82rem; font-weight: 700; }
       .no-results { display: none; margin: 0.85rem 0; color: rgb(var(--gray)); }
       .no-results.visible { display: block; }
-      .analysis-grid { display: flex; flex-direction: column; gap: 0.5rem; }
+      .analysis-grid { display: flex; flex-direction: column; gap: 0.65rem; }
       .pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; }
-      .pagination button { min-height: 2.4rem; padding: 0.45rem 0.9rem; border-radius: 6px; border: 1px solid var(--border); background: #fff; color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; }
+      .pagination button { min-height: 2.5rem; padding: 0.45rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; }
       .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
       .page-info { color: rgb(var(--gray)); font-size: 0.85rem; font-weight: 700; }
       .method-details { margin: 1.2rem 0 2rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
       .method-details summary { padding: 0.85rem 0; cursor: pointer; color: rgb(var(--gray-dark)); font-weight: 800; }
       .methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; padding-bottom: 1rem; }
-      .method { padding: 1rem; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+      .method { padding: 1rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
       .method h3 { margin: 0 0 0.6rem; font-size: 0.95rem; }
       .method p { margin: 0.35rem 0; color: rgb(var(--gray)); font-size: 0.88rem; line-height: 1.55; }
       .empty { padding: 1.2rem 0; color: rgb(var(--gray)); }

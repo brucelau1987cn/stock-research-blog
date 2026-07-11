@@ -8,7 +8,6 @@ const today = new Date();
     <div>
       <strong>{SITE_TITLE}</strong>
       <p>个股分析 + 白发股神 Serenity 动态追踪，由 {SITE_AUTHOR} 维护。</p>
-      <p class="disclaimer">个人研究笔记，不构成投资建议。数据可能延迟或有误，过往表现不代表未来。</p>
     </div>
     <div class="footer-links">
       <a href="/">首页</a>
@@ -20,17 +19,18 @@ const today = new Date();
       <a href={SITE_AUTHOR_URL} target="_blank" rel="noreferrer">{SITE_AUTHOR}</a>
     </div>
   </div>
+  <div class="site-shell disclaimer">个人研究笔记，不构成投资建议。数据可能延迟或有误，过往表现不代表未来；请在决策前独立核验价格、日期和来源。</div>
   <div class="site-shell copyright">&copy; {today.getFullYear()} {SITE_AUTHOR}. Research notes only.</div>
 </footer>
 <style>
-  footer { padding: 2.5rem 0 4rem; color: rgb(var(--gray)); background: var(--warm); border-top: 1px solid var(--border); }
+  footer { padding: 2.4rem 0 3rem; color: rgb(var(--gray)); background: var(--warm); border-top: 1px solid var(--border); }
   .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; }
   footer strong { color: rgb(var(--black)); }
   footer p { margin: 0.35rem 0 0; font-size: 0.92rem; }
-  footer .disclaimer { max-width: 39rem; color: rgb(var(--gray)); font-size: 0.8rem; line-height: 1.55; }
+  footer .disclaimer { margin-top: 1.5rem; padding: 0.8rem 1rem; border: 1px solid var(--border); border-radius: 10px; color: rgb(var(--gray)); font-size: 0.8rem; line-height: 1.55; }
   .footer-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: flex-end; }
   .footer-links a { color: rgb(var(--gray-dark)); text-decoration: none; font-size: 0.92rem; font-weight: 700; }
   .footer-links a:hover { color: var(--accent); }
-  .copyright { margin-top: 1.5rem; font-size: 0.82rem; color: rgb(var(--gray)); }
+  .copyright { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.82rem; color: rgb(var(--gray)); }
   @media (max-width: 720px) { .footer-inner { flex-direction: column; } .footer-links { justify-content: flex-start; } }
 </style>

@@ -50,7 +50,7 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
 
       /* Serenity hero */
       .serenity-hero { padding: 2.5rem 0 1rem; }
-      .serenity-hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.04em; }
+      .serenity-hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 0; }
       .serenity-hero .subtitle { font-size: 1.08rem; color: rgb(var(--gray)); line-height: 1.7; margin-top: 0.5rem; }
 
       /* Three intro cards in a row */
@@ -71,7 +71,7 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
       ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; list-style-type: none; margin: 0; padding: 0; }
       ul li:first-child { grid-column: 1 / -1; }
       .post-card { display: grid; grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; color: rgb(var(--gray-dark)); text-decoration: none; min-height: 13rem; }
-      ul li:first-child .post-card { min-height: 15rem; background: linear-gradient(135deg, #fff, var(--accent-soft)); }
+      ul li:first-child .post-card { min-height: 15rem; background: var(--accent-soft); border-color: #f3cec8; }
       .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
       .post-card .title { margin: 0; color: rgb(var(--black)); }
       .post-card .title .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
