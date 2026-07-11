@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import { buildSearchIndex, compactSummary, inferSentiment } from '../src/utils/article-summary.mjs';
 
@@ -26,4 +27,11 @@ test('buildSearchIndex keeps only compact identifying fields', () => {
     buildSearchIndex('600438', '通威股份', '600438 通威股份：盘后跟踪'),
     '600438 通威股份 600438 通威股份：盘后跟踪',
   );
+});
+
+test('article metadata labels distinguish publication from updates', () => {
+  const source = readFileSync(new URL('../src/layouts/BlogPost.astro', import.meta.url), 'utf8');
+  assert.match(source, /首次发布：/);
+  assert.match(source, /最后更新：/);
+  assert.match(source, /以最后更新为当前有效结论/);
 });

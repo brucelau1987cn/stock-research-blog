@@ -31,6 +31,18 @@ const blog = defineCollection({
 				action: z.string(),
 				changeSummary: z.array(z.string()).max(4).optional().default([]),
 			}).optional(),
+			usMarket: z.object({
+				asOf: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'asOf must use YYYY-MM-DD'),
+				period: z.string().min(1).optional(),
+				source: z.string().min(1),
+				earnings: z.object({
+					date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'earnings date must use YYYY-MM-DD').optional(),
+					status: z.string().min(1),
+				}).optional(),
+				valuation: z.array(z.object({ label: z.string(), value: z.string() })).max(4).optional().default([]),
+				macro: z.array(z.string()).max(3).optional().default([]),
+				peers: z.array(z.object({ ticker: z.string(), name: z.string() })).max(4).optional().default([]),
+			}).optional(),
 		}),
 });
 

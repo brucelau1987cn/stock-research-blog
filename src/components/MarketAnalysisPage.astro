@@ -4,6 +4,7 @@ import BaseHead from './BaseHead.astro';
 import Footer from './Footer.astro';
 import Header from './Header.astro';
 import StockAnalysisItem from './StockAnalysisItem.astro';
+import { getPostUrl } from '../utils/postUrl';
 import { SITE_TITLE } from '../consts';
 
 type Method = { icon: string; title: string; lines: string[] };
@@ -22,12 +23,26 @@ const parseTitle = (value: string) => {
   const match = value.match(/^(\S+)\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
   return match ? { code: match[1], name: match[2].trim() } : { code: value, name: '' };
 };
+const itemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `${title} | ${SITE_TITLE}`,
+  numberOfItems: posts.length,
+  itemListElement: posts.map((post, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: new URL(getPostUrl(post), Astro.site).toString(),
+    name: post.data.title,
+  })),
+};
+const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
 <html lang="zh-CN">
   <head>
     <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} />
+    <script type="application/ld+json" set:html={itemListJsonLdText} />
     <style>
       .market-head { display: flex; align-items: center; gap: 1rem; padding: 1.4rem 0 0.6rem; }
       .market-icon { display: inline-flex; align-items: center; justify-content: center; width: 4.5rem; height: 4.5rem; border-radius: 8px; border: 1px solid var(--border); background: var(--warm-2); font-size: 2.2rem; flex-shrink: 0; }

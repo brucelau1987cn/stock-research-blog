@@ -9,8 +9,21 @@ import { SITE_AUTHOR, SITE_AUTHOR_URL } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags, headings = [], image, decision } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, headings = [], image, decision, usMarket } = Astro.props;
 const isSerenity = tags?.includes('白发股神');
+const isUsStock = tags?.includes('美股分析');
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_AUTHOR_URL },
+  publisher: { '@type': 'Organization', name: 'AI选股', url: Astro.site?.toString() },
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
+};
+const articleJsonLdText = JSON.stringify(articleJsonLd).replace(/</g, '\\u003c');
 let tagLabel = 'A股分析';
 let tagPill = '';
 if (isSerenity) {
@@ -133,6 +146,7 @@ const formatDistance = (value: number) => {
 <html lang="zh-CN">
   <head>
     <BaseHead title={title} description={description} image={image} />
+    <script type="application/ld+json" set:html={articleJsonLdText} />
     <style>
       main { width: min(1040px, calc(100% - 2rem)); }
       .hero-image { width: 100%; }
@@ -146,7 +160,17 @@ const formatDistance = (value: number) => {
       .title h1 { max-width: 880px; margin: 0.7rem 0; font-size: clamp(1.75rem, 3.5vw, 2.55rem); letter-spacing: 0; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
       .description { max-width: 860px; color: rgb(var(--gray)); font-size: 0.96rem; line-height: 1.68; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
       .meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
-      .last-updated-on { color: rgb(var(--gray)); font-size: 0.88rem; }
+      .last-updated-on { margin-top: 0.35rem; color: rgb(var(--gray)); font-size: 0.88rem; }
+      .history-notice { margin: 0 0 1.2rem; padding: 0.8rem 1rem; border-left: 3px solid #0d47a1; background: rgba(13, 71, 161, 0.06); color: rgb(var(--gray-dark)); font-size: 0.88rem; line-height: 1.6; }
+      .us-market-panel { margin: 0 0 1.2rem; padding: 1rem; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+      .us-market-head { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; margin-bottom: 0.75rem; }
+      .us-market-head h2 { margin: 0; font-size: 1rem; }
+      .us-market-head span { color: rgb(var(--gray)); font-size: 0.76rem; }
+      .us-market-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+      .us-market-block { padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; background: var(--warm-2); }
+      .us-market-block h3 { margin: 0 0 0.4rem; font-size: 0.82rem; }
+      .us-market-block p, .us-market-block ul { margin: 0; color: rgb(var(--gray-dark)); font-size: 0.82rem; line-height: 1.55; }
+      .us-market-block ul { padding-left: 1rem; }
       .decision-panel { margin: 0 0 1.25rem; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; }
       .decision-head { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; padding: 1rem 1.1rem; border-bottom: 1px solid var(--border); background: var(--warm-2); }
       .decision-eyebrow { margin: 0 0 0.25rem; color: rgb(var(--gray)); font-size: 0.75rem; font-weight: 800; }
@@ -187,6 +211,9 @@ const formatDistance = (value: number) => {
       .track-history[open] summary { border-bottom: 1px solid var(--border); }
       .track-history-body { padding: 0 1rem 0.5rem; }
       .track-history-body > h3:first-child { margin-top: 1rem; }
+      .historical-framework { margin: 1.2rem 0; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; }
+      .historical-framework summary { padding: 0.9rem 1rem; cursor: pointer; background: var(--warm-2); color: rgb(var(--gray-dark)); font-weight: 800; }
+      .historical-framework-body { padding: 0 1rem 0.6rem; }
       .sidebar { position: sticky; top: 6rem; padding: 0.75rem 0 0.75rem 1rem; border-left: 1px solid var(--border); background: transparent; box-shadow: none; border-radius: 0; }
       .sidebar h2 { margin: 0 0 0.65rem; font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase; color: rgb(var(--gray)); }
       .sidebar a { display: block; color: rgb(var(--gray-dark)); text-decoration: none; padding: 0.48rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); font-size: 0.88rem; font-weight: 700; line-height: 1.35; }
@@ -214,6 +241,8 @@ const formatDistance = (value: number) => {
         .decision-metric:nth-child(2) { border-right: 0; }
         .decision-metric:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
         .decision-plan { grid-template-columns: 1fr; }
+        .us-market-grid { grid-template-columns: 1fr; }
+        .us-market-head { align-items: flex-start; flex-direction: column; gap: 0.25rem; }
         .prose table { max-width: 100%; }
       }
     </style>
@@ -230,11 +259,16 @@ const formatDistance = (value: number) => {
           <div class="meta">
             <span class={`pill ${tagPill}`}>{tagLabel}</span>
             <a class="pill author-pill" href={SITE_AUTHOR_URL} target="_blank" rel="noreferrer">作者 {SITE_AUTHOR}</a>
-            <span class="pill"><FormattedDate date={pubDate} /></span>
+            <span class="pill">首次发布：<FormattedDate date={pubDate} /></span>
           </div>
           <h1>{title}</h1>
           <p class="description">{description}</p>
-          {updatedDate && <div class="last-updated-on">更新：<FormattedDate date={updatedDate} showTime={true} /></div>}
+          <div class="last-updated-on">
+            最后更新：<FormattedDate date={updatedDate ?? pubDate} showTime={Boolean(updatedDate)} />
+            {decision
+              ? <> · 以最后更新为当前有效结论，历史版本见跟踪记录。</>
+              : updatedDate && <> · 内容更新时间不等于当前行情复核；有效性以页面提示为准。</>}
+          </div>
         </div>
         {decision && (
           <section class="decision-panel" aria-label="最新决策摘要">
@@ -276,6 +310,47 @@ const formatDistance = (value: number) => {
                 <div>
                   <h2>本次变化</h2>
                   <ul>{decision.changeSummary.map((item) => <li>{item}</li>)}</ul>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+        {isUsStock && (
+          <div class="history-notice">
+            {decision
+              ? '顶部“最新决策摘要”和“关键价位”是当前有效口径；正文中的旧结论、旧建仓区间与历史跟踪仅用于复盘，不应作为当前买卖依据。'
+              : '本文尚未完成最新结构化复核，正文价位和策略均为首次发布时的历史研究框架，不代表当前有效动作。'}
+          </div>
+        )}
+        {isUsStock && usMarket && (
+          <section class="us-market-panel" aria-label="美股市场信息">
+            <div class="us-market-head">
+              <h2>美股市场信息</h2>
+              <span>{usMarket.period ? `${usMarket.period} · ` : ''}截至 {usMarket.asOf} · 来源：{usMarket.source}</span>
+            </div>
+            <div class="us-market-grid">
+              {usMarket.earnings && (
+                <div class="us-market-block">
+                  <h3>财报日历</h3>
+                  <p>{usMarket.earnings.date ? `${usMarket.earnings.date} · ` : ''}{usMarket.earnings.status}</p>
+                </div>
+              )}
+              {usMarket.valuation.length > 0 && (
+                <div class="us-market-block">
+                  <h3>估值与运营指标</h3>
+                  <ul>{usMarket.valuation.map((item) => <li>{item.label}：{item.value}</li>)}</ul>
+                </div>
+              )}
+              {usMarket.macro.length > 0 && (
+                <div class="us-market-block">
+                  <h3>宏观敏感项</h3>
+                  <ul>{usMarket.macro.map((item) => <li>{item}</li>)}</ul>
+                </div>
+              )}
+              {usMarket.peers.length > 0 && (
+                <div class="us-market-block">
+                  <h3>可比公司</h3>
+                  <p>{usMarket.peers.map((item) => `${item.ticker} ${item.name}`).join(' · ')}</p>
                 </div>
               )}
             </div>
@@ -364,9 +439,9 @@ const formatDistance = (value: number) => {
           const prose = document.querySelector('.prose');
           const tracking = [...(prose?.querySelectorAll('h2') || [])]
             .find((heading) => (heading.textContent || '').trim().endsWith('跟踪记录'));
-          if (!prose || !tracking) return;
+          if (!prose) return;
           const sections = [];
-          let node = tracking.nextElementSibling;
+          let node = tracking?.nextElementSibling ?? null;
           while (node && node.tagName !== 'H2') {
             if (node.tagName === 'H3' && /^跟踪\s+/.test(node.textContent || '')) {
               sections.push({ heading: node, nodes: [] });
@@ -386,13 +461,45 @@ const formatDistance = (value: number) => {
             details.append(summary, body);
             section.nodes.forEach((item) => body.append(item));
           });
+
+          const isCurrentUsArticle = Boolean(document.querySelector('.history-notice') && document.querySelector('.decision-panel'));
+          const legacyHeading = [...prose.querySelectorAll('h2')]
+            .find((heading) => (heading.textContent || '').trim() === '结论先行');
+          if (isCurrentUsArticle && legacyHeading) {
+            const details = document.createElement('details');
+            details.className = 'historical-framework';
+            const summary = document.createElement('summary');
+            summary.textContent = '历史研究框架（旧结论与旧建仓计划）';
+            const body = document.createElement('div');
+            body.className = 'historical-framework-body';
+            legacyHeading.before(details);
+            details.append(summary, body);
+            let item = legacyHeading;
+            while (item) {
+              const next = item.nextElementSibling;
+              body.append(item);
+              item = next;
+            }
+          }
+
+          const openDetailsForHash = () => {
+            if (!location.hash) return;
+            const id = decodeURIComponent(location.hash.slice(1));
+            const target = document.getElementById(id);
+            const details = target?.closest('.track-history, .historical-framework');
+            if (details) details.open = true;
+          };
           document.querySelectorAll('.sidebar a[href^="#"]').forEach((link) => {
             link.addEventListener('click', () => {
-              const target = document.getElementById(decodeURIComponent(link.getAttribute('href').slice(1)));
-              const details = target?.closest('.track-history');
+              const href = link.getAttribute('href');
+              if (!href) return;
+              const target = document.getElementById(decodeURIComponent(href.slice(1)));
+              const details = target?.closest('.track-history, .historical-framework');
               if (details) details.open = true;
             });
           });
+          openDetailsForHash();
+          window.addEventListener('hashchange', openDetailsForHash);
         })();
       </script>
     )}

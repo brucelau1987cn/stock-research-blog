@@ -30,6 +30,34 @@ decision:
     - 07-10 最终收盘 13.75、上涨 0.585%，1.22498 亿股放量冲高回落
     - 盘中触及 14.14 但收盘未站稳 13.78，突破尚未确认
     - 13.41 转为关键支撑，13.00 为短线结构失效位
+usMarket:
+  asOf: '2026-03-31'
+  period: 2026 Q1
+  source: Nubank 2026 Q1 earnings release
+  earnings:
+    status: 下一次财报日期待更新时复核，不展示未经核实日期
+  valuation:
+    - label: 活跃用户
+      value: 超过 1 亿
+    - label: 巴西成年人渗透率
+      value: 超过 55%
+    - label: ARPAC
+      value: 超过 $11.4/月
+    - label: 效率比
+      value: 约 32%
+  macro:
+    - 巴西及墨西哥利率变化会影响净息差、信贷需求与资产质量
+    - 巴西雷亚尔兑美元波动会影响美元口径收入与估值
+    - 拉美监管及信用周期变化是主要基本面风险
+  peers:
+    - ticker: SOFI
+      name: SoFi Technologies
+    - ticker: INTR
+      name: Inter & Co
+    - ticker: ITUB
+      name: Itaú Unibanco
+    - ticker: BBD
+      name: Banco Bradesco
 ---
 
 ## 近1个月行情
