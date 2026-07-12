@@ -18,8 +18,7 @@ const sentiment = inferSentiment(decision, post.data.description);
 const searchIndex = buildSearchIndex(code, name, post.data.title);
 const formatPrice = (value: number) => {
   if (!decision) return String(value);
-  const digits = decision.currency === 'USD' ? 3 : 2;
-  const number = value.toFixed(digits).replace(/0+$/, '').replace(/\.$/, '');
+  const number = value.toFixed(2);
   return decision.currency === 'USD' ? `$${number}` : `${number} ${decision.currency}`;
 };
 ---

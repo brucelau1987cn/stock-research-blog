@@ -132,8 +132,8 @@ const stockDashboardLinks = [
 ].filter((item) => item.heading).map((item) => ({ label: item.label, href: `#${item.heading!.slug}` }));
 const formatDecisionPrice = (value: number) => {
   if (!decision) return String(value);
-  const digits = decision.currency === 'USD' ? 3 : 2;
-  const number = value.toFixed(digits).replace(/0+$/, '').replace(/\.$/, '');
+  const digits = decision.currency === 'USD' ? 2 : 2;
+  const number = value.toFixed(digits);
   return decision.currency === 'USD' ? `$${number}` : `${number} ${decision.currency}`;
 };
 const formatDistance = (value: number) => {
