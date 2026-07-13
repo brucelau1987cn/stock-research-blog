@@ -1,274 +1,268 @@
 {
-  "as_of": "2026-07-10 17:30:47 HKT",
-  "trading_day": "2026-07-10",
+  "as_of": "2026-07-13 17:30:34 HKT",
+  "trading_day": "2026-07-13",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "405.0",
-      "pct": "-0.7523",
+      "price": "379.51",
+      "pct": "-6.2938",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 11.400005,
-      "turnover": 8.751000000000001,
-      "amount_yi": 66.82,
-      "serenity_view": "Atlas/车企 humanoid 供应链落地，等待主机厂定点，回调分批低吸"
+      "amplitude": 9.555556,
+      "turnover": 6.6339999999999995,
+      "amount_yi": 47.59
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "207.17",
-      "pct": "-0.8756",
+      "price": "189.02",
+      "pct": "-8.7609",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 10.526316,
-      "turnover": 14.315,
-      "amount_yi": 100.21
+      "amplitude": 10.850992,
+      "turnover": 10.814,
+      "amount_yi": 67.84
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "16.94",
-      "pct": "-4.8315",
+      "price": "15.73",
+      "pct": "-7.1429",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 9.887640000000001,
-      "turnover": 6.659,
-      "amount_yi": 59.31
+      "amplitude": 9.090909,
+      "turnover": 4.746,
+      "amount_yi": 38.45
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "100.26",
-      "pct": "-2.6413",
+      "price": "90.23",
+      "pct": "-10.0040",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 6.69062,
-      "turnover": 11.901,
-      "amount_yi": 80.47
+      "amplitude": 7.949332000000001,
+      "turnover": 8.358,
+      "amount_yi": 50.79
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "61.06",
-      "pct": "-4.2496",
+      "price": "57.4",
+      "pct": "-5.9941",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 11.22785,
-      "turnover": 10.981,
-      "amount_yi": 55.27
+      "amplitude": 8.925647,
+      "turnover": 6.819,
+      "amount_yi": 31.46
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "801.0",
-      "pct": "-8.8146",
+      "price": "764.3",
+      "pct": "-4.5818",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 11.840443,
-      "turnover": 2.674,
-      "amount_yi": 167.11
+      "amplitude": 7.32834,
+      "turnover": 2.25,
+      "amount_yi": 127.85
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "36.4",
-      "pct": "-2.2819",
+      "price": "35.86",
+      "pct": "-1.4835",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 10.926174,
-      "turnover": 7.468,
-      "amount_yi": 81.67
+      "amplitude": 7.087912,
+      "turnover": 5.639,
+      "amount_yi": 58.57
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "271.12",
-      "pct": "-0.1400",
+      "price": "259.31",
+      "pct": "-4.3560",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 7.694291000000001,
-      "turnover": 5.938000000000001,
-      "amount_yi": 182.91,
-      "serenity_view": "XPU 与带宽增长继续支撑光互联需求，关注订单验证"
+      "amplitude": 8.180879000000001,
+      "turnover": 3.5549999999999997,
+      "amount_yi": 102.53
     },
     {
       "name": "拓荆科技",
       "code": "688072",
-      "price": "832.0",
-      "pct": "0.0000",
+      "price": "845.0",
+      "pct": "1.5625",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": null,
-      "turnover": 0.0,
-      "amount_yi": null
+      "amplitude": 27.638221,
+      "turnover": 7.947,
+      "amount_yi": 194.27
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "101.11",
-      "pct": "-2.3281",
+      "price": "99.05",
+      "pct": "-2.0374",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 12.326120999999999,
-      "turnover": 17.092,
-      "amount_yi": 332.13
+      "amplitude": 8.446247,
+      "turnover": 13.587,
+      "amount_yi": 250.12
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "70.95",
-      "pct": "-1.6905",
+      "price": "73.57",
+      "pct": "3.6927",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 9.546903,
-      "turnover": 13.347000000000001,
-      "amount_yi": 151.23
+      "amplitude": 10.246653,
+      "turnover": 14.094999999999999,
+      "amount_yi": 159.5
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "60.58",
-      "pct": "-8.4894",
+      "price": "54.59",
+      "pct": "-9.8878",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 15.060423,
-      "turnover": 8.906,
-      "amount_yi": 62.21
+      "amplitude": 12.347309,
+      "turnover": 6.914,
+      "amount_yi": 42.59
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "118.14",
-      "pct": "-5.9395",
+      "price": "108.03",
+      "pct": "-8.5576",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 14.745223,
-      "turnover": 13.436,
-      "amount_yi": 38.74,
-      "serenity_view": "GLW glass bridge 有潜力但短期难替 FAU，仅观察产业验证"
+      "amplitude": 9.70882,
+      "turnover": 10.011000000000001,
+      "amount_yi": 25.36
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "1093.98",
-      "pct": "-8.4459",
+      "price": "1108.0",
+      "pct": "1.2816",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 10.379111,
-      "turnover": 3.8129999999999997,
-      "amount_yi": 490.28,
-      "serenity_view": "CPO 延迟与 Meta Compute 空头叙事被证伪，网络优化不等于光模块 TAM 腰斩"
+      "amplitude": 6.552222,
+      "turnover": 3.104,
+      "amount_yi": 383.91
     },
     {
       "name": "中船特气",
       "code": "688146",
-      "price": "293.99",
-      "pct": "-19.1447",
+      "price": "244.5",
+      "pct": "-16.8339",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 16.828933,
-      "turnover": 13.706999999999999,
-      "amount_yi": 64.77
+      "amplitude": 24.643694999999997,
+      "turnover": 15.28,
+      "amount_yi": 58.59
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "523.05",
-      "pct": "-4.1155",
+      "price": "512.5",
+      "pct": "-2.0170",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 9.23923,
-      "turnover": 4.072,
-      "amount_yi": 280.31,
-      "serenity_view": "光通信空头拥挤且 thesis 不牢，订单未变时回调分批低吸"
+      "amplitude": 7.4295,
+      "turnover": 3.279,
+      "amount_yi": 213.87
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "34.39",
-      "pct": "-9.6189",
+      "price": "37.48",
+      "pct": "8.9852",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 12.089356,
-      "turnover": 11.935,
-      "amount_yi": 23.35
+      "amplitude": 10.322768,
+      "turnover": 13.525,
+      "amount_yi": 27.43
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "290.8",
-      "pct": "-7.8142",
+      "price": "270.76",
+      "pct": "-6.8913",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 10.936757,
-      "turnover": 6.129,
-      "amount_yi": 47.33,
-      "serenity_view": "CW laser/CPO 证伪链延续，右侧跟进而非标题党止损"
+      "amplitude": 7.407152999999999,
+      "turnover": 5.0,
+      "amount_yi": 34.38
     }
   ],
   "etf_top": [
     {
-      "code": "512630.SH",
-      "name": "广发中证卫星产业etf",
-      "price": "1.450",
-      "pct": 8.290000000000001
+      "code": "562390.SH",
+      "name": "中药",
+      "price": "0.889",
+      "pct": 4.465
     },
     {
-      "code": "563230.SH",
-      "name": "富国中证卫星产业etf",
-      "price": "1.450",
-      "pct": 8.209
+      "code": "560080.SH",
+      "name": "汇添富中证中药etf",
+      "price": "0.974",
+      "pct": 4.170999999999999
     },
     {
-      "code": "159283.SZ",
-      "name": "南方中证通用航空主题etf",
-      "price": "1.011",
-      "pct": 8.128
+      "code": "561510.SH",
+      "name": "华泰柏瑞中证中药etf",
+      "price": "0.949",
+      "pct": 4.170999999999999
     },
     {
-      "code": "563530.SH",
-      "name": "易方达中证卫星产业etf",
-      "price": "1.443",
-      "pct": 7.847999999999999
+      "code": "159647.SZ",
+      "name": "中药etf",
+      "price": "0.904",
+      "pct": 4.148000000000001
     },
     {
-      "code": "563790.SH",
-      "name": "鹏华中证卫星产业etf",
-      "price": "1.085",
-      "pct": 7.746
+      "code": "513350.SH",
+      "name": "富国标普石油天然气勘探及生产精选行业etf(qdii)",
+      "price": "1.181",
+      "pct": 3.961
     }
   ],
   "etf_bottom": [
     {
-      "code": "588710.SH",
-      "name": "华泰柏瑞上证科创板半导体材料设备主题etf",
-      "price": "3.984",
-      "pct": -7.756
+      "code": "512630.SH",
+      "name": "广发中证卫星产业etf",
+      "price": "1.305",
+      "pct": -10.0
     },
     {
-      "code": "588170.SH",
-      "name": "华夏上证科创板半导体材料设备主题etf",
-      "price": "1.292",
-      "pct": -7.516
+      "code": "563230.SH",
+      "name": "富国中证卫星产业etf",
+      "price": "1.305",
+      "pct": -10.0
     },
     {
-      "code": "589160.SH",
-      "name": "广发上证科创板芯片etf",
-      "price": "1.668",
-      "pct": -7.023
+      "code": "159206.SZ",
+      "name": "卫星etf永赢",
+      "price": "1.617",
+      "pct": -9.916
     },
     {
-      "code": "589020.SH",
-      "name": "鹏华科创板半导体材料设备主题etf",
-      "price": "3.154",
-      "pct": -6.988999999999999
+      "code": "563530.SH",
+      "name": "易方达中证卫星产业etf",
+      "price": "1.303",
+      "pct": -9.702
     },
     {
-      "code": "159516.SZ",
-      "name": "国泰中证半导体材料设备主题etf",
-      "price": "0.905",
-      "pct": -6.988999999999999
+      "code": "159283.SZ",
+      "name": "南方中证通用航空主题etf",
+      "price": "0.914",
+      "pct": -9.594999999999999
     }
   ],
   "macro": {
@@ -284,6 +278,5 @@
       "unit": "%",
       "name": "PMI"
     }
-  },
-  "serenity_sync_as_of": "2026-07-13 08:45:13 BJT"
+  }
 }
