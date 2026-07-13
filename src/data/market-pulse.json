@@ -11,7 +11,8 @@
       "sector_label": "🤖 人形机器人",
       "amplitude": 11.400005,
       "turnover": 8.751000000000001,
-      "amount_yi": 66.82
+      "amount_yi": 66.82,
+      "serenity_view": "Atlas/车企 humanoid 供应链落地，等待主机厂定点，回调分批低吸"
     },
     {
       "name": "雅克科技",
@@ -88,7 +89,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 7.694291000000001,
       "turnover": 5.938000000000001,
-      "amount_yi": 182.91
+      "amount_yi": 182.91,
+      "serenity_view": "XPU 与带宽增长继续支撑光互联需求，关注订单验证"
     },
     {
       "name": "拓荆科技",
@@ -143,7 +145,8 @@
       "sector_label": "🧊 TGV / 玻璃基板",
       "amplitude": 14.745223,
       "turnover": 13.436,
-      "amount_yi": 38.74
+      "amount_yi": 38.74,
+      "serenity_view": "GLW glass bridge 有潜力但短期难替 FAU，仅观察产业验证"
     },
     {
       "name": "中际旭创",
@@ -154,7 +157,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 10.379111,
       "turnover": 3.8129999999999997,
-      "amount_yi": 490.28
+      "amount_yi": 490.28,
+      "serenity_view": "CPO 延迟与 Meta Compute 空头叙事被证伪，网络优化不等于光模块 TAM 腰斩"
     },
     {
       "name": "中船特气",
@@ -176,7 +180,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 9.23923,
       "turnover": 4.072,
-      "amount_yi": 280.31
+      "amount_yi": 280.31,
+      "serenity_view": "光通信空头拥挤且 thesis 不牢，订单未变时回调分批低吸"
     },
     {
       "name": "金宏气体",
@@ -198,7 +203,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 10.936757,
       "turnover": 6.129,
-      "amount_yi": 47.33
+      "amount_yi": 47.33,
+      "serenity_view": "CW laser/CPO 证伪链延续，右侧跟进而非标题党止损"
     }
   ],
   "etf_top": [
@@ -278,5 +284,6 @@
       "unit": "%",
       "name": "PMI"
     }
-  }
+  },
+  "serenity_sync_as_of": "2026-07-13 08:45:13 BJT"
 }
