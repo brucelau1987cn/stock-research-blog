@@ -1,9 +1,35 @@
 ---
 title: 'WULF TeraWulf：核能转 AI 算力，高弹性数据中心的狂飙'
-description: '历史研究（数据截至2026-06-26）：WULF由比特币挖矿向AI/HPC数据中心转型的研究框架，文中价位和执行计划均为首次发布时快照，不代表当前有效动作。'
+description: '最新结论：WULF 07-10 收于 $21.97（-5.30%），已跌破原 $23.00 箱体下沿与 $22.50 风控线；短线偏空观望。收复 23.00 前不接反弹，若跌破 20.24 继续降级。'
 pubDate: 2026-06-26T21:45:00+08:00
-updatedDate: 2026-06-26T21:45:00+08:00
+updatedDate: 2026-07-13T21:20:00+08:00
 tags: ['美股分析']
+decision:
+  ticker: WULF
+  name: TeraWulf
+  status: 偏空，箱体下沿失守、清仓观望
+  currentPrice: 21.97
+  previousClose: 23.20
+  changePct: -5.302
+  currency: USD
+  asOf: '2026-07-13 21:20 BJT（数据截至 2026-07-10 美股最终收盘）'
+  resistance:
+    label: 原箱体下沿/收复线
+    value: 23.00
+    state: 未收复
+  support:
+    label: 近端低点支撑
+    value: 20.24
+    state: 仍在其上方
+  invalidation:
+    label: 近端失效位
+    value: 20.24
+    action: 放量跌破后继续降级并观望，不接弱势反弹
+  action: 收复 23.00 前清仓观望；跌破 20.24 继续降级，不左侧抄底
+  changeSummary:
+    - 07-10 收盘 21.97、下跌 5.30%，失守原 23.00 箱体下沿
+    - 原 22.50 风控线已被跌破，短线结构转弱
+    - 周度复核将历史高弹性框架降级为当前偏空观望决策
 ---
 
 ## 近1个月行情

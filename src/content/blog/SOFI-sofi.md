@@ -1,9 +1,35 @@
 ---
 title: 'SOFI SoFi Technologies：美国本土数字银行，高波动散户大本营'
-description: '历史研究（数据截至2026-06-26）：SOFI美国数字银行与均线突破框架，文中价位、目标和执行计划均为首次发布时快照，不代表当前有效动作。'
+description: '最新结论：SOFI 07-10 收于 $18.78（+0.86%），逼近 $18.80 箱体上沿；均线束上方偏多，但突破尚未确认。站稳 18.80 后再看上行，跌破 16.90 降级，跌破 15.50 止损。'
 pubDate: 2026-06-26T22:20:00+08:00
-updatedDate: 2026-06-26T22:20:00+08:00
+updatedDate: 2026-07-13T21:20:00+08:00
 tags: ['美股分析']
+decision:
+  ticker: SOFI
+  name: SoFi Technologies
+  status: 偏多，逼近箱体上沿、突破待确认
+  currentPrice: 18.78
+  previousClose: 18.62
+  changePct: 0.859
+  currency: USD
+  asOf: '2026-07-13 21:20 BJT（数据截至 2026-07-10 美股最终收盘）'
+  resistance:
+    label: 箱体上沿/第一压力
+    value: 18.80
+    state: 未收复
+  support:
+    label: 均线束支撑
+    value: 16.90
+    state: 仍在其上方
+  invalidation:
+    label: 绝对底部/失效位
+    value: 15.50
+    action: 跌破后形态破坏，无条件清仓观望
+  action: 依托 16.90 持有观察；放量站稳 18.80 后再评估加仓，跌破 16.90 先减仓，跌破 15.50 止损
+  changeSummary:
+    - 07-10 收盘 18.78、上涨 0.86%，距离 18.80 箱体上沿仅一步
+    - 仍稳居 16.90 均线束上方，突破质量待放量确认
+    - 周度复核将历史研究升级为当前结构化决策
 ---
 
 ## 近1个月行情

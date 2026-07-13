@@ -1,9 +1,35 @@
 ---
 title: 'INTR Inter Co：巴西全能型数字银行，左侧超跌的价值博弈'
-description: '历史研究（数据截至2026-06-26）：INTR拉美数字银行与超跌博弈框架，文中价位、止损和仓位计划均为首次发布时快照，不代表当前有效动作。'
+description: '最新结论：INTR 07-10 收于 $5.82（+1.93%），已站上原 $5.65 攻击线；短线偏多修复但 $6.00 仍待确认。若跌破 $5.65 先降级，放量跌破 $5.16 前低则放弃左侧试错。'
 pubDate: 2026-06-26T22:20:00+08:00
-updatedDate: 2026-06-26T22:20:00+08:00
+updatedDate: 2026-07-13T21:20:00+08:00
 tags: ['美股分析']
+decision:
+  ticker: INTR
+  name: Inter Co
+  status: 偏多修复，已站上原攻击线、等待确认 6.00
+  currentPrice: 5.82
+  previousClose: 5.71
+  changePct: 1.926
+  currency: USD
+  asOf: '2026-07-13 21:20 BJT（数据截至 2026-07-10 美股最终收盘）'
+  resistance:
+    label: 第一压力
+    value: 6.00
+    state: 未收复
+  support:
+    label: 原攻击线/第一支撑
+    value: 5.65
+    state: 已收复
+  invalidation:
+    label: 前低/试错失效位
+    value: 5.16
+    action: 放量跌破前低后放弃左侧试错并止损观望
+  action: 持有/轻仓观察；站稳 6.00 后再评估加仓，跌破 5.65 先降级，跌破 5.16 止损
+  changeSummary:
+    - 07-10 收盘 5.82、上涨 1.93%，已站上原 5.65 攻击线
+    - 近端压力上移至 6.00；5.16 前低与 5.00 整数关口仍是失效序列
+    - 周度复核将历史框架升级为当前结构化决策，旧分批计划仅供复盘
 ---
 
 ## 近1个月行情
