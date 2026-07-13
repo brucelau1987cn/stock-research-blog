@@ -1,10 +1,28 @@
 # Cloudflare Pages redirects
-# 个股分析页：URL 去掉日期前缀（YYYYMMDD-XXXXXX-slug → XXXXXX-slug）
-# 旧链接全部 301 到新地址，保证历史外链不失效
+# 1) A-share date-prefix legacy URLs → stable tracker URLs
+# 2) US stock uppercase variants → lowercase static paths
+# Keep this file complete whenever a new stock page is added.
 
+# A-share legacy date-prefixed URLs
 /20260612-002026-swd/  /002026-swd/  301
 /20260612-002459-jakt/ /002459-jakt/ 301
+/20260612-002810-shda/ /002810-shda/ 301
 /20260612-600438-twgf/ /600438-twgf/ 301
 /20260612-600580-wldq/ /600580-wldq/ 301
 /20260612-601012-ljln/ /601012-ljln/ 301
 /20260612-603997-jfgf/ /603997-jfgf/ 301
+
+
+# US stock uppercase / mixed-case → lowercase
+/NU-nubank/       /nu-nubank/       301
+/NU-Nubank/       /nu-nubank/       301
+/Nu-nubank/       /nu-nubank/       301
+/INTR-inter/      /intr-inter/      301
+/INTR-Inter/      /intr-inter/      301
+/SOFI-sofi/       /sofi-sofi/       301
+/SOFI-SoFi/       /sofi-sofi/       301
+/UMC-umc/         /umc-umc/         301
+/WULF-terawulf/   /wulf-terawulf/   301
+/WULF-TeraWulf/   /wulf-terawulf/   301
+
+# Note: add new /YYYYMMDD-<code>-<slug>/ 301 lines when creating date-prefixed historical aliases.

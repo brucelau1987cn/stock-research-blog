@@ -1,0 +1,78 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={`页面未找到 | ${SITE_TITLE}`} description="请求的页面不存在或已移动。" />
+    <style>
+      .not-found {
+        max-width: 42rem;
+        margin: 3.5rem auto 4rem;
+        padding: 0 1rem;
+        text-align: center;
+      }
+      .not-found .code {
+        margin: 0;
+        color: #d63d2e;
+        font-size: clamp(3.5rem, 10vw, 5rem);
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        line-height: 1;
+      }
+      .not-found h1 {
+        margin: 0.8rem 0 0.6rem;
+        font-size: clamp(1.5rem, 4vw, 2rem);
+      }
+      .not-found p {
+        margin: 0 auto 1.4rem;
+        max-width: 30rem;
+        color: rgb(var(--gray));
+        line-height: 1.65;
+      }
+      .not-found-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+      }
+      .not-found-actions a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.6rem;
+        padding: 0.55rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: rgb(var(--gray-dark));
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .not-found-actions a.primary {
+        border-color: rgba(214, 61, 46, 0.35);
+        background: #fff7f5;
+        color: #d63d2e;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main class="not-found">
+      <p class="code">404</p>
+      <h1>页面未找到</h1>
+      <p>这个地址没有对应文章或栏目。可能是链接写错、大小写不匹配，或内容已下线。请从首页或研究列表重新进入。</p>
+      <div class="not-found-actions">
+        <a class="primary" href="/">返回首页</a>
+        <a href="/stock-analysis/">A股分析</a>
+        <a href="/us-stock-analysis/">美股分析</a>
+        <a href="/serenity/">白发股神</a>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>

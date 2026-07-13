@@ -440,15 +440,17 @@ const formatDistance = (value: number) => {
       </article>
     </main>
     <Footer />
-    {!isSerenity && (
-      <script is:inline>
-        (() => {
-          const prose = document.querySelector('.prose');
-          const tracking = [...(prose?.querySelectorAll('h2') || [])]
-            .find((heading) => (heading.textContent || '').trim().endsWith('跟踪记录'));
-          if (!prose) return;
+    <script is:inline>
+      (() => {
+        const prose = document.querySelector('.prose');
+        if (!prose) return;
+
+        // A/US stock tracking fold: newest open, older collapsed
+        const tracking = [...prose.querySelectorAll('h2')]
+          .find((heading) => (heading.textContent || '').trim().endsWith('跟踪记录'));
+        if (tracking) {
           const sections = [];
-          let node = tracking?.nextElementSibling ?? null;
+          let node = tracking.nextElementSibling;
           while (node && node.tagName !== 'H2') {
             if (node.tagName === 'H3' && /^跟踪\s+/.test(node.textContent || '')) {
               sections.push({ heading: node, nodes: [] });
@@ -468,55 +470,83 @@ const formatDistance = (value: number) => {
             details.append(summary, body);
             section.nodes.forEach((item) => body.append(item));
           });
+        }
 
-          const isCurrentUsArticle = Boolean(document.querySelector('.history-notice') && document.querySelector('.decision-panel'));
-          const legacyHeading = [...prose.querySelectorAll('h2')]
-            .find((heading) => (heading.textContent || '').trim() === '结论先行');
-          if (isCurrentUsArticle && legacyHeading) {
-            const details = document.createElement('details');
-            details.className = 'historical-framework';
-            const summary = document.createElement('summary');
-            summary.textContent = '历史研究框架（旧结论与旧建仓计划）';
-            const body = document.createElement('div');
-            body.className = 'historical-framework-body';
-            legacyHeading.before(details);
-            details.append(summary, body);
-            let item = legacyHeading;
-            const legacySections = new Set([
-              '结论先行',
-              '持仓者动作 (分批买入 / 减仓计划)',
-              '分批买入 / 减仓计划',
-              '上涨 / 下跌逻辑 (行业与基本面锚点)',
-              '风险点',
-              '三个风险',
-            ]);
-            while (item && (item.tagName !== 'H2' || legacySections.has((item.textContent || '').trim()))) {
-              const next = item.nextElementSibling;
-              body.append(item);
-              item = next;
-            }
+        // Serenity monthly digests: keep recent tweets expanded, fold older ones
+        const tweetSections = [];
+        let cursor = prose.firstElementChild;
+        while (cursor) {
+          if (cursor.tagName === 'H3' && /^Tweet\s+/.test(cursor.textContent || '')) {
+            tweetSections.push({ heading: cursor, nodes: [] });
+          } else if (tweetSections.length && cursor.tagName !== 'H2') {
+            tweetSections[tweetSections.length - 1].nodes.push(cursor);
           }
-
-          const openDetailsForHash = () => {
-            if (!location.hash) return;
-            const id = decodeURIComponent(location.hash.slice(1));
-            const target = document.getElementById(id);
-            const details = target?.closest('.track-history, .historical-framework');
-            if (details) details.open = true;
-          };
-          document.querySelectorAll('.sidebar a[href^="#"]').forEach((link) => {
-            link.addEventListener('click', () => {
-              const href = link.getAttribute('href');
-              if (!href) return;
-              const target = document.getElementById(decodeURIComponent(href.slice(1)));
-              const details = target?.closest('.track-history, .historical-framework');
-              if (details) details.open = true;
-            });
+          cursor = cursor.nextElementSibling;
+        }
+        const RECENT_TWEETS = 12;
+        if (tweetSections.length > RECENT_TWEETS) {
+          const older = tweetSections.slice(RECENT_TWEETS);
+          const shell = document.createElement('details');
+          shell.className = 'track-history tweet-archive';
+          const summary = document.createElement('summary');
+          summary.textContent = `更早推文（${older.length} 条，点击展开）`;
+          const body = document.createElement('div');
+          body.className = 'track-history-body';
+          older[0].heading.before(shell);
+          shell.append(summary, body);
+          older.forEach((section) => {
+            body.append(section.heading);
+            section.nodes.forEach((item) => body.append(item));
           });
-          openDetailsForHash();
-          window.addEventListener('hashchange', openDetailsForHash);
-        })();
-      </script>
-    )}
+        }
+
+        const isCurrentUsArticle = Boolean(document.querySelector('.history-notice') && document.querySelector('.decision-panel'));
+        const legacyHeading = [...prose.querySelectorAll('h2')]
+          .find((heading) => (heading.textContent || '').trim() === '结论先行');
+        if (isCurrentUsArticle && legacyHeading) {
+          const details = document.createElement('details');
+          details.className = 'historical-framework';
+          const summary = document.createElement('summary');
+          summary.textContent = '历史研究框架（旧结论与旧建仓计划）';
+          const body = document.createElement('div');
+          body.className = 'historical-framework-body';
+          legacyHeading.before(details);
+          details.append(summary, body);
+          let item = legacyHeading;
+          const legacySections = new Set([
+            '结论先行',
+            '持仓者动作 (分批买入 / 减仓计划)',
+            '分批买入 / 减仓计划',
+            '上涨 / 下跌逻辑 (行业与基本面锚点)',
+            '风险点',
+            '三个风险',
+          ]);
+          while (item && (item.tagName !== 'H2' || legacySections.has((item.textContent || '').trim()))) {
+            const next = item.nextElementSibling;
+            body.append(item);
+            item = next;
+          }
+        }
+
+        const openDetailsForHash = () => {
+          if (!location.hash) return;
+          const id = decodeURIComponent(location.hash.slice(1));
+          const target = document.getElementById(id);
+          const details = target?.closest('.track-history, .historical-framework, .tweet-archive');
+          if (details) details.open = true;
+        };
+        document.querySelectorAll('.sidebar a[href^="#"]').forEach((link) => {
+          link.addEventListener('click', () => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+            const target = document.getElementById(decodeURIComponent(href.slice(1)));
+            const details = target?.closest('.track-history, .historical-framework, .tweet-archive');
+            if (details) details.open = true;
+          });
+        });
+        openDetailsForHash();
+        window.addEventListener('hashchange', openDetailsForHash);
+      })();
+    </script>
   </body>
 </html>

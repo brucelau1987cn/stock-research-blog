@@ -35,7 +35,7 @@ usMarket:
   period: 2026 Q1
   source: Nubank 2026 Q1 earnings release
   earnings:
-    status: 下一次财报日期待更新时复核，不展示未经核实日期
+    status: 下一次财报日期尚未核实，本页不展示未验证日期
   valuation:
     - label: 活跃用户
       value: 超过 1 亿

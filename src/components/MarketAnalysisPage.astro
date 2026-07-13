@@ -125,7 +125,12 @@ const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c
               </div>
             )}
           </>
-        ) : <div class="empty">暂无{title}文章，栏目将在有真实研究内容后展示。</div>}
+        ) : (
+          <div class="empty">
+            <p>暂无{title}文章。</p>
+            <p>当前栏目入口保留，但不会展示占位标的；有真实研究内容并打上对应标签后会自动出现在此列表。</p>
+          </div>
+        )}
       </section>
 
       <details class="method-details">
