@@ -5,6 +5,7 @@ import Footer from './Footer.astro';
 import Header from './Header.astro';
 import StockAnalysisItem from './StockAnalysisItem.astro';
 import { getPostUrl } from '../utils/postUrl';
+import { inferSentiment } from '../utils/article-summary.mjs';
 import { SITE_TITLE } from '../consts';
 
 type Method = { icon: string; title: string; lines: string[] };
@@ -19,6 +20,12 @@ type Props = {
 
 const { posts, title, icon, description, focus, methods } = Astro.props;
 const PAGE_SIZE = 6;
+const structuredPosts = posts.filter((post) => post.data.decision);
+const sentimentCounts = structuredPosts.reduce((counts, post) => {
+  const sentiment = inferSentiment(post.data.decision, post.data.description);
+  counts[sentiment] = (counts[sentiment] ?? 0) + 1;
+  return counts;
+}, {} as Record<string, number>);
 const parseTitle = (value: string) => {
   const match = value.match(/^(\S+)\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
   return match ? { code: match[1], name: match[2].trim() } : { code: value, name: '' };
@@ -44,12 +51,20 @@ const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c
     <BaseHead title={`${title} | ${SITE_TITLE}`} description={description} />
     <script type="application/ld+json" set:html={itemListJsonLdText} />
     <style>
-      .market-head { display: flex; align-items: center; gap: 1rem; padding: 1rem 0 1.5rem; border-bottom: 1px solid var(--border); }
+      .market-head { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0 1.25rem; border-bottom: 1px solid var(--border); }
       .market-icon { display: inline-flex; align-items: center; justify-content: center; width: 3.8rem; height: 3.8rem; border-radius: 12px; border: 1px solid var(--border); background: #fff; box-shadow: var(--box-shadow); font-size: 1.8rem; flex-shrink: 0; }
       .market-head h1 { margin: 0.25rem 0; font-size: clamp(1.8rem, 4vw, 2.35rem); letter-spacing: 0; }
       .market-head p { margin: 0; max-width: 760px; color: rgb(var(--gray)); line-height: 1.6; }
       .focus { margin-top: 0.35rem !important; font-size: 0.9rem; font-weight: 700; }
-      .analysis-section { margin: 2rem 0 1rem; }
+      .market-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 1rem 0 0; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; }
+      .market-stat { padding: 0.7rem 0.85rem; border-right: 1px solid var(--border); }
+      .market-stat:last-child { border-right: 0; }
+      .market-stat span { display: block; color: rgb(var(--gray)); font-size: 0.67rem; font-weight: 750; }
+      .market-stat strong { display: block; margin-top: 0.18rem; font: 800 1.15rem/1.1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+      .market-stat.bull strong { color: var(--accent); }
+      .market-stat.watch strong { color: var(--amber); }
+      .market-stat.bear strong { color: var(--green); }
+      .analysis-section { margin: 1.35rem 0 1rem; }
       .analysis-section-head { display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
       .analysis-section-head h2 { margin: 0; font-size: 1.6rem; }
       .analysis-section-head p { margin: 0; color: rgb(var(--gray)); font-size: 0.88rem; }
@@ -60,7 +75,7 @@ const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c
       .result-count { color: rgb(var(--gray)); font-size: 0.82rem; font-weight: 700; }
       .no-results { display: none; margin: 0.85rem 0; color: rgb(var(--gray)); }
       .no-results.visible { display: block; }
-      .analysis-grid { display: flex; flex-direction: column; gap: 0.65rem; }
+      .analysis-grid { display: flex; flex-direction: column; gap: 0.42rem; }
       .pagination { display: flex; align-items: center; justify-content: center; gap: 0.7rem; margin-top: 1rem; }
       .pagination button { min-height: 2.5rem; padding: 0.45rem 0.9rem; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: rgb(var(--gray-dark)); font-weight: 800; cursor: pointer; }
       .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -76,6 +91,9 @@ const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c
         .market-head { align-items: flex-start; }
         .market-icon { width: 3.5rem; height: 3.5rem; font-size: 1.8rem; }
         .methods { grid-template-columns: 1fr; }
+        .market-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .market-stat:nth-child(2) { border-right: 0; }
+        .market-stat:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
       }
     </style>
   </head>
@@ -93,6 +111,14 @@ const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c
       </section>
 
       <section class="analysis-section" aria-label={`${title}文章列表`}>
+        {posts.length > 0 && (
+          <div class="market-stats" aria-label={`${title}研究状态`}>
+            <div class="market-stat"><span>研究覆盖</span><strong>{posts.length}</strong></div>
+            <div class="market-stat bull"><span>偏多</span><strong>{sentimentCounts['偏多'] ?? 0}</strong></div>
+            <div class="market-stat watch"><span>防守/观望</span><strong>{sentimentCounts['观望/防守'] ?? 0}</strong></div>
+            <div class="market-stat bear"><span>偏空</span><strong>{sentimentCounts['偏空'] ?? 0}</strong></div>
+          </div>
+        )}
         <div class="analysis-section-head">
           <h2>最新{title}</h2>
           <p>按最后更新时间排序，先看结论、关键位与动作。</p>

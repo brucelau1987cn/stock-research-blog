@@ -1,0 +1,152 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import { inferSentiment } from '../utils/article-summary.mjs';
+import { getPostUrl } from '../utils/postUrl';
+
+type Props = {
+  posts: CollectionEntry<'blog'>[];
+};
+
+const { posts } = Astro.props;
+const tracked = posts.filter((post) => post.data.decision);
+const latest = tracked.slice(0, 5);
+const sentiments = tracked.map((post) => inferSentiment(post.data.decision, post.data.description));
+const bullish = sentiments.filter((value) => value === '偏多').length;
+const defensive = sentiments.filter((value) => value === '观望/防守').length;
+const bearish = sentiments.filter((value) => value === '偏空').length;
+const latestDate = tracked[0] ? tracked[0].data.updatedDate ?? tracked[0].data.pubDate : null;
+const marketName = (post: CollectionEntry<'blog'>) => {
+  if (post.data.tags?.includes('美股分析')) return '美股';
+  if (post.data.tags?.includes('港股分析')) return '港股';
+  return 'A股';
+};
+const formatPrice = (post: CollectionEntry<'blog'>) => {
+  const decision = post.data.decision;
+  if (!decision) return '—';
+  return `${decision.currency === 'USD' ? '$' : ''}${decision.currentPrice.toFixed(2)}${decision.currency === 'USD' ? '' : ` ${decision.currency}`}`;
+};
+const formatChange = (value?: number) => {
+  if (value == null) return '—';
+  return `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
+};
+---
+
+<section class="monitor-board" aria-labelledby="monitor-title">
+  <div class="monitor-head">
+    <div>
+      <span class="monitor-eyebrow">RESEARCH MONITOR</span>
+      <h2 id="monitor-title">研究监控看板</h2>
+    </div>
+    <div class="monitor-freshness">
+      <span class="status-dot" aria-hidden="true"></span>
+      {latestDate ? <>最后同步 <FormattedDate date={latestDate} showTime={true} /></> : '暂无结构化研究'}
+    </div>
+  </div>
+
+  <div class="monitor-kpis" aria-label="研究状态摘要">
+    <div class="monitor-kpi">
+      <span>覆盖标的</span>
+      <strong>{tracked.length}</strong>
+      <small>A股、美股与港股</small>
+    </div>
+    <div class="monitor-kpi tone-bull">
+      <span>偏多</span>
+      <strong class:list={{ empty: bullish === 0 }}>{bullish}</strong>
+      <small>结构保持或修复</small>
+    </div>
+    <div class="monitor-kpi tone-watch">
+      <span>防守/观望</span>
+      <strong class:list={{ empty: defensive === 0 }}>{defensive}</strong>
+      <small>等待关键位确认</small>
+    </div>
+    <div class="monitor-kpi tone-bear">
+      <span>偏空</span>
+      <strong class:list={{ empty: bearish === 0 }}>{bearish}</strong>
+      <small>破位或失效状态</small>
+    </div>
+  </div>
+
+  <div class="monitor-table" role="list" aria-label="最近更新的结构化研究">
+    <div class="monitor-columns" aria-hidden="true">
+      <span>标的 / 市场</span>
+      <span>最新价</span>
+      <span>涨跌幅</span>
+      <span>当前状态</span>
+    </div>
+    {latest.map((post) => {
+      const decision = post.data.decision!;
+      const sentiment = inferSentiment(decision, post.data.description);
+      const direction = (decision.changePct ?? 0) > 0 ? 'up' : (decision.changePct ?? 0) < 0 ? 'down' : 'flat';
+      return (
+        <a class="monitor-row" href={getPostUrl(post)} role="listitem">
+          <span class="instrument">
+            <strong>{decision.name}</strong>
+            <small><span class="market-chip">{marketName(post)}</span>{decision.ticker}</small>
+          </span>
+          <span class="quote">{formatPrice(post)}</span>
+          <span class:list={['change', direction]}>{formatChange(decision.changePct)}</span>
+          <span class="state-cell">
+            <span class:list={['state-bar', sentiment === '偏多' ? 'bull' : sentiment === '偏空' ? 'bear' : 'watch']} aria-hidden="true"></span>
+            <span>{decision.status}</span>
+          </span>
+        </a>
+      );
+    })}
+  </div>
+  <div class="monitor-foot">
+    <span>静态研究快照，不代表实时行情</span>
+    <a href="/archive/">查看全部研究 →</a>
+  </div>
+</section>
+
+<style>
+  .monitor-board { margin: 0 0 2.5rem; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgba(20,20,18,0.04); }
+  .monitor-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; padding: 1rem 1.1rem 0.9rem; border-bottom: 1px solid var(--border); background: var(--warm-2); }
+  .monitor-eyebrow { color: var(--blue); font: 800 0.68rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: 0.08em; }
+  .monitor-head h2 { margin: 0.28rem 0 0; font-size: 1.25rem; }
+  .monitor-freshness { display: flex; align-items: center; gap: 0.45rem; color: rgb(var(--gray)); font-size: 0.76rem; white-space: nowrap; }
+  .status-dot { width: 0.48rem; height: 0.48rem; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(21,148,71,0.1); }
+  .monitor-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--border); }
+  .monitor-kpi { min-width: 0; padding: 0.85rem 1rem; border-right: 1px solid var(--border); }
+  .monitor-kpi:last-child { border-right: 0; }
+  .monitor-kpi span { display: block; color: rgb(var(--gray)); font-size: 0.72rem; font-weight: 750; }
+  .monitor-kpi strong { display: block; margin-top: 0.18rem; font: 800 1.5rem/1.1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .monitor-kpi small { display: block; margin-top: 0.25rem; color: rgb(var(--gray)); font-size: 0.68rem; }
+  .monitor-kpi.tone-bull strong { color: var(--accent); }
+  .monitor-kpi.tone-watch strong { color: var(--amber); }
+  .monitor-kpi.tone-bear strong { color: var(--green); }
+  .monitor-kpi strong.empty { color: rgb(var(--gray)); opacity: 0.45; }
+  .monitor-columns, .monitor-row { display: grid; grid-template-columns: minmax(11rem, 1.1fr) 7rem 6rem minmax(13rem, 1.5fr); align-items: center; gap: 0.85rem; }
+  .monitor-columns { padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); color: rgb(var(--gray)); font-size: 0.66rem; font-weight: 800; text-transform: uppercase; }
+  .monitor-row { min-height: 3.45rem; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); color: inherit; text-decoration: none; transition: background 120ms ease; }
+  .monitor-row:hover { background: #fcfbf8; }
+  .instrument { min-width: 0; }
+  .instrument strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.88rem; }
+  .instrument small { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.18rem; color: rgb(var(--gray)); font: 700 0.7rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .market-chip { padding: 0.12rem 0.3rem; border-radius: 3px; background: var(--blue-soft); color: var(--blue); font-family: inherit; }
+  .quote, .change { font: 800 0.85rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; text-align: right; }
+  .change.up { color: var(--accent); }
+  .change.down { color: var(--green); }
+  .change.flat { color: rgb(var(--gray)); }
+  .state-cell { display: grid; grid-template-columns: 0.2rem minmax(0, 1fr); align-items: center; gap: 0.55rem; min-width: 0; color: rgb(var(--gray-dark)); font-size: 0.77rem; line-height: 1.35; }
+  .state-cell > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .state-bar { width: 0.2rem; height: 1.55rem; border-radius: 999px; background: var(--amber); }
+  .state-bar.bull { background: var(--accent); }
+  .state-bar.bear { background: var(--green); }
+  .monitor-foot { display: flex; justify-content: space-between; gap: 1rem; padding: 0.62rem 1rem; color: rgb(var(--gray)); font-size: 0.7rem; }
+  .monitor-foot a { font-weight: 800; text-decoration: none; }
+  @media (max-width: 760px) {
+    .monitor-head { align-items: flex-start; }
+    .monitor-freshness { white-space: normal; text-align: right; }
+    .monitor-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .monitor-kpi:nth-child(2) { border-right: 0; }
+    .monitor-kpi:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .monitor-columns { display: none; }
+    .monitor-row { grid-template-columns: minmax(0, 1fr) auto; gap: 0.3rem 0.8rem; padding: 0.7rem 0.9rem; }
+    .quote { grid-column: 2; grid-row: 1; }
+    .change { grid-column: 2; grid-row: 2; }
+    .state-cell { grid-column: 1 / -1; margin-top: 0.35rem; }
+    .monitor-foot { flex-direction: column; gap: 0.25rem; }
+  }
+</style>

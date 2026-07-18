@@ -4,6 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import ResearchMonitorBoard from '../components/ResearchMonitorBoard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { compactSummary } from '../utils/article-summary.mjs';
 import { getPostUrl } from '../utils/postUrl';
@@ -45,15 +46,15 @@ const pillars = [
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
-      .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; padding: 1rem 0 2.25rem; }
+      .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; padding: 0.5rem 0 1.5rem; }
       .hero-badges { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
-      .hero h1 { max-width: 12em; margin: 0 0 0.8rem; font-size: clamp(2.2rem, 4.4vw, 3.05rem); line-height: 1.25; text-wrap: balance; }
+      .hero h1 { max-width: 13em; margin: 0 0 0.65rem; font-size: clamp(2rem, 4vw, 2.7rem); line-height: 1.18; text-wrap: balance; }
       .subtitle { max-width: 42rem; margin: 0 0 1.2rem; color: rgb(var(--gray)); font-size: 1rem; line-height: 1.7; }
       .actions { display: flex; gap: 0.65rem; flex-wrap: wrap; }
-      .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 2.85rem; padding: 0.62rem 1rem; border-radius: 999px; border: 1px solid var(--border); background: #fff; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
+      .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 2.7rem; padding: 0.58rem 0.9rem; border-radius: 6px; border: 1px solid var(--border); background: #fff; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
       .btn.primary { background: rgb(var(--black)); color: #fff; border-color: rgb(var(--black)); }
       .btn:hover { transform: translateY(-1px); box-shadow: var(--box-shadow); }
-      .market-brief { padding: 1.4rem; border: 1px solid #f3cec8; border-radius: 14px; background: #fff7f5; box-shadow: var(--box-shadow); }
+      .market-brief { padding: 1.2rem; border: 1px solid #f3cec8; border-radius: 8px; background: #fff7f5; box-shadow: var(--box-shadow); }
       .brief-meta { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
       .market-brief h2 { margin: 0 0 0.65rem; font-size: 1.65rem; }
       .market-brief > p { color: rgb(var(--gray)); line-height: 1.65; }
@@ -115,6 +116,8 @@ const pillars = [
           {currentPost && <a class="section-link" href={getPostUrl(currentPost)}>打开最新结构化研究 →</a>}
         </aside>
       </section>
+
+      <ResearchMonitorBoard posts={marketResearch} />
 
       <section class="section" aria-label="最新研究">
         <div class="section-head"><div><h2>最新研究</h2><p>按最后更新时间跨市场排序</p></div><a class="section-link" href="/archive/">查看全部 →</a></div>
