@@ -21,11 +21,14 @@ const hkStockPosts = allPosts.filter((post) => post.data.tags?.includes('港股�
 const marketResearch = allPosts.filter((post) =>
   post.data.tags?.some((tag) => ['个股分析', '美股分析', '港股分析'].includes(tag)),
 );
-const latestResearch = marketResearch.slice(0, 5);
 const currentPost = marketResearch.find((post) => post.data.decision);
 const currentDecision = currentPost?.data.decision;
+const latestResearch = marketResearch
+  .filter((post) => post.id !== currentPost?.id)
+  .slice(0, 4);
 
 const shortTitle = (post: (typeof allPosts)[number]) => {
+  if (post.data.tags?.includes('白发股神')) return post.data.title.replace(/^白发股神[：:]\s*/, '');
   if (post.data.decision) return `${post.data.decision.name} ${post.data.decision.ticker}`;
   return post.data.title.split(/[：:]/)[0];
 };

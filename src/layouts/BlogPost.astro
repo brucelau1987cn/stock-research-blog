@@ -379,18 +379,9 @@ const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
             ) : (
               <>
                 <h2>快捷目录</h2>
-                {sidebarHeadings.map((heading) => (
+                {(sidebarHeadings.length > 0 ? sidebarHeadings : stockHeadings.slice(0, 7)).map((heading) => (
                   <a href={`#${heading.slug}`}>{heading.text}</a>
                 ))}
-                {sidebarHeadings.length === 0 && (
-                  <>
-                    <a href="#结论先行">结论先行</a>
-                    <a href="#上涨--下跌逻辑">上涨 / 下跌逻辑</a>
-                    <a href="#操作优先级">操作优先级</a>
-                    <a href="#关键价位">关键价位</a>
-                    <a href="#风险点">风险点</a>
-                  </>
-                )}
               </>
             )}
             <div class="disclaimer">个人研究记录，用于复盘股票研究和交易纪律，不构成投资建议。</div>
