@@ -91,36 +91,6 @@ const groupTweetHeadingsByDate = () => {
 
 const tweetGroupsByDate = groupTweetHeadingsByDate();
 
-// A股分析页跟踪段（H3 "跟踪 YYYY-MM-DD HH:MM BJT"）按日期分组，跳转当日最新一条
-// 多个 H2 时取第一个作为「跟踪段容器」
-// 硬约束：sidebar 只显示近 TRACK_DAYS_WINDOW 个交易日（默认 5）；旧段在文章里仍保留
-const TRACK_DAYS_WINDOW = 5;
-const stockTrackHeadings = headings.filter(
-  (h) => h.depth === 3 && /^跟踪\s+\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}/.test(h.text),
-);
-const groupStockTrackByDate = () => {
-  const groups: { date: string; count: number; slug: string; latestTime: string }[] = [];
-  for (const heading of stockTrackHeadings) {
-    const dateMatch = heading.text.match(/^跟踪\s+(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})/);
-    if (!dateMatch) continue;
-    const [, date, time] = dateMatch;
-    const existing = groups.find((g) => g.date === date);
-    if (existing) {
-      existing.count += 1;
-      if (time > existing.latestTime) {
-        existing.slug = heading.slug;
-        existing.latestTime = time;
-      }
-    } else {
-      groups.push({ date, count: 1, slug: heading.slug, latestTime: time });
-    }
-  }
-  // 只保留近 TRACK_DAYS_WINDOW 个交易日（按日期降序截断）
-  groups.sort((a, b) => (a.date < b.date ? 1 : -1));
-  return groups.slice(0, TRACK_DAYS_WINDOW);
-};
-const stockTrackGroupsByDate = groupStockTrackByDate();
-
 // A股分析页 H2 全部列出（不截断），保持与正文 H2 顺序一致
 const stockHeadings = headings.filter((heading) => heading.depth === 2);
 const headingLink = (...texts: string[]) => stockHeadings.find((heading) => texts.includes(heading.text));
@@ -130,6 +100,15 @@ const stockDashboardLinks = [
   { label: '仓位动作', heading: headingLink('持仓者动作 (分批买入 / 减仓计划)', '分批买入 / 减仓计划') },
   { label: '风险点', heading: headingLink('风险点', '三个风险') },
 ].filter((item) => item.heading).map((item) => ({ label: item.label, href: `#${item.heading!.slug}` }));
+const sidebarHeadingNames = [
+  '近1个月行情', '走势与基本面概览', '关键价位', '跟踪记录', '结论先行',
+  '持仓者动作 (分批买入 / 减仓计划)', '分批买入 / 减仓计划',
+  '上涨 / 下跌逻辑 (行业与基本面锚点)', '风险点', '三个风险',
+];
+const sidebarHeadings = stockHeadings
+  .filter((heading) => sidebarHeadingNames.includes(heading.text))
+  .filter((heading, index, items) => items.findIndex((item) => item.text === heading.text) === index)
+  .slice(0, 7);
 const formatDecisionPrice = (value: number) => {
   if (!decision) return String(value);
   const digits = decision.currency === 'USD' ? 2 : 2;
@@ -141,6 +120,7 @@ const formatDistance = (value: number) => {
   const distance = ((value - decision.currentPrice) / decision.currentPrice) * 100;
   return `${distance >= 0 ? '+' : ''}${distance.toFixed(1)}%`;
 };
+const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
 ---
 
 <html lang="zh-CN">
@@ -160,38 +140,44 @@ const formatDistance = (value: number) => {
       .hero-image img { display: block; margin: 0 auto; border-radius: 18px; box-shadow: var(--box-shadow); }
       .article-shell { display: grid; grid-template-columns: minmax(0, 1fr) 244px; gap: 2.5rem; align-items: start; }
       .prose { min-width: 0; padding: 0; color: rgb(var(--gray-dark)); }
-      .title { margin: 0 0 1rem; padding: 1.35rem 1.45rem; border-radius: 14px; border: 1px solid var(--border); background: #fff; box-shadow: var(--box-shadow); }
+      .title { margin: 0 0 0.8rem; padding: 1.05rem 1.2rem; border-radius: 8px; border: 1px solid var(--border); background: #fff; box-shadow: 0 1px 2px rgba(20,20,18,0.04); }
       .title.serenity { background: #fff7f5; border-color: #f3cec8; }
       .pill-blue { background: rgba(13, 71, 161, 0.08); color: #0d47a1; border: 1px solid rgba(13, 71, 161, 0.15); }
       .pill-purple { background: rgba(123, 31, 162, 0.08); color: #7b1fa2; border: 1px solid rgba(123, 31, 162, 0.15); }
-      .title h1 { max-width: 880px; margin: 0.7rem 0; font-size: clamp(1.75rem, 3.5vw, 2.45rem); letter-spacing: 0; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
+      .title h1 { max-width: 920px; margin: 0.58rem 0; font-size: clamp(1.65rem, 3vw, 2.2rem); letter-spacing: 0; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
       .description { max-width: 860px; color: rgb(var(--gray)); font-size: 0.96rem; line-height: 1.68; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
       .meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
       .last-updated-on { margin-top: 0.35rem; color: rgb(var(--gray)); font-size: 0.88rem; }
       .history-notice { margin: 0 0 1.2rem; padding: 0.8rem 1rem; border-left: 3px solid #0d47a1; background: rgba(13, 71, 161, 0.06); color: rgb(var(--gray-dark)); font-size: 0.88rem; line-height: 1.6; }
-      .us-market-panel { margin: 0 0 1.2rem; padding: 1rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
-      .us-market-head { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; margin-bottom: 0.75rem; }
+      .us-market-panel { margin: 0 0 1.2rem; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; }
+      .us-market-panel > summary { display: block; cursor: pointer; padding: 0.8rem 1rem; background: var(--warm-2); }
+      .us-market-panel > summary::after { content: '+'; float: right; color: rgb(var(--gray)); font-weight: 900; }
+      .us-market-panel[open] > summary::after { content: '−'; }
+      .us-market-head { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
       .us-market-head h2 { margin: 0; font-size: 1rem; }
       .us-market-head span { color: rgb(var(--gray)); font-size: 0.76rem; }
-      .us-market-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+      .us-market-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; padding: 0.9rem 1rem 1rem; border-top: 1px solid var(--border); }
       .us-market-block { padding: 0.75rem; border: 1px solid var(--border); border-radius: 6px; background: var(--warm-2); }
       .us-market-block h3 { margin: 0 0 0.4rem; font-size: 0.82rem; }
       .us-market-block p, .us-market-block ul { margin: 0; color: rgb(var(--gray-dark)); font-size: 0.82rem; line-height: 1.55; }
       .us-market-block ul { padding-left: 1rem; }
-      .decision-panel { margin: 0 0 1.25rem; border: 1px solid #f3cec8; border-radius: 14px; background: #fff; overflow: hidden; box-shadow: var(--box-shadow); }
-      .decision-head { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; padding: 1rem 1.1rem; border-bottom: 1px solid #f3cec8; background: #fff7f5; }
+      .decision-panel { margin: 0 0 1rem; border: 1px solid #f3cec8; border-radius: 8px; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgba(20,20,18,0.04); }
+      .decision-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.65rem 1.25rem; align-items: start; padding: 0.85rem 1rem; border-bottom: 1px solid #f3cec8; background: #fff7f5; }
       .decision-eyebrow { margin: 0 0 0.25rem; color: rgb(var(--gray)); font-size: 0.75rem; font-weight: 800; }
-      .decision-status { margin: 0; color: rgb(var(--black)); font-size: 1.08rem; line-height: 1.45; }
+      .decision-status { margin: 0; color: rgb(var(--black)); font-size: 1.02rem; line-height: 1.4; }
+      .decision-action { grid-column: 1 / -1; margin: 0; color: rgb(var(--gray-dark)); font-size: 0.92rem; line-height: 1.5; }
       .decision-asof { color: rgb(var(--gray)); font-size: 0.8rem; white-space: nowrap; }
       .decision-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .decision-metric { min-width: 0; padding: 0.9rem 1rem; border-right: 1px solid var(--border); }
+      .decision-metric { min-width: 0; padding: 0.78rem 0.9rem; border-right: 1px solid var(--border); }
       .decision-metric:last-child { border-right: 0; }
       .decision-label { display: block; margin-bottom: 0.3rem; color: rgb(var(--gray)); font-size: 0.76rem; font-weight: 800; }
       .decision-value { display: block; color: rgb(var(--black)); font-size: 1.12rem; font-weight: 900; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
-      .decision-state { display: block; margin-top: 0.2rem; color: rgb(var(--gray)); font-size: 0.76rem; line-height: 1.35; }
-      .decision-plan { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1rem; padding: 1rem 1.1rem; border-top: 1px solid var(--border); }
+      .decision-state { display: block; margin-top: 0.2rem; color: rgb(var(--gray)); font-size: 0.72rem; line-height: 1.3; }
+      .decision-plan { display: block; padding: 0.75rem 0.95rem; border-top: 1px solid var(--border); background: var(--warm-2); }
+      .decision-plan summary { cursor: pointer; color: rgb(var(--gray-dark)); font-size: 0.78rem; font-weight: 800; }
+      .decision-plan[open] summary { margin-bottom: 0.45rem; }
       .decision-plan h2 { margin: 0 0 0.4rem; font-size: 0.82rem; color: rgb(var(--gray)); }
-      .decision-plan p, .decision-plan ul { margin: 0; color: rgb(var(--gray-dark)); font-size: 0.9rem; line-height: 1.55; }
+      .decision-plan p, .decision-plan ul { margin: 0; color: rgb(var(--gray-dark)); font-size: 0.8rem; line-height: 1.45; }
       .decision-plan ul { padding-left: 1.1rem; }
       .stock-dashboard { margin: 0 0 1.4rem; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
       .stock-dashboard .eyebrow { margin: 0; color: rgb(var(--gray)); font-size: 0.74rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
@@ -221,7 +207,7 @@ const formatDistance = (value: number) => {
       .historical-framework { margin: 1.2rem 0; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; }
       .historical-framework summary { padding: 0.9rem 1rem; cursor: pointer; background: var(--warm-2); color: rgb(var(--gray-dark)); font-weight: 800; }
       .historical-framework-body { padding: 0 1rem 0.6rem; }
-      .sidebar { position: sticky; top: 6rem; padding: 0.75rem 0 0.75rem 1rem; border-left: 1px solid var(--border); background: transparent; box-shadow: none; border-radius: 0; }
+      .sidebar { position: sticky; top: 6rem; max-height: calc(100vh - 7.5rem); overflow-y: auto; padding: 0.75rem 0 0.75rem 1rem; border-left: 1px solid var(--border); background: transparent; box-shadow: none; border-radius: 0; }
       .sidebar h2 { margin: 0 0 0.65rem; font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase; color: rgb(var(--gray)); }
       .sidebar a { display: block; color: rgb(var(--gray-dark)); text-decoration: none; padding: 0.48rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); font-size: 0.88rem; font-weight: 700; line-height: 1.35; }
       .sidebar a:hover { color: var(--accent); }
@@ -269,7 +255,7 @@ const formatDistance = (value: number) => {
             <span class="pill">首次发布：<FormattedDate date={pubDate} /></span>
           </div>
           <h1>{title}</h1>
-          <p class="description">{description}</p>
+          {!decision && <p class="description">{description}</p>}
           <div class="last-updated-on">
             最后更新：<FormattedDate date={updatedDate ?? pubDate} showTime={Boolean(updatedDate)} />
             {decision
@@ -284,7 +270,8 @@ const formatDistance = (value: number) => {
                 <p class="decision-eyebrow">最新决策摘要</p>
                 <p class="decision-status"><strong>{decision.ticker} {decision.name}</strong> · {decision.status}</p>
               </div>
-              <span class="decision-asof">数据截至 {decision.asOf}</span>
+              <span class="decision-asof">数据口径：{decisionAsOf}</span>
+              <p class="decision-action"><strong>当前动作：</strong>{decision.action}</p>
             </div>
             <div class="decision-metrics">
               <div class="decision-metric">
@@ -308,18 +295,12 @@ const formatDistance = (value: number) => {
                 <span class="decision-state">{decision.invalidation.action}</span>
               </div>
             </div>
-            <div class="decision-plan">
-              <div>
-                <h2>当前动作</h2>
-                <p>{decision.action}</p>
-              </div>
-              {decision.changeSummary?.length > 0 && (
-                <div>
-                  <h2>本次变化</h2>
-                  <ul>{decision.changeSummary.map((item) => <li>{item}</li>)}</ul>
-                </div>
-              )}
-            </div>
+            {decision.changeSummary?.length > 0 && (
+              <details class="decision-plan">
+                <summary>本次变化（{decision.changeSummary.length}）</summary>
+                <ul>{decision.changeSummary.map((item) => <li>{item}</li>)}</ul>
+              </details>
+            )}
           </section>
         )}
         {isUsStock && (
@@ -330,11 +311,11 @@ const formatDistance = (value: number) => {
           </div>
         )}
         {isUsStock && usMarket && (
-          <section class="us-market-panel" aria-label="美股市场信息">
-            <div class="us-market-head">
-              <h2>美股市场信息</h2>
+          <details class="us-market-panel" aria-label="美股市场信息">
+            <summary class="us-market-head">
+              <strong>研究背景：财报、估值与宏观敏感项</strong>
               <span>{usMarket.period ? `${usMarket.period} · ` : ''}截至 {usMarket.asOf} · 来源：{usMarket.source}</span>
-            </div>
+            </summary>
             <div class="us-market-grid">
               {usMarket.earnings && (
                 <div class="us-market-block">
@@ -361,7 +342,7 @@ const formatDistance = (value: number) => {
                 </div>
               )}
             </div>
-          </section>
+          </details>
         )}
         {!decision && !isSerenity && stockDashboardLinks.length > 0 && (
           <nav class="stock-dashboard" aria-label="文章重点导航">
@@ -398,32 +379,10 @@ const formatDistance = (value: number) => {
             ) : (
               <>
                 <h2>快捷目录</h2>
-                {/* A股分析页 sidebar：保持与正文 H2 顺序一致。
-                    「跟踪记录」H2 不直接渲染，在「关键价位」之后插 section-link + 分组日期，
-                    位置 = 正文 H2 第 3 位（紧跟"关键价位"之后、"近1个月行情"之前）。 */}
-                {stockHeadings
-                  .filter((heading) => heading.text !== '跟踪记录')
-                  .map((heading) => {
-                    // 在「关键价位」之后插入「跟踪记录」section-link + 日期分组
-                    const isAfterKeyLevels = heading.text === '关键价位';
-                    return (
-                      <Fragment>
-                        <a href={`#${heading.slug}`}>{heading.text}</a>
-                        {isAfterKeyLevels && stockTrackGroupsByDate.length > 0 && (
-                          <>
-                            <a class="section-link" href="#跟踪记录">跟踪记录</a>
-                            {stockTrackGroupsByDate.map((track) => (
-                              <a class="tweet-link" href={`#${track.slug}`}>
-                                <span class="toc-date">{track.date} {track.latestTime}</span>
-                                <span class="toc-count">{track.count}</span>
-                              </a>
-                            ))}
-                          </>
-                        )}
-                      </Fragment>
-                    );
-                  })}
-                {stockHeadings.length === 0 && (
+                {sidebarHeadings.map((heading) => (
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                ))}
+                {sidebarHeadings.length === 0 && (
                   <>
                     <a href="#结论先行">结论先行</a>
                     <a href="#上涨--下跌逻辑">上涨 / 下跌逻辑</a>

@@ -10,7 +10,7 @@ import { getPostUrl } from '../utils/postUrl';
 
 const tag = Astro.url.searchParams.get('tag') || '';
 const allPosts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  (a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf(),
 );
 const filtered = tag ? allPosts.filter(p => p.data.tags?.includes(tag)) : allPosts;
 const tagLabel = tag === '白发股神' ? '白发股神' : tag === '个股分析' ? '个股分析' : '';
@@ -26,6 +26,12 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
   const m = title.match(/^(\d{6})\s+([^：:]+?)(?:\s*[：:—–-]|$)/);
   if (!m) return { code: title, name: '' };
   return { code: m[1], name: m[2].trim() };
+};
+const categoryLabel = (post: (typeof allPosts)[number]) => {
+  if (post.data.tags?.includes('白发股神')) return '白发股神';
+  if (post.data.tags?.includes('美股分析')) return '美股分析';
+  if (post.data.tags?.includes('港股分析')) return '港股分析';
+  return 'A股分析';
 };
 ---
 
@@ -70,8 +76,8 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
 
       ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; list-style-type: none; margin: 0; padding: 0; }
       ul li:first-child { grid-column: 1 / -1; }
-      .post-card { display: grid; grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem; color: rgb(var(--gray-dark)); text-decoration: none; min-height: 13rem; }
-      ul li:first-child .post-card { min-height: 15rem; background: var(--accent-soft); border-color: #f3cec8; }
+      .post-card { display: grid; grid-template-columns: 1fr; gap: 0.65rem; padding: 1rem 1.1rem; color: rgb(var(--gray-dark)); text-decoration: none; min-height: 9rem; border-radius: 8px; }
+      ul li:first-child .post-card { min-height: 10rem; background: var(--accent-soft); border-color: #f3cec8; }
       .post-card:hover { transform: translateY(-2px); transition: transform 0.18s ease; color: rgb(var(--gray-dark)); }
       .post-card .title { margin: 0; color: rgb(var(--black)); }
       .post-card .title .stock-name { color: rgb(var(--black)); font-weight: 800; margin-right: 0.4rem; }
@@ -233,22 +239,25 @@ const parseStockTitle = (title: string): { code: string; name: string } => {
 
           <div class="filter-bar">
             <a href="/archive/" class:list={['', { active: !tag }]}>全部</a>
-            <a href="/stock-analysis/">📊 个股分析</a>
-            <a href="/serenity/">👩‍🦳 白发股神</a>
+            <a href="/stock-analysis/">📈 A股分析</a>
+            <a href="/us-stock-analysis/">🗽 美股分析</a>
+            <a href="/hk-stock-analysis/">🇭🇰 港股分析</a>
+            <a href="/serenity/">白发股神</a>
           </div>
 
           {filtered.length > 0 ? (
             <ul>
               {filtered.map((post) => {
-                const isStock = post.data.tags?.includes('个股分析');
-                const s = isStock ? parseStockTitle(post.data.title) : null;
+                const s = post.data.decision
+                  ? { code: post.data.decision.ticker, name: post.data.decision.name }
+                  : post.data.tags?.includes('个股分析') ? parseStockTitle(post.data.title) : null;
                 return (
                   <li>
                     <a class="post-card" href={getPostUrl(post)}>
                       {post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
                       <div>
                         <span class={`pill ${post.data.tags?.includes('白发股神') ? 'pill-red' : ''}`}>
-                          {post.data.tags?.includes('白发股神') ? '白发股神' : '个股分析'}
+                          {categoryLabel(post)}
                         </span>
                         <h2 class="title">
                           {s?.name ? <span class="stock-name">{s.name}</span> : null}
