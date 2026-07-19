@@ -14,7 +14,7 @@ const base = {
   dataAsOf: '2026-07-17T15:00:00+08:00',
   resistance: { label: '第一压力', value: 12, state: '未突破' },
   support: { label: '第一支撑', value: 9, state: '已站稳' },
-  invalidation: { label: '失效位', value: 8, action: '退出' },
+  invalidation: { label: '失效位', value: 8, direction: 'below', state: 'pending', action: '退出' },
   action: '等待触发',
 };
 
@@ -60,4 +60,15 @@ test('rejects missing or inconsistent market timestamps', () => {
 
   const mismatched = { ...base, dataAsOf: '2026-07-18T15:00:00+08:00' };
   assert.match(validateDecision(mismatched, 'test.md').join('\n'), /日期必须与 sessionDate 一致/);
+});
+
+test('rejects invalidation states inconsistent with the current price', () => {
+  const falseTriggered = { ...base, invalidation: { ...base.invalidation, state: 'triggered' } };
+  assert.match(validateDecision(falseTriggered, 'test.md').join('\n'), /不能标记 triggered/);
+
+  const falsePending = { ...base, currentPrice: 7.5, invalidation: { ...base.invalidation, state: 'pending' } };
+  assert.match(validateDecision(falsePending, 'test.md').join('\n'), /不能标记 pending/);
+
+  const tooFarNear = { ...base, invalidation: { ...base.invalidation, state: 'near' } };
+  assert.match(validateDecision(tooFarNear, 'test.md').join('\n'), /距离不超过 3%/);
 });

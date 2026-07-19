@@ -3,13 +3,41 @@
 # 用法：复制本文件 → 替换 {{占位符}} → 保存为 src/content/blog/YYYYMMDD-CODE-slug.md
 # URL 自动剥掉 YYYYMMDD- 前缀，访问 /CODE-slug/ 即可
 # 配套 cron：见 templates/cron-prompt-template.md
----
-
-title: '{{CODE}} {{NAME}}：{{当前价}} 元{{一句话状态}}'
+title: '{{CODE}} {{NAME}}：{{当前价}} {{币种}}{{一句话状态}}'
 description: '最新结论：{{一句话重写当前框架（80-120字）}}'
-pubDate: {{首发时间 BJT ISO 8601}}
-updatedDate: {{最近一次同步时间 BJT ISO 8601}}
-tags: ['个股分析']
+pubDate: '{{首发时间 ISO 8601}}'
+updatedDate: '{{最近一次同步时间 ISO 8601}}'
+tags: ['{{市场标签：个股分析/美股分析/港股分析}}']
+decision:
+  ticker: '{{CODE_PLAIN}}'
+  name: '{{NAME}}'
+  status: '{{当前已经发生的状态事实}}'
+  currentPrice: X.XX
+  previousClose: X.XX
+  changePct: X.XX
+  currency: '{{元/USD/HKD}}'
+  asOf: '{{供读者阅读的行情截止说明}}'
+  market: '{{CN/US/HK}}'
+  sessionDate: '{{YYYY-MM-DD 行情所属交易日}}'
+  dataAsOf: '{{带时区的行情截止 ISO 时间}}'
+  resistance:
+    label: '{{压力/收复线名称}}'
+    value: X.XX
+    state: '{{未突破/未收复/已突破等事实}}'
+  support:
+    label: '{{支撑/防守线名称}}'
+    value: X.XX
+    state: '{{守稳/已跌破/待确认等事实}}'
+  invalidation:
+    label: '{{失效位名称}}'
+    value: X.XX
+    direction: '{{below/above}}'
+    state: '{{pending/near/triggered}}'
+    action: '{{触发后的动作}}'
+  action: '{{当前条件执行计划}}'
+  changeSummary:
+    - '{{本次变化 1}}'
+---
 
 ## 结论先行
 {{NAME}}当前是**{{一句话定性（左侧/右侧/突破/弱势）}}**的{{行业/题材}}票：**{{操作总纲：小仓试探 / 右侧跟进 / 不参与 / 减仓离场}}**。{{一段最新数据 + 操作判断的结合说明}}

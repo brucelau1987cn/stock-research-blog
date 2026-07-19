@@ -208,7 +208,7 @@ const itemListJsonLdText = JSON.stringify(itemListJsonLd).replace(/</g, '\\u003c
               const priority = priorityFilter?.value ?? '';
               return (!query || card.dataset.search?.toLowerCase().includes(query))
                 && (!sentiment || card.dataset.sentiment === sentiment)
-                && (!priority || card.dataset.priority === priority);
+                && (!priority || (priority === 'stale' ? ['stale', 'unknown'].includes(card.dataset.freshness) : card.dataset.priority === priority));
             };
 
             const render = (moveFocus = false) => {

@@ -111,7 +111,7 @@ const sidebarHeadings = stockHeadings
   .slice(0, 7);
 const formatDecisionPrice = (value: number) => {
   if (!decision) return String(value);
-  const digits = decision.currency === 'USD' ? 2 : 2;
+  const digits = decision.currency === 'USD' && !Number.isInteger(value * 100) ? 3 : 2;
   const number = value.toFixed(digits);
   return decision.currency === 'USD' ? `$${number}` : `${number} ${decision.currency}`;
 };
@@ -120,6 +120,9 @@ const formatDistance = (value: number) => {
   const distance = ((value - decision.currentPrice) / decision.currentPrice) * 100;
   return `${distance >= 0 ? '+' : ''}${distance.toFixed(1)}%`;
 };
+const invalidationStateLabel = decision?.invalidation.state === 'triggered'
+  ? '已触发'
+  : decision?.invalidation.state === 'near' ? '接近触发' : '未触发';
 const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
 ---
 
@@ -294,7 +297,7 @@ const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
               <div class="decision-metric">
                 <span class="decision-label">{decision.invalidation.label}</span>
                 <span class="decision-value">{formatDecisionPrice(decision.invalidation.value)}</span>
-                <span class="decision-state">{decision.invalidation.action}</span>
+                <span class="decision-state"><strong>{invalidationStateLabel}</strong> · {decision.invalidation.action}</span>
               </div>
             </div>
             {decision.changeSummary?.length > 0 && (

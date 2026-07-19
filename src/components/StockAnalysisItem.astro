@@ -19,7 +19,8 @@ const sentiment = inferSentiment(decision, post.data.description);
 const searchIndex = buildSearchIndex(code, name, post.data.title);
 const formatPrice = (value: number) => {
   if (!decision) return String(value);
-  const number = value.toFixed(2);
+  const digits = decision.currency === 'USD' && !Number.isInteger(value * 100) ? 3 : 2;
+  const number = value.toFixed(digits);
   return decision.currency === 'USD' ? `$${number}` : `${number} ${decision.currency}`;
 };
 const formatChange = (value?: number) => value == null ? '—' : `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`;
@@ -41,6 +42,7 @@ const priority = buildResearchPriority(decision, post.data.updatedDate ?? post.d
   data-search={searchIndex}
   data-sentiment={sentiment}
   data-priority={priority.key}
+  data-freshness={priority.freshness}
 >
   <span class:list={['signal-rail', sentimentClass]} aria-hidden="true"></span>
   <div class="instrument-cell">
@@ -48,6 +50,9 @@ const priority = buildResearchPriority(decision, post.data.updatedDate ?? post.d
     <span class="stock-code">{code}</span>
     <span class:list={['sentiment-tag', sentimentClass]}>{sentiment}</span>
     {decision && <span class:list={['priority-tag', priority.key]}>{priority.label}</span>}
+    {decision && priority.freshness !== 'fresh' && (
+      <span class:list={['freshness-tag', priority.freshness]}>{priority.freshness === 'aging' ? '行情老化' : '待复核'}</span>
+    )}
   </div>
 
   {decision ? (
@@ -103,6 +108,8 @@ const priority = buildResearchPriority(decision, post.data.updatedDate ?? post.d
   .priority-tag.risk { background: var(--accent-soft); color: var(--accent-dark); }
   .priority-tag.near, .priority-tag.volatile { background: var(--amber-soft); color: var(--amber); }
   .priority-tag.stale { background: var(--blue-soft); color: var(--blue); }
+  .freshness-tag { display: inline-flex; margin: 0.35rem 0 0 0.25rem; padding: 0.14rem 0.38rem; border-radius: 3px; background: var(--blue-soft); color: var(--blue); font-size: 0.65rem; font-weight: 800; }
+  .freshness-tag.aging { background: var(--amber-soft); color: var(--amber); }
   .quote-cell, .level-cell, .update-cell { min-width: 0; }
   .cell-label, .update-cell > span { display: block; color: rgb(var(--gray)); font-size: 0.65rem; font-weight: 750; }
   .quote-cell strong, .level-cell strong { display: block; margin-top: 0.25rem; color: rgb(var(--black)); font: 800 0.85rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; }

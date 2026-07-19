@@ -23,10 +23,13 @@ const take = (items: CollectionEntry<'blog'>[], limit: number) => {
   }
 };
 take(prioritized.filter((post) => priorityOf(post).key === 'risk'), 3);
-take(prioritized.filter((post) => ['near', 'volatile', 'stale'].includes(priorityOf(post).key)), 2);
+take(prioritized.filter((post) => {
+  const priority = priorityOf(post);
+  return ['stale', 'unknown'].includes(priority.freshness) || ['near', 'volatile'].includes(priority.key);
+}), 2);
 take(prioritized, 5 - latest.length);
 const priorities = tracked.map((post) => buildResearchPriority(post.data.decision, post.data.updatedDate ?? post.data.pubDate));
-const riskCount = priorities.filter((value) => value.key === 'risk').length;
+const triggeredCount = tracked.filter((post) => post.data.decision?.invalidation.state === 'triggered').length;
 const attentionCount = priorities.filter((value) => value.key === 'near' || value.key === 'volatile').length;
 const staleCount = priorities.filter((value) => value.freshness === 'stale' || value.freshness === 'unknown').length;
 const oldestFreshness = priorities.some((value) => value.freshness === 'stale' || value.freshness === 'unknown')
@@ -39,8 +42,8 @@ const latestDataAsOf = tracked
   .map((value) => new Date(value!))
   .sort((a, b) => b.valueOf() - a.valueOf())[0] ?? null;
 const marketName = (post: CollectionEntry<'blog'>) => {
-  if (post.data.tags?.includes('美股分析')) return '美股';
-  if (post.data.tags?.includes('港股分析')) return '港股';
+  if (post.data.decision?.market === 'US') return '美股';
+  if (post.data.decision?.market === 'HK') return '港股';
   return 'A股';
 };
 const formatPrice = (post: CollectionEntry<'blog'>) => {
@@ -73,14 +76,14 @@ const formatChange = (value?: number) => {
       <small>A股、美股与港股</small>
     </div>
     <div class="monitor-kpi tone-risk">
-      <span>风险总数</span>
-      <strong class:list={{ empty: riskCount === 0 }}>{riskCount}</strong>
-      <small>队列优先展示 3 项</small>
+      <span>失效已触发</span>
+      <strong class:list={{ empty: triggeredCount === 0 }}>{triggeredCount}</strong>
+      <small>已越过结构化失效位</small>
     </div>
     <div class="monitor-kpi tone-watch">
       <span>临界关注</span>
       <strong class:list={{ empty: attentionCount === 0 }}>{attentionCount}</strong>
-      <small>接近关键位或异常波动</small>
+      <small>接近失效或其他关键位</small>
     </div>
     <div class="monitor-kpi tone-stale">
       <span>待复核</span>

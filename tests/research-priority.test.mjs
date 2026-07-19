@@ -10,7 +10,7 @@ const baseDecision = {
   changePct: 0.5,
   resistance: { label: '压力位', value: 12 },
   support: { label: '支撑位', value: 9 },
-  invalidation: { label: '失效位', value: 8 },
+  invalidation: { label: '失效位', value: 8, direction: 'below', state: 'pending' },
 };
 
 const now = new Date('2026-07-20T00:00:00+08:00');
@@ -33,6 +33,32 @@ test('explicitly losing or closing below a defense line is treated as a risk fac
     const result = buildResearchPriority({ ...baseDecision, status }, '2026-07-19T16:00:00+08:00', now);
     assert.equal(result.key, 'risk');
   }
+});
+
+test('a broken structured support promotes neutral wording to risk', () => {
+  const result = buildResearchPriority({
+    ...baseDecision,
+    status: '极端套牢且板块异动，场外观望',
+    support: { label: '防守线', value: 12, state: '持续失守' },
+  }, '2026-07-19T16:00:00+08:00', now);
+  assert.equal(result.key, 'risk');
+  assert.equal(result.reason, '防守线持续失守');
+});
+
+test('structured invalidation state takes precedence over wording', () => {
+  const triggered = buildResearchPriority({
+    ...baseDecision,
+    invalidation: { label: '风控线', value: 11, direction: 'below', state: 'triggered' },
+  }, '2026-07-19T16:00:00+08:00', now);
+  assert.equal(triggered.key, 'risk');
+  assert.equal(triggered.label, '失效已触发');
+
+  const near = buildResearchPriority({
+    ...baseDecision,
+    invalidation: { label: '止损线', value: 9.8, direction: 'below', state: 'near' },
+  }, '2026-07-19T16:00:00+08:00', now);
+  assert.equal(near.key, 'near');
+  assert.equal(near.label, '接近失效');
 });
 
 test('a stock near a key level becomes an explainable trigger candidate', () => {
@@ -98,4 +124,21 @@ test('priority sorting puts risk before near-trigger and routine research', () =
   ];
 
   assert.deepEqual(sortByResearchPriority(posts, now).map((post) => post.id), ['risk', 'near', 'routine']);
+});
+
+test('stale research sorts before fresh research within the same risk tier', () => {
+  const makePost = (id, sessionDate, dataAsOf) => ({
+    id,
+    data: {
+      decision: { ...baseDecision, status: '跌破防守线', sessionDate, dataAsOf },
+      updatedDate: new Date(dataAsOf),
+      pubDate: new Date(dataAsOf),
+    },
+  });
+  const posts = [
+    makePost('fresh-risk', '2026-07-17', '2026-07-17T15:00:00+08:00'),
+    makePost('stale-risk', '2026-07-10', '2026-07-10T15:00:00+08:00'),
+  ];
+
+  assert.deepEqual(sortByResearchPriority(posts, now).map((post) => post.id), ['stale-risk', 'fresh-risk']);
 });

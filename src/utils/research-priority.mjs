@@ -1,4 +1,5 @@
 const RISK_PATTERN = /偏空|清仓|退出|失效|破位|跌破|失守|防守线下|止损|降低仓位|减仓/;
+const LEVEL_RISK_PATTERN = /已跌破|持续失守|收盘失守|已经失守|已失守/;
 
 const toDate = (value) => {
   const date = value instanceof Date ? value : new Date(value);
@@ -45,6 +46,8 @@ export function buildResearchPriority(decision, updatedAt, now = new Date()) {
   const levels = levelEvidence(decision);
   const nearest = levels[0] ?? null;
   const statusText = `${decision?.status ?? ''}`;
+  const levelRisk = [decision?.support, decision?.resistance]
+    .find((level) => LEVEL_RISK_PATTERN.test(String(level?.state ?? '')));
   const changePct = Number(decision?.changePct);
   const updated = toDate(decision?.dataAsOf ?? updatedAt);
   const current = toDate(now);
@@ -58,19 +61,35 @@ export function buildResearchPriority(decision, updatedAt, now = new Date()) {
   let label = '常规跟踪';
   let reason = '按既定条件继续观察';
 
-  if (RISK_PATTERN.test(statusText)) {
+  if (decision?.invalidation?.state === 'triggered') {
+    rank = 5;
+    key = 'risk';
+    label = '失效已触发';
+    reason = `${decision.invalidation.label}已触发`;
+    evidence.push('失效状态命中');
+  } else if (decision?.invalidation?.state === 'near') {
+    rank = 4;
+    key = 'near';
+    label = '接近失效';
+    reason = `接近${decision.invalidation.label}`;
+    evidence.push('接近失效状态命中');
+  }
+
+  if (!['triggered', 'near'].includes(decision?.invalidation?.state) && rank < 5 && (RISK_PATTERN.test(statusText) || levelRisk)) {
     rank = 5;
     key = 'risk';
     label = '风险处置';
-    reason = decision?.status || decision?.action || '风险条件已出现';
-    evidence.push('风险语义命中');
+    reason = RISK_PATTERN.test(statusText)
+      ? decision?.status
+      : `${levelRisk.label}${levelRisk.state}`;
+    evidence.push(RISK_PATTERN.test(statusText) ? '风险语义命中' : '关键位状态命中');
   }
 
-  if (nearest && Math.abs(nearest.distance) <= 3) {
+  if (nearest && Math.abs(nearest.distance) <= 3 && decision?.invalidation?.state !== 'triggered') {
     const distanceText = `${Math.abs(nearest.distance).toFixed(1)}%`;
     const isInvalidation = nearest.kind === 'invalidation';
-    const candidateRank = isInvalidation ? 5 : 4;
-    const candidateKey = isInvalidation ? 'risk' : 'near';
+    const candidateRank = 4;
+    const candidateKey = 'near';
     const candidateLabel = isInvalidation ? '接近失效' : '接近触发';
     const candidateReason = `距${nearest.label} ${distanceText}`;
     evidence.push(candidateReason);
@@ -128,6 +147,9 @@ export function sortByResearchPriority(posts, now = new Date()) {
     const bDate = b.data.updatedDate ?? b.data.pubDate;
     const aPriority = buildResearchPriority(a.data.decision, aDate, now);
     const bPriority = buildResearchPriority(b.data.decision, bDate, now);
-    return bPriority.rank - aPriority.rank || bDate.valueOf() - aDate.valueOf();
+    const freshnessWeight = { unknown: 3, stale: 3, aging: 2, fresh: 1 };
+    return bPriority.rank - aPriority.rank
+      || freshnessWeight[bPriority.freshness] - freshnessWeight[aPriority.freshness]
+      || bDate.valueOf() - aDate.valueOf();
   });
 }

@@ -27,6 +27,8 @@ decision:
   invalidation:
     label: 短线失效位
     value: 13.00
+    direction: below
+    state: pending
     action: 放量跌破后降级为区间震荡并降低仓位
   action: 维持减仓后的谨慎仓位，守住 13.33 观察反弹，收复 13.78 后再评估，放量跌破 13.00 继续降低仓位
   changeSummary:
