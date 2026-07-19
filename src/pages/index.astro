@@ -9,11 +9,13 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { compactSummary } from '../utils/article-summary.mjs';
 import { getPostUrl } from '../utils/postUrl';
 
-const allPosts = (await getCollection('blog')).sort((a, b) => {
+const allPosts = (await getCollection('blog'))
+  .filter((post) => !post.data.serenityArchive)
+  .sort((a, b) => {
   const aDate = a.data.updatedDate ?? a.data.pubDate;
   const bDate = b.data.updatedDate ?? b.data.pubDate;
   return bDate.valueOf() - aDate.valueOf();
-});
+  });
 const serenityPosts = allPosts.filter((post) => post.data.tags?.includes('白发股神'));
 const stockPosts = allPosts.filter((post) => post.data.tags?.includes('个股分析'));
 const usStockPosts = allPosts.filter((post) => post.data.tags?.includes('美股分析'));

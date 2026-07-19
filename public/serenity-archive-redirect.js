@@ -1,0 +1,1 @@
+(()=>{const m=location.pathname.match(/^\/(20\d{4})\/$/),n=Number(decodeURIComponent(location.hash).match(/^#tweet-(\d+)-/)?.[1]);if(!m||!n)return;const a={"202606":[31,56,81,106,131,156,181,206],"202607":[31,56,84,111,138,165,192]}[m[1]]||[];let p=0;for(let i=0;i<a.length;i++)if(n>=a[i])p=i+1;if(p)location.replace('/'+m[1]+'-archive-'+p+'/'+location.hash)})();

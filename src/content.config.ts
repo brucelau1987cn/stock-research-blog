@@ -16,6 +16,7 @@ const blog = defineCollection({
 			heroImage: z.optional(image()),
 			image: z.string().optional(),
 			tags: z.array(z.string()).optional().default([]),
+			serenityArchive: z.boolean().optional().default(false),
 			decision: z.object({
 				ticker: z.string(),
 				name: z.string(),

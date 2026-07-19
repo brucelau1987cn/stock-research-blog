@@ -9,7 +9,7 @@ import { SITE_AUTHOR, SITE_AUTHOR_URL } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags, headings = [], image, decision, usMarket } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, headings = [], image, decision, usMarket, serenityArchive = false } = Astro.props;
 const isSerenity = tags?.includes('白发股神');
 const isUsStock = tags?.includes('美股分析');
 const articleJsonLd = {
@@ -139,6 +139,8 @@ const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
       .hero-image { width: 100%; }
       .hero-image img { display: block; margin: 0 auto; border-radius: 18px; box-shadow: var(--box-shadow); }
       .article-shell { display: grid; grid-template-columns: minmax(0, 1fr) 244px; gap: 2.5rem; align-items: start; }
+      .article-shell.serenity-archive-shell { grid-template-columns: minmax(0, 1fr); }
+      .serenity-archive-shell .prose { max-width: 900px; margin: 0 auto; width: 100%; }
       .prose { min-width: 0; padding: 0; color: rgb(var(--gray-dark)); }
       .title { margin: 0 0 0.8rem; padding: 1.05rem 1.2rem; border-radius: 8px; border: 1px solid var(--border); background: #fff; box-shadow: 0 1px 2px rgba(20,20,18,0.04); }
       .title.serenity { background: #fff7f5; border-color: #f3cec8; }
@@ -359,11 +361,11 @@ const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
             </div>
           </nav>
         )}
-        <div class="article-shell">
+        <div class:list={['article-shell', { 'serenity-archive-shell': serenityArchive }]}>
           <div class="prose">
             <slot />
           </div>
-          <aside class="sidebar card">
+          {!serenityArchive && <aside class="sidebar card">
             {isSerenity ? (
               <>
                 <h2>快捷目录</h2>
@@ -385,11 +387,12 @@ const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
               </>
             )}
             <div class="disclaimer">个人研究记录，用于复盘股票研究和交易纪律，不构成投资建议。</div>
-          </aside>
+          </aside>}
         </div>
       </article>
     </main>
     <Footer />
+    {isSerenity && !serenityArchive && <script is:inline src="/serenity-archive-redirect.js"></script>}
     <script is:inline>
       (() => {
         const prose = document.querySelector('.prose');

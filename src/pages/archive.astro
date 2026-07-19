@@ -9,7 +9,9 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getPostUrl } from '../utils/postUrl';
 
 const tag = Astro.url.searchParams.get('tag') || '';
-const allPosts = (await getCollection('blog')).sort(
+const allPosts = (await getCollection('blog'))
+  .filter((post) => !post.data.serenityArchive)
+  .sort(
   (a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf(),
 );
 const filtered = tag ? allPosts.filter(p => p.data.tags?.includes(tag)) : allPosts;

@@ -8,10 +8,9 @@ import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
 import { getPostUrl } from '../utils/postUrl';
 
-const allPosts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-const filtered = allPosts.filter(p => p.data.tags?.includes('白发股神'));
+const filtered = (await getCollection('blog'))
+  .filter((post) => post.data.tags?.includes('白发股神') && !post.data.serenityArchive)
+  .sort((a, b) => (b.data.updatedDate ?? b.data.pubDate).valueOf() - (a.data.updatedDate ?? a.data.pubDate).valueOf());
 const pageTitle = `白发股神 | ${SITE_TITLE}`;
 const pageDesc = '白发股神 Serenity (@aleabitoreddit) 的 AI / 半导体供应链动态整理，聚焦 CPO、TGV、机器人、封测、材料、电力链条与 hyperscaler capex；A股产业链映射仅供研究参考。';
 ---
