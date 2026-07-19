@@ -56,6 +56,27 @@ test('an old snapshot is marked for review when no stronger evidence exists', ()
   assert.match(result.reason, /9 天/);
 });
 
+test('Friday market data stays fresh through the weekend', () => {
+  const result = buildResearchPriority(
+    { ...baseDecision, sessionDate: '2026-07-17', dataAsOf: '2026-07-17T16:00:00-04:00' },
+    '2026-07-19T20:00:00+08:00',
+    new Date('2026-07-19T20:00:00+08:00'),
+  );
+  assert.equal(result.tradingAgeDays, 0);
+  assert.equal(result.freshness, 'fresh');
+});
+
+test('market freshness uses data timestamp instead of article update timestamp', () => {
+  const result = buildResearchPriority(
+    { ...baseDecision, sessionDate: '2026-07-10', dataAsOf: '2026-07-10T15:00:00+08:00' },
+    '2026-07-19T20:00:00+08:00',
+    new Date('2026-07-19T20:00:00+08:00'),
+  );
+  assert.equal(result.tradingAgeDays, 5);
+  assert.equal(result.freshness, 'stale');
+  assert.match(result.reason, /5 个交易日/);
+});
+
 test('missing optional evidence does not reduce a routine item below baseline', () => {
   const result = buildResearchPriority(
     { status: '持续跟踪', action: '等待后续数据', currentPrice: 10 },

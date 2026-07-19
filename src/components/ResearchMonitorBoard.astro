@@ -28,8 +28,16 @@ take(prioritized, 5 - latest.length);
 const priorities = tracked.map((post) => buildResearchPriority(post.data.decision, post.data.updatedDate ?? post.data.pubDate));
 const riskCount = priorities.filter((value) => value.key === 'risk').length;
 const attentionCount = priorities.filter((value) => value.key === 'near' || value.key === 'volatile').length;
-const staleCount = priorities.filter((value) => value.key === 'stale').length;
-const latestDate = tracked[0] ? tracked[0].data.updatedDate ?? tracked[0].data.pubDate : null;
+const staleCount = priorities.filter((value) => value.freshness === 'stale' || value.freshness === 'unknown').length;
+const oldestFreshness = priorities.some((value) => value.freshness === 'stale' || value.freshness === 'unknown')
+  ? 'stale'
+  : priorities.some((value) => value.freshness === 'aging') ? 'aging' : 'fresh';
+const freshnessLabel = oldestFreshness === 'stale' ? '存在待复核快照' : oldestFreshness === 'aging' ? '部分行情开始老化' : '行情快照新鲜';
+const latestDataAsOf = tracked
+  .map((post) => post.data.decision?.dataAsOf)
+  .filter(Boolean)
+  .map((value) => new Date(value!))
+  .sort((a, b) => b.valueOf() - a.valueOf())[0] ?? null;
 const marketName = (post: CollectionEntry<'blog'>) => {
   if (post.data.tags?.includes('美股分析')) return '美股';
   if (post.data.tags?.includes('港股分析')) return '港股';
@@ -53,8 +61,8 @@ const formatChange = (value?: number) => {
       <h2 id="monitor-title">研究处置队列</h2>
     </div>
     <div class="monitor-freshness">
-      <span class="status-dot" aria-hidden="true"></span>
-      {latestDate ? <>最后同步 <FormattedDate date={latestDate} showTime={true} /></> : '暂无结构化研究'}
+      <span class:list={['status-dot', oldestFreshness]} aria-hidden="true"></span>
+      {latestDataAsOf ? <>{freshnessLabel} · 行情截至 <FormattedDate date={latestDataAsOf} showTime={true} /></> : '暂无可解析行情时间'}
     </div>
   </div>
 
@@ -121,6 +129,8 @@ const formatChange = (value?: number) => {
   .monitor-head h2 { margin: 0.28rem 0 0; font-size: 1.25rem; }
   .monitor-freshness { display: flex; align-items: center; gap: 0.45rem; color: rgb(var(--gray)); font-size: 0.76rem; white-space: nowrap; }
   .status-dot { width: 0.48rem; height: 0.48rem; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(21,148,71,0.1); }
+  .status-dot.aging { background: var(--amber); box-shadow: 0 0 0 3px rgba(138,75,0,0.12); }
+  .status-dot.stale { background: var(--accent-dark); box-shadow: 0 0 0 3px rgba(178,31,31,0.12); }
   .monitor-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--border); }
   .monitor-kpi { min-width: 0; padding: 0.85rem 1rem; border-right: 1px solid var(--border); }
   .monitor-kpi:last-child { border-right: 0; }

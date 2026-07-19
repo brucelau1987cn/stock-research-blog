@@ -15,6 +15,21 @@ export function validateDecision(decision, source = 'unknown') {
   const support = number(decision.support?.value);
   const previous = number(decision.previousClose);
   const changePct = number(decision.changePct);
+  const sessionDate = String(decision.sessionDate ?? '');
+  const dataAsOf = String(decision.dataAsOf ?? '');
+
+  if (!['CN', 'US', 'HK'].includes(decision.market)) {
+    errors.push(`${source}: decision.market 必须是 CN、US 或 HK`);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(sessionDate)) {
+    errors.push(`${source}: decision.sessionDate 必须使用 YYYY-MM-DD`);
+  }
+  const parsedDataAsOf = new Date(dataAsOf);
+  if (!dataAsOf || Number.isNaN(parsedDataAsOf.valueOf()) || !/(Z|[+-]\d{2}:\d{2})$/.test(dataAsOf)) {
+    errors.push(`${source}: decision.dataAsOf 必须是带时区偏移的 ISO 时间`);
+  } else if (sessionDate && dataAsOf.slice(0, 10) !== sessionDate) {
+    errors.push(`${source}: decision.dataAsOf 日期必须与 sessionDate 一致`);
+  }
 
   if (current === null || current <= 0) {
     errors.push(`${source}: decision.currentPrice 必须是正数`);

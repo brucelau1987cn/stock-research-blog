@@ -12,6 +12,22 @@ const distancePct = (current, level) => {
   return ((target - price) / price) * 100;
 };
 
+const tradingDaysSince = (sessionDate, now) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(sessionDate ?? ''))) return null;
+  const [year, month, day] = sessionDate.split('-').map(Number);
+  const start = new Date(Date.UTC(year, month - 1, day));
+  const current = toDate(now);
+  if (!current) return null;
+  const end = new Date(Date.UTC(current.getUTCFullYear(), current.getUTCMonth(), current.getUTCDate()));
+  if (end <= start) return 0;
+  let count = 0;
+  for (const cursor = new Date(start.valueOf() + 86_400_000); cursor <= end; cursor.setUTCDate(cursor.getUTCDate() + 1)) {
+    const weekday = cursor.getUTCDay();
+    if (weekday !== 0 && weekday !== 6) count += 1;
+  }
+  return count;
+};
+
 const levelEvidence = (decision) => {
   const levels = [
     { kind: 'resistance', label: decision?.resistance?.label ?? '压力位', value: decision?.resistance?.value },
@@ -30,9 +46,12 @@ export function buildResearchPriority(decision, updatedAt, now = new Date()) {
   const nearest = levels[0] ?? null;
   const statusText = `${decision?.status ?? ''}`;
   const changePct = Number(decision?.changePct);
-  const updated = toDate(updatedAt);
+  const updated = toDate(decision?.dataAsOf ?? updatedAt);
   const current = toDate(now);
-  const ageDays = updated && current ? Math.max(0, (current.valueOf() - updated.valueOf()) / 86_400_000) : null;
+  const calendarAgeDays = updated && current ? Math.max(0, (current.valueOf() - updated.valueOf()) / 86_400_000) : null;
+  const tradingAgeDays = tradingDaysSince(decision?.sessionDate, current);
+  const ageDays = tradingAgeDays ?? calendarAgeDays;
+  const freshness = ageDays == null ? 'unknown' : ageDays > 3 ? 'stale' : ageDays > 1 ? 'aging' : 'fresh';
 
   let rank = 1;
   let key = 'routine';
@@ -76,8 +95,10 @@ export function buildResearchPriority(decision, updatedAt, now = new Date()) {
     }
   }
 
-  if (ageDays != null && ageDays > 4) {
-    const staleReason = `距最后同步 ${Math.floor(ageDays)} 天`;
+  if (ageDays != null && ageDays > 3) {
+    const staleReason = decision?.sessionDate
+      ? `距行情交易日 ${Math.floor(ageDays)} 个交易日`
+      : `距最后同步 ${Math.floor(ageDays)} 天`;
     evidence.push(staleReason);
     if (rank < 2) {
       rank = 2;
@@ -95,6 +116,9 @@ export function buildResearchPriority(decision, updatedAt, now = new Date()) {
     evidence,
     nearestDistancePct: nearest?.distance ?? null,
     ageDays,
+    calendarAgeDays,
+    tradingAgeDays,
+    freshness,
   };
 }
 

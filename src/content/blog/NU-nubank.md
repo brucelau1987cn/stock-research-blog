@@ -13,6 +13,9 @@ decision:
   changePct: -1.4503
   currency: USD
   asOf: '2026-07-18 22:07 BJT（数据截至 2026-07-17 美股最终收盘）'
+  market: US
+  sessionDate: '2026-07-17'
+  dataAsOf: '2026-07-17T16:00:00-04:00'
   resistance:
     label: 第一压力
     value: 13.78
