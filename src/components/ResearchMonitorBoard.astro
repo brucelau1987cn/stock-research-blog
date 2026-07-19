@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
-import { inferSentiment } from '../utils/article-summary.mjs';
 import { getPostUrl } from '../utils/postUrl';
+import { buildResearchPriority, sortByResearchPriority } from '../utils/research-priority.mjs';
 
 type Props = {
   posts: CollectionEntry<'blog'>[];
@@ -10,11 +10,25 @@ type Props = {
 
 const { posts } = Astro.props;
 const tracked = posts.filter((post) => post.data.decision);
-const latest = tracked.slice(0, 5);
-const sentiments = tracked.map((post) => inferSentiment(post.data.decision, post.data.description));
-const bullish = sentiments.filter((value) => value === '偏多').length;
-const defensive = sentiments.filter((value) => value === '观望/防守').length;
-const bearish = sentiments.filter((value) => value === '偏空').length;
+const prioritized = sortByResearchPriority(tracked);
+const priorityOf = (post: CollectionEntry<'blog'>) => buildResearchPriority(post.data.decision, post.data.updatedDate ?? post.data.pubDate);
+const selectedIds = new Set<string>();
+const latest: CollectionEntry<'blog'>[] = [];
+const take = (items: CollectionEntry<'blog'>[], limit: number) => {
+  for (const post of items) {
+    if (latest.length >= 5 || limit <= 0 || selectedIds.has(post.id)) continue;
+    latest.push(post);
+    selectedIds.add(post.id);
+    limit -= 1;
+  }
+};
+take(prioritized.filter((post) => priorityOf(post).key === 'risk'), 3);
+take(prioritized.filter((post) => ['near', 'volatile', 'stale'].includes(priorityOf(post).key)), 2);
+take(prioritized, 5 - latest.length);
+const priorities = tracked.map((post) => buildResearchPriority(post.data.decision, post.data.updatedDate ?? post.data.pubDate));
+const riskCount = priorities.filter((value) => value.key === 'risk').length;
+const attentionCount = priorities.filter((value) => value.key === 'near' || value.key === 'volatile').length;
+const staleCount = priorities.filter((value) => value.key === 'stale').length;
 const latestDate = tracked[0] ? tracked[0].data.updatedDate ?? tracked[0].data.pubDate : null;
 const marketName = (post: CollectionEntry<'blog'>) => {
   if (post.data.tags?.includes('美股分析')) return '美股';
@@ -35,8 +49,8 @@ const formatChange = (value?: number) => {
 <section class="monitor-board" aria-labelledby="monitor-title">
   <div class="monitor-head">
     <div>
-      <span class="monitor-eyebrow">RESEARCH MONITOR</span>
-      <h2 id="monitor-title">研究监控看板</h2>
+      <span class="monitor-eyebrow">ACTION QUEUE</span>
+      <h2 id="monitor-title">研究处置队列</h2>
     </div>
     <div class="monitor-freshness">
       <span class="status-dot" aria-hidden="true"></span>
@@ -50,33 +64,33 @@ const formatChange = (value?: number) => {
       <strong>{tracked.length}</strong>
       <small>A股、美股与港股</small>
     </div>
-    <div class="monitor-kpi tone-bull">
-      <span>偏多</span>
-      <strong class:list={{ empty: bullish === 0 }}>{bullish}</strong>
-      <small>结构保持或修复</small>
+    <div class="monitor-kpi tone-risk">
+      <span>风险总数</span>
+      <strong class:list={{ empty: riskCount === 0 }}>{riskCount}</strong>
+      <small>队列优先展示 3 项</small>
     </div>
     <div class="monitor-kpi tone-watch">
-      <span>防守/观望</span>
-      <strong class:list={{ empty: defensive === 0 }}>{defensive}</strong>
-      <small>等待关键位确认</small>
+      <span>临界关注</span>
+      <strong class:list={{ empty: attentionCount === 0 }}>{attentionCount}</strong>
+      <small>接近关键位或异常波动</small>
     </div>
-    <div class="monitor-kpi tone-bear">
-      <span>偏空</span>
-      <strong class:list={{ empty: bearish === 0 }}>{bearish}</strong>
-      <small>破位或失效状态</small>
+    <div class="monitor-kpi tone-stale">
+      <span>待复核</span>
+      <strong class:list={{ empty: staleCount === 0 }}>{staleCount}</strong>
+      <small>超过维护窗口的快照</small>
     </div>
   </div>
 
-  <div class="monitor-table" role="list" aria-label="最近更新的结构化研究">
+  <div class="monitor-table" role="list" aria-label="按处置优先级排序的结构化研究">
     <div class="monitor-columns" aria-hidden="true">
       <span>标的 / 市场</span>
       <span>最新价</span>
       <span>涨跌幅</span>
-      <span>当前状态</span>
+      <span>优先级 / 触发原因</span>
     </div>
     {latest.map((post) => {
       const decision = post.data.decision!;
-      const sentiment = inferSentiment(decision, post.data.description);
+      const priority = buildResearchPriority(decision, post.data.updatedDate ?? post.data.pubDate);
       const direction = (decision.changePct ?? 0) > 0 ? 'up' : (decision.changePct ?? 0) < 0 ? 'down' : 'flat';
       return (
         <a class="monitor-row" href={getPostUrl(post)} role="listitem">
@@ -86,16 +100,16 @@ const formatChange = (value?: number) => {
           </span>
           <span class="quote">{formatPrice(post)}</span>
           <span class:list={['change', direction]}>{formatChange(decision.changePct)}</span>
-          <span class="state-cell">
-            <span class:list={['state-bar', sentiment === '偏多' ? 'bull' : sentiment === '偏空' ? 'bear' : 'watch']} aria-hidden="true"></span>
-            <span>{decision.status}</span>
+          <span class:list={['state-cell', `priority-${priority.key}`]}>
+            <span class:list={['state-bar', priority.key]} aria-hidden="true"></span>
+            <span><strong>{priority.reason}</strong><small>{priority.label}</small></span>
           </span>
         </a>
       );
     })}
   </div>
   <div class="monitor-foot">
-    <span>静态研究快照，不代表实时行情</span>
+    <span>按风险、关键位、波动与新鲜度排序 · 静态研究快照</span>
     <a href="/archive/">查看全部研究 →</a>
   </div>
 </section>
@@ -113,9 +127,9 @@ const formatChange = (value?: number) => {
   .monitor-kpi span { display: block; color: rgb(var(--gray)); font-size: 0.72rem; font-weight: 750; }
   .monitor-kpi strong { display: block; margin-top: 0.18rem; font: 800 1.5rem/1.1 ui-monospace, SFMono-Regular, Consolas, monospace; }
   .monitor-kpi small { display: block; margin-top: 0.25rem; color: rgb(var(--gray)); font-size: 0.68rem; }
-  .monitor-kpi.tone-bull strong { color: var(--accent); }
+  .monitor-kpi.tone-risk strong { color: var(--accent-dark); }
   .monitor-kpi.tone-watch strong { color: var(--amber); }
-  .monitor-kpi.tone-bear strong { color: var(--green); }
+  .monitor-kpi.tone-stale strong { color: var(--blue); }
   .monitor-kpi strong.empty { color: rgb(var(--gray)); opacity: 0.45; }
   .monitor-columns, .monitor-row { display: grid; grid-template-columns: minmax(11rem, 1.1fr) 7rem 6rem minmax(13rem, 1.5fr); align-items: center; gap: 0.85rem; }
   .monitor-columns { padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); color: rgb(var(--gray)); font-size: 0.66rem; font-weight: 800; text-transform: uppercase; }
@@ -130,10 +144,16 @@ const formatChange = (value?: number) => {
   .change.down { color: var(--green); }
   .change.flat { color: rgb(var(--gray)); }
   .state-cell { display: grid; grid-template-columns: 0.2rem minmax(0, 1fr); align-items: center; gap: 0.55rem; min-width: 0; color: rgb(var(--gray-dark)); font-size: 0.77rem; line-height: 1.35; }
-  .state-cell > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .state-cell > span:last-child { min-width: 0; }
+  .state-cell strong, .state-cell small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .state-cell strong { color: rgb(var(--black)); font-size: 0.76rem; }
+  .state-cell small { margin-top: 0.12rem; color: rgb(var(--gray)); font-size: 0.64rem; font-weight: 750; }
   .state-bar { width: 0.2rem; height: 1.55rem; border-radius: 999px; background: var(--amber); }
-  .state-bar.bull { background: var(--accent); }
-  .state-bar.bear { background: var(--green); }
+  .state-bar.risk { background: var(--accent); }
+  .state-bar.near { background: var(--amber); }
+  .state-bar.volatile { background: #8a4b00; }
+  .state-bar.stale { background: var(--blue); }
+  .state-bar.routine { background: rgb(var(--gray)); }
   .monitor-foot { display: flex; justify-content: space-between; gap: 1rem; padding: 0.62rem 1rem; color: rgb(var(--gray)); font-size: 0.7rem; }
   .monitor-foot a { font-weight: 800; text-decoration: none; }
   @media (max-width: 760px) {
