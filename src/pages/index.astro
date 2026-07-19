@@ -8,6 +8,7 @@ import ResearchMonitorBoard from '../components/ResearchMonitorBoard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { compactSummary } from '../utils/article-summary.mjs';
 import { getPostUrl } from '../utils/postUrl';
+import { sortByMarketDataTime } from '../utils/research-priority.mjs';
 
 const allPosts = (await getCollection('blog'))
   .filter((post) => !post.data.serenityArchive)
@@ -23,7 +24,8 @@ const hkStockPosts = allPosts.filter((post) => post.data.tags?.includes('港股�
 const marketResearch = allPosts.filter((post) =>
   post.data.tags?.some((tag) => ['个股分析', '美股分析', '港股分析'].includes(tag)),
 );
-const currentPost = marketResearch.find((post) => post.data.decision);
+const structuredResearch = sortByMarketDataTime(marketResearch.filter((post) => post.data.decision));
+const currentPost = structuredResearch[0];
 const currentDecision = currentPost?.data.decision;
 const latestResearch = marketResearch
   .filter((post) => post.id !== currentPost?.id)
@@ -113,24 +115,24 @@ const pillars = [
           </div>
         </div>
         <aside class="market-brief" aria-label="最新结构化研究摘要">
-          <div class="brief-meta"><span class="pill">{currentDecision ? `数据截至 ${currentDecision.asOf}` : '最新研究摘要'}</span><span class="pill pill-amber">跨市场研究</span></div>
+          <div class="brief-meta"><span class="pill">{currentDecision ? <>行情截至 <FormattedDate date={new Date(currentDecision.dataAsOf)} showTime={true} /></> : '最新研究摘要'}</span><span class="pill pill-amber">跨市场研究</span></div>
           <h2>{currentDecision ? `${currentDecision.name} · ${currentDecision.status}` : '先确认数据时效'}</h2>
           <p>{currentDecision?.action ?? '详情页区分首次发布、最后更新和历史框架；没有结构化决策的文章不会被包装成当前建议。'}</p>
           <div class="brief-row"><span>当前口径</span><strong>{currentDecision ? `${currentDecision.ticker} 最新价 ${currentDecision.currency === 'USD' ? '$' : ''}${currentDecision.currentPrice}` : '以详情页最新决策摘要为准'}</strong></div>
           <div class="brief-row"><span>风险边界</span><strong>{currentDecision ? `${currentDecision.invalidation.label} ${currentDecision.invalidation.value}；${currentDecision.invalidation.action}` : '价格、日期与来源均需复核'}</strong></div>
-          {currentPost && <a class="section-link" href={getPostUrl(currentPost)}>打开最新结构化研究 →</a>}
+          {currentPost && <a class="section-link" href={getPostUrl(currentPost)}>打开最新行情快照 →</a>}
         </aside>
       </section>
 
       <ResearchMonitorBoard posts={marketResearch} />
 
       <section class="section" aria-label="最新研究">
-        <div class="section-head"><div><h2>最新研究</h2><p>按最后更新时间跨市场排序</p></div><a class="section-link" href="/archive/">查看全部 →</a></div>
+        <div class="section-head"><div><h2>最新研究</h2><p>按内容维护时间跨市场排序</p></div><a class="section-link" href="/archive/">查看全部 →</a></div>
         <div class="latest-grid">
           {latestResearch.map((post) => (
             <a class="latest-item" href={getPostUrl(post)}>
               <div><div class="latest-title"><strong>{shortTitle(post)}</strong>{post.data.decision && <span class="status">{post.data.decision.status}</span>}</div><p class="latest-summary">{shortSummary(post)}</p></div>
-              <span class="latest-date"><FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></span>
+              <span class="latest-date">内容更新 <FormattedDate date={post.data.updatedDate ?? post.data.pubDate} showTime={true} /></span>
             </a>
           ))}
         </div>

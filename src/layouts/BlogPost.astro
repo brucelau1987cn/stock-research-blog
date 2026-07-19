@@ -111,7 +111,7 @@ const sidebarHeadings = stockHeadings
   .slice(0, 7);
 const formatDecisionPrice = (value: number) => {
   if (!decision) return String(value);
-  const digits = decision.currency === 'USD' && !Number.isInteger(value * 100) ? 3 : 2;
+  const digits = decision.currency === 'USD' && Math.abs(value - Number(value.toFixed(2))) > 1e-9 ? 3 : 2;
   const number = value.toFixed(digits);
   return decision.currency === 'USD' ? `$${number}` : `${number} ${decision.currency}`;
 };
@@ -123,7 +123,6 @@ const formatDistance = (value: number) => {
 const invalidationStateLabel = decision?.invalidation.state === 'triggered'
   ? '已触发'
   : decision?.invalidation.state === 'near' ? '接近触发' : '未触发';
-const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
 ---
 
 <html lang="zh-CN">
@@ -264,7 +263,7 @@ const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
           <div class="last-updated-on">
             最后更新：<FormattedDate date={updatedDate ?? pubDate} showTime={Boolean(updatedDate)} />
             {decision
-              ? <> · 以最后更新为当前有效结论，历史版本见跟踪记录。</>
+              ? <> · 内容更新时间；当前行情有效性以“行情截至”为准。</>
               : updatedDate && <> · 内容更新时间不等于当前行情复核；有效性以页面提示为准。</>}
           </div>
         </div>
@@ -275,7 +274,7 @@ const decisionAsOf = decision?.asOf.replace(/^数据截至\s*/, '');
                 <p class="decision-eyebrow">最新决策摘要</p>
                 <p class="decision-status"><strong>{decision.ticker} {decision.name}</strong> · {decision.status}</p>
               </div>
-              <span class="decision-asof">数据口径：{decisionAsOf}</span>
+              <span class="decision-asof">行情截至：<FormattedDate date={new Date(decision.dataAsOf)} showTime={true} /> · {decision.market} {decision.sessionDate}</span>
               <p class="decision-action"><strong>当前动作：</strong>{decision.action}</p>
             </div>
             <div class="decision-metrics">

@@ -13,13 +13,49 @@ const distancePct = (current, level) => {
   return ((target - price) / price) * 100;
 };
 
-const tradingDaysSince = (sessionDate, now) => {
+const MARKET_TIME_ZONES = {
+  CN: 'Asia/Shanghai',
+  HK: 'Asia/Hong_Kong',
+  US: 'America/New_York',
+};
+
+const MARKET_CLOSE_MINUTES = {
+  CN: 15 * 60,
+  HK: 16 * 60,
+  US: 16 * 60,
+};
+
+const marketDateParts = (date, market) => {
+  const timeZone = MARKET_TIME_ZONES[market] ?? 'UTC';
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(date);
+  const get = (type) => Number(parts.find((part) => part.type === type)?.value);
+  return {
+    year: get('year'),
+    month: get('month'),
+    day: get('day'),
+    minutes: get('hour') * 60 + get('minute'),
+  };
+};
+
+const tradingDaysSince = (sessionDate, now, market) => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(sessionDate ?? ''))) return null;
   const [year, month, day] = sessionDate.split('-').map(Number);
   const start = new Date(Date.UTC(year, month - 1, day));
   const current = toDate(now);
   if (!current) return null;
-  const end = new Date(Date.UTC(current.getUTCFullYear(), current.getUTCMonth(), current.getUTCDate()));
+  const marketNow = marketDateParts(current, market);
+  let end = new Date(Date.UTC(marketNow.year, marketNow.month - 1, marketNow.day));
+  if (marketNow.minutes < (MARKET_CLOSE_MINUTES[market] ?? 24 * 60)) {
+    end = new Date(end.valueOf() - 86_400_000);
+  }
   if (end <= start) return 0;
   let count = 0;
   for (const cursor = new Date(start.valueOf() + 86_400_000); cursor <= end; cursor.setUTCDate(cursor.getUTCDate() + 1)) {
@@ -52,7 +88,7 @@ export function buildResearchPriority(decision, updatedAt, now = new Date()) {
   const updated = toDate(decision?.dataAsOf ?? updatedAt);
   const current = toDate(now);
   const calendarAgeDays = updated && current ? Math.max(0, (current.valueOf() - updated.valueOf()) / 86_400_000) : null;
-  const tradingAgeDays = tradingDaysSince(decision?.sessionDate, current);
+  const tradingAgeDays = tradingDaysSince(decision?.sessionDate, current, decision?.market);
   const ageDays = tradingAgeDays ?? calendarAgeDays;
   const freshness = ageDays == null ? 'unknown' : ageDays > 3 ? 'stale' : ageDays > 1 ? 'aging' : 'fresh';
 
@@ -151,5 +187,13 @@ export function sortByResearchPriority(posts, now = new Date()) {
     return bPriority.rank - aPriority.rank
       || freshnessWeight[bPriority.freshness] - freshnessWeight[aPriority.freshness]
       || bDate.valueOf() - aDate.valueOf();
+  });
+}
+
+export function sortByMarketDataTime(posts) {
+  return [...posts].sort((a, b) => {
+    const aTime = toDate(a.data.decision?.dataAsOf)?.valueOf() ?? 0;
+    const bTime = toDate(b.data.decision?.dataAsOf)?.valueOf() ?? 0;
+    return bTime - aTime;
   });
 }

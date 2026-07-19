@@ -29,9 +29,11 @@ test('buildSearchIndex keeps only compact identifying fields', () => {
   );
 });
 
-test('article metadata labels distinguish publication from updates', () => {
+test('article metadata separates content updates from market-data freshness', () => {
   const source = readFileSync(new URL('../src/layouts/BlogPost.astro', import.meta.url), 'utf8');
   assert.match(source, /首次发布：/);
   assert.match(source, /最后更新：/);
-  assert.match(source, /以最后更新为当前有效结论/);
+  assert.match(source, /内容更新时间；当前行情有效性以“行情截至”为准/);
+  assert.match(source, /decision\.dataAsOf/);
+  assert.doesNotMatch(source, /以最后更新为当前有效结论/);
 });

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { buildResearchPriority, sortByResearchPriority } from '../src/utils/research-priority.mjs';
+import { buildResearchPriority, sortByMarketDataTime, sortByResearchPriority } from '../src/utils/research-priority.mjs';
 
 const baseDecision = {
   status: '区间观察',
@@ -94,13 +94,38 @@ test('Friday market data stays fresh through the weekend', () => {
 
 test('market freshness uses data timestamp instead of article update timestamp', () => {
   const result = buildResearchPriority(
-    { ...baseDecision, sessionDate: '2026-07-10', dataAsOf: '2026-07-10T15:00:00+08:00' },
+    { ...baseDecision, market: 'CN', sessionDate: '2026-07-10', dataAsOf: '2026-07-10T15:00:00+08:00' },
     '2026-07-19T20:00:00+08:00',
     new Date('2026-07-19T20:00:00+08:00'),
   );
   assert.equal(result.tradingAgeDays, 5);
   assert.equal(result.freshness, 'stale');
   assert.match(result.reason, /5 个交易日/);
+});
+
+test('US market age uses New York date instead of advancing at UTC midnight', () => {
+  const result = buildResearchPriority(
+    { ...baseDecision, market: 'US', sessionDate: '2026-07-15', dataAsOf: '2026-07-15T16:00:00-04:00' },
+    '2026-07-20T20:30:00-04:00',
+    new Date('2026-07-21T00:30:00Z'),
+  );
+  assert.equal(result.tradingAgeDays, 3);
+  assert.equal(result.freshness, 'aging');
+});
+
+test('current market session is counted only after the local close', () => {
+  const beforeClose = buildResearchPriority(
+    { ...baseDecision, market: 'US', sessionDate: '2026-07-17', dataAsOf: '2026-07-17T16:00:00-04:00' },
+    '2026-07-20T09:30:00-04:00',
+    new Date('2026-07-20T13:30:00Z'),
+  );
+  const afterClose = buildResearchPriority(
+    { ...baseDecision, market: 'US', sessionDate: '2026-07-17', dataAsOf: '2026-07-17T16:00:00-04:00' },
+    '2026-07-20T16:01:00-04:00',
+    new Date('2026-07-20T20:01:00Z'),
+  );
+  assert.equal(beforeClose.tradingAgeDays, 0);
+  assert.equal(afterClose.tradingAgeDays, 1);
 });
 
 test('missing optional evidence does not reduce a routine item below baseline', () => {
@@ -141,4 +166,18 @@ test('stale research sorts before fresh research within the same risk tier', () 
   ];
 
   assert.deepEqual(sortByResearchPriority(posts, now).map((post) => post.id), ['stale-risk', 'fresh-risk']);
+});
+
+test('market snapshot selection ignores a newer article edit with older quote data', () => {
+  const posts = [
+    {
+      id: 'recent-edit-old-quote',
+      data: { decision: { dataAsOf: '2026-07-17T15:00:00+08:00' }, updatedDate: new Date('2026-07-19T20:00:00+08:00') },
+    },
+    {
+      id: 'older-edit-new-quote',
+      data: { decision: { dataAsOf: '2026-07-18T16:00:00-04:00' }, updatedDate: new Date('2026-07-18T18:00:00-04:00') },
+    },
+  ];
+  assert.equal(sortByMarketDataTime(posts)[0].id, 'older-edit-new-quote');
 });
