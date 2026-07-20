@@ -30,8 +30,20 @@ function splitTweetSections(body) {
 }
 
 function headingSlug(section) {
-  const heading = section.split('\n', 1)[0].replace(/^###\s+/, '').trim();
+  const heading = section
+    .split('\n', 1)[0]
+    .replace(/^###\s+Tweet(?:\s+\d+)?\s+·\s*/, '')
+    .trim();
   return new GithubSlugger().slug(heading);
+}
+
+function normalizeSection(section, number) {
+  const lines = section.split('\n').map((line) => line.trimEnd());
+  lines[0] = lines[0].replace(
+    /^### Tweet(?:\s+\d+)?\s+·/,
+    `### Tweet ${number} ·`,
+  );
+  return lines.join('\n').trim();
 }
 
 function frontmatterValue(frontmatter, key, fallback = '') {
@@ -88,8 +100,17 @@ for (const monthFile of months) {
     return true;
   });
 
-  const recent = uniqueSections.slice(0, KEEP_RECENT);
-  const older = uniqueSections.slice(KEEP_RECENT);
+  const currentNumbers = uniqueSections.map((section) =>
+    Number(section.match(/^### Tweet (\d+)\s+·/)?.[1])
+  );
+  const needsRenumber = currentNumbers.some(
+    (number, index) => number !== index + 1
+  );
+  const numberedSections = needsRenumber
+    ? uniqueSections.map((section, index) => normalizeSection(section, index + 1))
+    : uniqueSections;
+  const recent = numberedSections.slice(0, KEEP_RECENT);
+  const older = numberedSections.slice(KEEP_RECENT);
   const chunks = Array.from({ length: Math.ceil(older.length / ARCHIVE_SIZE) }, (_, index) =>
     older.slice(index * ARCHIVE_SIZE, (index + 1) * ARCHIVE_SIZE)
   );
