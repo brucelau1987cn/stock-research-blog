@@ -25,4 +25,8 @@
 /WULF-terawulf/   /wulf-terawulf/   301
 /WULF-TeraWulf/   /wulf-terawulf/   301
 
+# Sub-RSS feed routing
+/stock-analysis/rss.xml  /stock-analysis/rss.xml  200
+/us-stock-analysis/rss.xml /us-stock-analysis/rss.xml 200
+
 # Note: add new /YYYYMMDD-<code>-<slug>/ 301 lines when creating date-prefixed historical aliases.
