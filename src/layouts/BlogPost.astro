@@ -203,10 +203,12 @@ const invalidationStateLabel = decision?.invalidation.state === 'triggered'
       .prose th { background: var(--warm-2); color: rgb(var(--black)); font-weight: 900; }
       .prose tr:last-child td { border-bottom: 0; }
       .prose td { color: rgb(var(--gray-dark)); }
-      .track-history { margin: 1rem 0; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; }
-      .track-history summary { padding: 0.85rem 1rem; cursor: pointer; color: rgb(var(--black)); font-weight: 800; background: var(--warm-2); }
-      .track-history[open] summary { border-bottom: 1px solid var(--border); }
-      .track-history-body { padding: 0 1rem 0.5rem; }
+      .track-history { margin: 1.2rem 0; border: 1px solid var(--border); border-radius: 10px; background: #fff; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: border-color 120ms ease; }
+      .track-history:hover { border-color: rgba(214,61,46,0.3); }
+      .track-history summary { padding: 0.85rem 1.1rem; cursor: pointer; color: rgb(var(--black)); font-weight: 800; background: var(--warm-2); user-select: none; transition: background 120ms ease, color 120ms ease; }
+      .track-history summary:hover { background: var(--warm); }
+      .track-history[open] summary { border-bottom: 1px solid var(--border); background: #fff7f5; color: #d63d2e; }
+      .track-history-body { padding: 0.8rem 1.1rem 1rem; border-left: 3px solid #fce8cd; margin-left: 0.5rem; }
       .track-history-body > h3:first-child { margin-top: 1rem; }
       .historical-framework { margin: 1.2rem 0; border: 1px solid var(--border); border-radius: 8px; background: #fff; overflow: hidden; }
       .historical-framework summary { padding: 0.9rem 1rem; cursor: pointer; background: var(--warm-2); color: rgb(var(--gray-dark)); font-weight: 800; }
