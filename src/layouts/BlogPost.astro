@@ -219,7 +219,11 @@ const invalidationStateLabel = decision?.invalidation.state === 'triggered'
       .sidebar .section-link { color: rgb(var(--gray)); font-size: 0.84rem; }
       .sidebar .toc-date { font-weight: 700; color: rgb(var(--gray-dark)); }
       .sidebar .toc-count { display: inline-flex; align-items: center; justify-content: center; min-width: 1.45rem; height: 1.45rem; border-radius: 999px; padding: 0 0.35rem; background: var(--accent-soft); color: var(--accent-dark); font-size: 0.78rem; font-weight: 900; flex-shrink: 0; }
-      .disclaimer { margin-top: 0.75rem; padding: 0.75rem 0 0; border-top: 1px solid var(--border); color: rgb(var(--gray)); font-size: 0.8rem; line-height: 1.55; }
+      .serenity-link-card { margin-top: 1.2rem; padding: 0.85rem; border-radius: 8px; background: #fff8ed; border: 1px solid #fce8cd; }
+      .serenity-link-card h3 { margin: 0 0 0.25rem; font-size: 0.85rem; color: #8a4b00; }
+      .serenity-link-card p { margin: 0 0 0.5rem; font-size: 0.72rem; color: rgb(var(--gray-dark)); line-height: 1.4; }
+      .serenity-link-card a { font-size: 0.75rem; font-weight: 800; color: #b86200; text-decoration: none; }
+      .disclaimer { margin-top: 1rem; padding-top: 0.85rem; border-top: 1px dashed var(--border); color: rgb(var(--gray)); font-size: 0.72rem; line-height: 1.45; }
       @media (max-width: 960px) {
         .article-shell { grid-template-columns: 1fr; }
         .sidebar { position: static; order: -1; display: flex; align-items: center; gap: 0.65rem; overflow-x: auto; padding: 0.7rem 0; border-left: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -387,6 +391,13 @@ const invalidationStateLabel = decision?.invalidation.state === 'triggered'
                   <a href={`#${heading.slug}`}>{heading.text}</a>
                 ))}
               </>
+            )}
+            {!isSerenity && (
+              <div class="serenity-link-card">
+                <h3>👩🦳 Serenity 产业链映射</h3>
+                <p>全球 AI & 半导体供应链核心节点与 A 股映射</p>
+                <a href="/serenity/">查看白发股神专栏 →</a>
+              </div>
             )}
             <div class="disclaimer">个人研究记录，用于复盘股票研究和交易纪律，不构成投资建议。</div>
           </aside>}

@@ -365,12 +365,23 @@ th { text-align: left; background: var(--warm); color: rgb(var(--black)); }
 .profit-ratio {
   display: inline-flex;
   align-items: center;
-  background: rgba(255, 51, 102, 0.1);
+  gap: 0.35rem;
+  background: rgba(255, 51, 102, 0.08);
   color: #ff3366;
   font-weight: 800;
-  padding: 0 0.25rem;
+  padding: 0.08rem 0.4rem;
   border-radius: 4px;
   font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  border: 1px solid rgba(255, 51, 102, 0.2);
+}
+.profit-ratio::before {
+  content: '';
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #ff3366;
+  box-shadow: 0 0 4px rgba(255, 51, 102, 0.5);
 }
 .avg-cost {
   display: inline-flex;
