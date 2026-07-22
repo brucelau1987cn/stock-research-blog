@@ -10,6 +10,11 @@ import HeaderLink from './HeaderLink.astro';
       <span class="brand-copy"><strong>{SITE_TITLE}</strong><small>股票研究与策略复盘</small></span>
     </a>
     <div class="internal-links">
+      <button id="global-search-trigger" class="search-trigger" aria-label="快捷搜索 (Cmd+K)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <span>搜索</span>
+        <kbd>⌘K</kbd>
+      </button>
       <HeaderLink href="/">首页</HeaderLink>
       <HeaderLink href="/stock-analysis/">A股分析</HeaderLink>
       <HeaderLink href="/us-stock-analysis/">美股分析</HeaderLink>
@@ -19,6 +24,31 @@ import HeaderLink from './HeaderLink.astro';
     </div>
   </nav>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const trigger = document.getElementById('global-search-trigger');
+    const handleSearch = () => {
+      const searchBox = document.querySelector<HTMLInputElement>('input[type="search"]');
+      if (searchBox) {
+        searchBox.focus();
+        searchBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        window.location.href = '/stock-analysis/';
+      }
+    };
+    trigger?.addEventListener('click', handleSearch);
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        handleSearch();
+      } else if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        handleSearch();
+      }
+    });
+  });
+</script>
 <style>
   header {
     position: sticky;
@@ -37,6 +67,9 @@ import HeaderLink from './HeaderLink.astro';
   .brand-copy strong { font-size: 0.95rem; }
   .brand-copy small { margin-top: 0.18rem; color: rgb(var(--gray)); font-size: 0.68rem; font-weight: 650; }
   .internal-links { display: flex; align-items: center; gap: 0.2rem; justify-content: flex-end; }
+  .search-trigger { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.6rem; margin-right: 0.3rem; border: 1px solid var(--border); border-radius: 6px; background: rgba(0,0,0,0.03); color: rgb(var(--gray)); font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 120ms ease; }
+  .search-trigger:hover { background: #fff; border-color: rgba(0,0,0,0.2); color: rgb(var(--black)); }
+  .search-trigger kbd { display: inline-flex; align-items: center; padding: 0.1rem 0.3rem; border-radius: 4px; background: rgba(0,0,0,0.06); font-size: 0.68rem; font-family: ui-monospace, monospace; }
   nav a { color: rgb(var(--gray-dark)); text-decoration: none; font-size: 0.88rem; font-weight: 700; padding: 0.55rem 0.68rem; border-radius: 8px; white-space: nowrap; }
   nav a.active { color: var(--accent-dark); background: var(--accent-soft); }
   nav a:hover { background: var(--warm); color: rgb(var(--black)); }

@@ -95,8 +95,21 @@ const pillars = [
       .pillar-item p { margin: 0.18rem 0 0; color: rgb(var(--gray)); font-size: 0.76rem; }
       .pillar-more { display: block; padding: 0.75rem 1.1rem; color: var(--accent); font-size: 0.84rem; font-weight: 800; text-decoration: none; }
       .empty-market { margin-top: 0.85rem; padding: 1rem; border: 1px dashed var(--border); border-radius: 12px; color: rgb(var(--gray)); }
-      @media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 2rem; } .pillars { grid-template-columns: 1fr; } }
-      @media (max-width: 680px) { .hero { padding-top: 1.25rem; } .hero h1 { font-size: 2.35rem; } .latest-grid { grid-template-columns: 1fr; } .latest-item:first-child { grid-column: 1; } .latest-item { grid-template-columns: 1fr; gap: 0.4rem; } .latest-date { white-space: normal; } .section-head { align-items: flex-start; } }
+      @media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 1.5rem; } .pillars { grid-template-columns: 1fr; } }
+      @media (max-width: 680px) {
+        .hero { padding-top: 0.75rem; text-align: left; }
+        .hero h1 { font-size: 2.15rem; line-height: 1.25; }
+        .hero-badges { justify-content: flex-start; gap: 0.35rem; }
+        .actions { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+        .actions .btn { width: 100%; justify-content: center; min-height: 2.8rem; }
+        .market-brief { padding: 1rem; border-radius: 10px; }
+        .brief-row { grid-template-columns: 4.8rem 1fr; gap: 0.5rem; padding: 0.65rem 0.75rem; }
+        .latest-grid { grid-template-columns: 1fr; }
+        .latest-item:first-child { grid-column: 1; }
+        .latest-item { grid-template-columns: 1fr; gap: 0.4rem; }
+        .latest-date { white-space: normal; }
+        .section-head { align-items: flex-start; }
+      }
     </style>
   </head>
   <body>

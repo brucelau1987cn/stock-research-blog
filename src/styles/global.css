@@ -363,16 +363,18 @@ th { text-align: left; background: var(--warm); color: rgb(var(--black)); }
 
 /* Stock Highlight Elements */
 .profit-ratio {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   background: rgba(255, 51, 102, 0.08);
   color: #ff3366;
   font-weight: 800;
-  padding: 0.08rem 0.4rem;
+  padding: 0.12rem 0.45rem;
   border-radius: 4px;
   font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
   border: 1px solid rgba(255, 51, 102, 0.2);
+  overflow: hidden;
 }
 .profit-ratio::before {
   content: '';
@@ -382,6 +384,7 @@ th { text-align: left; background: var(--warm); color: rgb(var(--black)); }
   border-radius: 50%;
   background: #ff3366;
   box-shadow: 0 0 4px rgba(255, 51, 102, 0.5);
+  flex-shrink: 0;
 }
 .avg-cost {
   display: inline-flex;
