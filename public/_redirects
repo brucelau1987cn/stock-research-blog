@@ -24,6 +24,8 @@
 /UMC-umc/         /umc-umc/         301
 /WULF-terawulf/   /wulf-terawulf/   301
 /WULF-TeraWulf/   /wulf-terawulf/   301
+/FFAI-faraday/    /ffai-faraday/    301
+/FFAI-Faraday/    /ffai-faraday/    301
 
 # Sub-RSS feed routing
 /stock-analysis/rss.xml  /stock-analysis/rss.xml  200
