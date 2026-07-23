@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-07-22 17:31:10 HKT",
+  "as_of": "2026-07-23 05:28:32 BJT (serenity narrative refresh; price snapshot from 2026-07-22 17:31 HKT)",
   "trading_day": "2026-07-22",
   "stocks": [
     {
@@ -88,7 +88,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 6.917749,
       "turnover": 3.862,
-      "amount_yi": 95.07
+      "amount_yi": 95.07,
+      "serenity_view": "$GOOGL FY26 capex 上修至 $195B-$205B + 2027 继续加码，CPO/光模块需求底被 hyperscaler 硬指引二次加固；回调分批低吸"
     },
     {
       "name": "拓荆科技",
@@ -121,7 +122,8 @@
       "sector_label": "🔧 ASIC 封测",
       "amplitude": 7.720058000000001,
       "turnover": 16.336000000000002,
-      "amount_yi": 186.36
+      "amount_yi": 186.36,
+      "serenity_view": "$GOOGL FY26 capex $195B-$205B + AMD SF 7/22-7/23 CPO roadmap 双线加固 AMD 封测主供地位；右侧跟进"
     },
     {
       "name": "昊华科技",
@@ -154,7 +156,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 6.8963090000000005,
       "turnover": 3.315,
-      "amount_yi": 405.6
+      "amount_yi": 405.6,
+      "serenity_view": "$GOOGL FY26 capex 中值 $200B 是上游半导体最强 read through；800G/1.6T 双 hyperscaler ($NVDA+$GOOGL) 驱动；7/18 Goldman 2026-2028 盈利上修 65%/108%/119% 加固，回调分批低吸"
     },
     {
       "name": "中船特气",
@@ -176,7 +179,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 8.235315,
       "turnover": 4.997,
-      "amount_yi": 332.34
+      "amount_yi": 332.34,
+      "serenity_view": "$GOOGL FY26 capex $195B-$205B 二次加固 800G/1.6T 需求底；与中际旭创同链共振，回调分批低吸"
     },
     {
       "name": "金宏气体",
