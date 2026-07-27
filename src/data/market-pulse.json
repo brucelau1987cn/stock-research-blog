@@ -199,6 +199,42 @@
       "amplitude": 9.057624,
       "turnover": 4.0329999999999995,
       "amount_yi": 23.33
+    },
+    {
+      "name": "兆易创新",
+      "code": "603986",
+      "price": "—",
+      "pct": "—",
+      "sector": "memory",
+      "sector_label": "💾 Memory（$CXMT IPO + $AVGO memory deal）",
+      "amplitude": "—",
+      "turnover": "—",
+      "amount_yi": "—",
+      "serenity_note": "国产 NAND/NOR 龙头，直接承接 7/27 $CXMT IPO 估值锚 + Samsung + $AVGO memory deal；待 cron 补盘中价"
+    },
+    {
+      "name": "深南电路",
+      "code": "002916",
+      "price": "—",
+      "pct": "—",
+      "sector": "fcbga",
+      "sector_label": "🔧 FC-BGA 先进封装基板（Samsung FC-BGA 紧缺国产替代）",
+      "amplitude": "—",
+      "turnover": "—",
+      "amount_yi": "—",
+      "serenity_note": "FC-BGA 封装基板直接对标 Ibiden 4062 / Unimicron；7/27 Samsung 基板紧缺打开估值锚；待 cron 补盘中价"
+    },
+    {
+      "name": "兴森科技",
+      "code": "002436",
+      "price": "—",
+      "pct": "—",
+      "sector": "fcbga",
+      "sector_label": "🔧 IC 载板 + ABF 国产替代",
+      "amplitude": "—",
+      "turnover": "—",
+      "amount_yi": "—",
+      "serenity_note": "IC 载板 + ABF 国产替代；7/20 封装侧瓶颈 ABF 基板 ~1 年 + 7/27 Samsung FC-BGA 紧缺；待 cron 补盘中价"
     }
   ],
   "etf_top": [
