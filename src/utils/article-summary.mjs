@@ -20,8 +20,9 @@ export function compactSummary(value, maxLength = 72) {
     .replace(/\s+/g, ' ')
     .trim();
 
-  if (text.length <= maxLength) return text;
-  return `${text.slice(0, Math.max(0, maxLength - 1)).trimEnd()}…`;
+  const characters = Array.from(text);
+  if (characters.length <= maxLength) return text;
+  return `${characters.slice(0, Math.max(0, maxLength - 1)).join('').trimEnd()}…`;
 }
 
 const classifySentiment = (source) => {

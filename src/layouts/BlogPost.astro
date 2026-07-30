@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_AUTHOR, SITE_AUTHOR_URL } from '../consts';
+import { compactSummary } from '../utils/article-summary.mjs';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -16,12 +17,13 @@ const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: title,
-  description,
+  description: compactSummary(description, 160),
   datePublished: pubDate.toISOString(),
   dateModified: (updatedDate ?? pubDate).toISOString(),
   author: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_AUTHOR_URL },
   publisher: { '@type': 'Organization', name: 'AI选股', url: Astro.site?.toString() },
   mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).toString(),
+  ...(image ? { image: new URL(image, Astro.site).toString() } : {}),
 };
 const articleJsonLdText = JSON.stringify(articleJsonLd).replace(/</g, '\\u003c');
 let tagLabel = 'A股分析';
@@ -100,15 +102,18 @@ const stockDashboardLinks = [
   { label: '仓位动作', heading: headingLink('持仓者动作 (分批买入 / 减仓计划)', '分批买入 / 减仓计划') },
   { label: '风险点', heading: headingLink('风险点', '三个风险') },
 ].filter((item) => item.heading).map((item) => ({ label: item.label, href: `#${item.heading!.slug}` }));
-const sidebarHeadingNames = [
-  '近1个月行情', '走势与基本面概览', '关键价位', '跟踪记录', '结论先行',
-  '持仓者动作 (分批买入 / 减仓计划)', '分批买入 / 减仓计划',
-  '上涨 / 下跌逻辑 (行业与基本面锚点)', '风险点', '三个风险',
+const sidebarHeadingPatterns = [
+  /仪表盘/,
+  /筹码分布/,
+  /跟踪记录/,
+  /多智能体投研拆解|走势与基本面概览/,
+  /If-Then|操盘手计划|持仓者动作|分批买入/,
+  /关键价位/,
+  /结论先行/,
 ];
-const sidebarHeadings = stockHeadings
-  .filter((heading) => sidebarHeadingNames.includes(heading.text))
-  .filter((heading, index, items) => items.findIndex((item) => item.text === heading.text) === index)
-  .slice(0, 7);
+const sidebarHeadings = sidebarHeadingPatterns
+  .map((pattern) => stockHeadings.find((heading) => pattern.test(heading.text)))
+  .filter((heading): heading is (typeof stockHeadings)[number] => Boolean(heading));
 const formatDecisionPrice = (value: number) => {
   if (!decision) return String(value);
   const digits = decision.currency === 'USD' && Math.abs(value - Number(value.toFixed(2))) > 1e-9 ? 3 : 2;
@@ -238,7 +243,7 @@ const invalidationStateLabel = decision?.invalidation.state === 'triggered'
         .title { margin-top: 1rem; }
         .dashboard-card { align-items: flex-start; flex-direction: column; }
         .dashboard-links { justify-content: flex-start; }
-        .decision-head { flex-direction: column; gap: 0.35rem; }
+        .decision-head { grid-template-columns: 1fr; gap: 0.35rem; }
         .decision-asof { white-space: normal; }
         .decision-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .decision-metric:nth-child(2) { border-right: 0; }

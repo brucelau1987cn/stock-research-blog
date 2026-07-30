@@ -62,6 +62,26 @@ test('rejects missing or inconsistent market timestamps', () => {
   assert.match(validateDecision(mismatched, 'test.md').join('\n'), /日期必须与 sessionDate 一致/);
 });
 
+test('validates final-close timestamps in each market timezone', () => {
+  const cnWrongZone = { ...base, asOf: '2026-07-17 收盘', dataAsOf: '2026-07-17T15:00:00-04:00' };
+  assert.match(validateDecision(cnWrongZone, 'cn-zone.md').join('\n'), /CN 收盘快照/);
+
+  const cnUtcEquivalent = { ...base, asOf: '2026-07-17 收盘', dataAsOf: '2026-07-17T07:00:00Z' };
+  assert.deepEqual(validateDecision(cnUtcEquivalent, 'cn-utc.md'), []);
+
+  const hkClose = { ...base, market: 'HK', asOf: '2026-07-17 收盘', dataAsOf: '2026-07-17T08:00:00Z' };
+  assert.deepEqual(validateDecision(hkClose, 'hk-close.md'), []);
+
+  const usSummer = { ...base, market: 'US', sessionDate: '2026-07-17', asOf: '2026-07-17 最终收盘', dataAsOf: '2026-07-17T16:00:00-04:00' };
+  assert.deepEqual(validateDecision(usSummer, 'us-summer.md'), []);
+
+  const usWinter = { ...base, market: 'US', sessionDate: '2026-01-16', asOf: '2026-01-16 最终收盘', dataAsOf: '2026-01-16T16:00:00-05:00' };
+  assert.deepEqual(validateDecision(usWinter, 'us-winter.md'), []);
+
+  const usWrongDate = { ...base, market: 'US', sessionDate: '2026-07-18', asOf: '2026-07-18 最终收盘', dataAsOf: '2026-07-18T00:30:00Z' };
+  assert.match(validateDecision(usWrongDate, 'us-date.md').join('\n'), /市场时区后的日期必须与 sessionDate 一致/);
+});
+
 test('rejects invalidation states inconsistent with the current price', () => {
   const falseTriggered = { ...base, invalidation: { ...base.invalidation, state: 'triggered' } };
   assert.match(validateDecision(falseTriggered, 'test.md').join('\n'), /不能标记 triggered/);

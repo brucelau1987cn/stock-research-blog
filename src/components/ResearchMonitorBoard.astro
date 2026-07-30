@@ -35,7 +35,9 @@ const staleCount = priorities.filter((value) => value.freshness === 'stale' || v
 const oldestFreshness = priorities.some((value) => value.freshness === 'stale' || value.freshness === 'unknown')
   ? 'stale'
   : priorities.some((value) => value.freshness === 'aging') ? 'aging' : 'fresh';
-const freshnessLabel = oldestFreshness === 'stale' ? '存在待复核快照' : oldestFreshness === 'aging' ? '部分行情开始老化' : '行情快照新鲜';
+const freshnessLabel = oldestFreshness === 'stale'
+  ? `${staleCount} 项待复核`
+  : oldestFreshness === 'aging' ? '部分行情开始老化' : '行情快照新鲜';
 const latestDataAsOf = tracked
   .map((post) => post.data.decision?.dataAsOf)
   .filter(Boolean)
@@ -65,14 +67,14 @@ const formatChange = (value?: number) => {
     </div>
     <div class="monitor-right">
       <div class="market-filter-tabs" role="tablist" aria-label="市场切换">
-        <button class="tab-btn active" data-market="ALL" role="tab" aria-selected="true">全部</button>
-        <button class="tab-btn" data-market="CN" role="tab" aria-selected="false">A股</button>
-        <button class="tab-btn" data-market="US" role="tab" aria-selected="false">美股</button>
-        <button class="tab-btn" data-market="HK" role="tab" aria-selected="false">港股</button>
+        <button id="market-tab-all" class="tab-btn active" data-market="ALL" role="tab" aria-selected="true" aria-controls="monitor-results">全部</button>
+        <button id="market-tab-cn" class="tab-btn" data-market="CN" role="tab" aria-selected="false" aria-controls="monitor-results" tabindex="-1">A股</button>
+        <button id="market-tab-us" class="tab-btn" data-market="US" role="tab" aria-selected="false" aria-controls="monitor-results" tabindex="-1">美股</button>
+        <button id="market-tab-hk" class="tab-btn" data-market="HK" role="tab" aria-selected="false" aria-controls="monitor-results" tabindex="-1">港股</button>
       </div>
       <div class="monitor-freshness">
         <span class:list={['status-dot', oldestFreshness]} aria-hidden="true"></span>
-        {latestDataAsOf ? <>{freshnessLabel} · 行情截至 <FormattedDate date={latestDataAsOf} showTime={true} /></> : '暂无可解析行情时间'}
+        {latestDataAsOf ? <>{freshnessLabel} · 最新行情 <FormattedDate date={latestDataAsOf} showTime={true} /></> : '暂无可解析行情时间'}
       </div>
     </div>
   </div>
@@ -100,7 +102,7 @@ const formatChange = (value?: number) => {
     </div>
   </div>
 
-  <div class="monitor-table" role="list" aria-label="按处置优先级排序的结构化研究">
+  <div id="monitor-results" class="monitor-table" role="list" aria-label="按处置优先级排序的结构化研究" aria-live="polite">
     <div class="monitor-columns" aria-hidden="true">
       <span>标的 / 市场</span>
       <span>最新价</span>
@@ -135,9 +137,10 @@ const formatChange = (value?: number) => {
         </a>
       );
     })}
+    <p class="monitor-empty" hidden>当前筛选暂无处置项；可进入全部研究查看完整覆盖。</p>
   </div>
   <div class="monitor-foot">
-    <span>按风险、关键位、波动与新鲜度排序 · 静态研究快照</span>
+    <span><strong id="monitor-result-count">显示 {latest.length} 项</strong> · 按风险、关键位、波动与新鲜度排序 · 静态研究快照</span>
     <a href="/archive/">查看全部研究 →</a>
   </div>
 </section>
@@ -146,23 +149,44 @@ const formatChange = (value?: number) => {
   document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.market-filter-tabs .tab-btn');
     const rows = document.querySelectorAll<HTMLElement>('.monitor-row[data-market]');
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
+    const empty = document.querySelector<HTMLElement>('.monitor-empty');
+    const resultCount = document.getElementById('monitor-result-count');
+    const activateTab = (tab: Element) => {
         const targetMarket = tab.getAttribute('data-market');
         tabs.forEach((t) => {
           t.classList.remove('active');
           t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
         });
         tab.classList.add('active');
         tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+        let visibleCount = 0;
         rows.forEach((row) => {
           const rowMarket = row.getAttribute('data-market');
           if (targetMarket === 'ALL' || rowMarket === targetMarket) {
             row.style.display = '';
+            visibleCount += 1;
           } else {
             row.style.display = 'none';
           }
         });
+        if (empty) empty.hidden = visibleCount > 0;
+        if (resultCount) resultCount.textContent = `显示 ${visibleCount} 项`;
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let nextIndex = index;
+        if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = tabs.length - 1;
+        const nextTab = tabs[nextIndex];
+        activateTab(nextTab);
+        (nextTab as HTMLElement).focus();
       });
     });
   });
@@ -199,6 +223,7 @@ const formatChange = (value?: number) => {
   .sup-dist { color: var(--blue); }
   .monitor-row { min-height: 3.45rem; padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); color: inherit; text-decoration: none; transition: background 120ms ease; }
   .monitor-row:hover { background: #fcfbf8; }
+  .monitor-empty { margin: 0; padding: 1.2rem 1rem; color: rgb(var(--gray)); text-align: center; }
   .instrument { min-width: 0; }
   .instrument strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.88rem; }
   .instrument small { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.18rem; color: rgb(var(--gray)); font: 700 0.7rem/1 ui-monospace, SFMono-Regular, Consolas, monospace; }
@@ -219,6 +244,7 @@ const formatChange = (value?: number) => {
   .state-bar.stale { background: var(--blue); }
   .state-bar.routine { background: rgb(var(--gray)); }
   .monitor-foot { display: flex; justify-content: space-between; gap: 1rem; padding: 0.62rem 1rem; color: rgb(var(--gray)); font-size: 0.7rem; }
+  .monitor-foot strong { color: rgb(var(--gray-dark)); }
   .monitor-foot a { font-weight: 800; text-decoration: none; }
   @media (max-width: 760px) {
     .monitor-head { align-items: flex-start; }

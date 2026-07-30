@@ -1,9 +1,30 @@
 const NOT_CLEARED = /未突破|未收复|暂未收复|未站稳/;
 const SUPPORT_HELD = /已站稳|已收复|暂时收复|守稳|支撑有效/;
+const MARKET_CLOSE_TIME = { CN: '15:00', HK: '16:00', US: '16:00' };
+const MARKET_TIME_ZONE = { CN: 'Asia/Shanghai', HK: 'Asia/Hong_Kong', US: 'America/New_York' };
 
 function number(value) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : null;
+}
+
+function marketDateTime(date, market) {
+  const timeZone = MARKET_TIME_ZONE[market];
+  if (!timeZone) return null;
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(date);
+  const get = (type) => parts.find((part) => part.type === type)?.value;
+  return {
+    date: `${get('year')}-${get('month')}-${get('day')}`,
+    time: `${get('hour')}:${get('minute')}`,
+  };
 }
 
 export function validateDecision(decision, source = 'unknown') {
@@ -28,8 +49,17 @@ export function validateDecision(decision, source = 'unknown') {
   const parsedDataAsOf = new Date(dataAsOf);
   if (!dataAsOf || Number.isNaN(parsedDataAsOf.valueOf()) || !/(Z|[+-]\d{2}:\d{2})$/.test(dataAsOf)) {
     errors.push(`${source}: decision.dataAsOf 必须是带时区偏移的 ISO 时间`);
-  } else if (sessionDate && dataAsOf.slice(0, 10) !== sessionDate) {
-    errors.push(`${source}: decision.dataAsOf 日期必须与 sessionDate 一致`);
+  } else {
+    const local = marketDateTime(parsedDataAsOf, decision.market);
+    if (sessionDate && local?.date !== sessionDate) {
+      errors.push(`${source}: decision.dataAsOf 转换到 ${decision.market} 市场时区后的日期必须与 sessionDate 一致`);
+    }
+    if (/收盘|最终/.test(String(decision.asOf ?? ''))) {
+      const expectedClose = MARKET_CLOSE_TIME[decision.market];
+      if (expectedClose && local?.time !== expectedClose) {
+        errors.push(`${source}: ${decision.market} 收盘快照 dataAsOf 应为 ${expectedClose} 当地时间，当前为 ${local?.time ?? '无法解析'}`);
+      }
+    }
   }
 
   if (current === null || current <= 0) {

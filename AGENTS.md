@@ -14,7 +14,9 @@ Whenever a task creates or updates a post with `decision` frontmatter, keep thes
 
 Any prose that calls a value the current/latest price must match `decision.currentPrice` and `sessionDate`. Update or remove stale background-price claims whenever the decision snapshot changes.
 
-Do not advance `sessionDate` or `dataAsOf` unless the quote and trading date were verified. If the source date is ambiguous, stop before editing rather than making the snapshot appear newer.
+For every prose/table distance to a key level, calculate `(level - currentPrice) / currentPrice`. Prefer the unambiguous wording `高于当前价 X%` or `低于当前价 X%`; do not reuse a legacy signed percentage without recalculating it.
+
+Do not advance `sessionDate` or `dataAsOf` unless the quote and trading date were verified. If the source date is ambiguous, stop before editing rather than making the snapshot appear newer. Final-close snapshots must resolve to the market's local normal close timestamp: CN `15:00 Asia/Shanghai`, HK `16:00 Asia/Hong_Kong`, and US `16:00 America/New_York` (including DST).
 
 After editing structured research, run:
 

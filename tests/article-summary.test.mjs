@@ -14,6 +14,10 @@ test('compactSummary keeps a concise conclusion unchanged', () => {
   assert.equal(compactSummary('等待放量站稳关键位后再观察。', 40), '等待放量站稳关键位后再观察。');
 });
 
+test('compactSummary does not split an emoji surrogate pair', () => {
+  assert.equal(compactSummary('测试😀结论', 4), '测试😀…');
+});
+
 test('inferSentiment prioritizes a structured status over conflicting legacy text', () => {
   assert.equal(inferSentiment({ status: '偏空，破位确认' }, '短线看多，等待修复'), '偏空');
 });

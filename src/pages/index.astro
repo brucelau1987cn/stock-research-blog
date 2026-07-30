@@ -53,17 +53,18 @@ const pillars = [
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
-      .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; padding: 0.5rem 0 1.5rem; }
-      .hero-badges { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
-      .hero h1 { max-width: 13em; margin: 0 0 0.65rem; font-size: clamp(2rem, 4vw, 2.7rem); line-height: 1.18; text-wrap: balance; }
-      .subtitle { max-width: 42rem; margin: 0 0 1.2rem; color: rgb(var(--gray)); font-size: 1rem; line-height: 1.7; }
+      main { padding-top: 2rem; }
+      .hero { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 1.1fr); gap: clamp(1.25rem, 3vw, 2.25rem); align-items: center; padding: 0 0 1.15rem; }
+      .hero-badges { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+      .hero h1 { max-width: 13em; margin: 0 0 0.5rem; font-size: clamp(1.85rem, 3.6vw, 2.45rem); line-height: 1.18; text-wrap: balance; }
+      .subtitle { max-width: 42rem; margin: 0 0 0.85rem; color: rgb(var(--gray)); font-size: 0.96rem; line-height: 1.62; }
       .actions { display: flex; gap: 0.65rem; flex-wrap: wrap; }
       .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 2.7rem; padding: 0.58rem 0.9rem; border-radius: 6px; border: 1px solid var(--border); background: #fff; color: rgb(var(--black)); font-weight: 800; text-decoration: none; }
       .btn.primary { background: rgb(var(--black)); color: #fff; border-color: rgb(var(--black)); }
       .btn:hover { transform: translateY(-1px); box-shadow: var(--box-shadow); }
-      .market-brief { padding: 1.2rem; border: 1px solid #f3cec8; border-radius: 8px; background: #fff7f5; box-shadow: var(--box-shadow); }
+      .market-brief { padding: 1rem 1.1rem; border: 1px solid #f3cec8; border-radius: 8px; background: #fff7f5; box-shadow: var(--box-shadow); }
       .brief-meta { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
-      .market-brief h2 { margin: 0 0 0.65rem; font-size: 1.65rem; }
+      .market-brief h2 { margin: 0 0 0.5rem; font-size: 1.35rem; line-height: 1.35; }
       .market-brief > p { color: rgb(var(--gray)); line-height: 1.65; }
       .brief-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: 0.75rem; margin-top: 0.65rem; padding: 0.8rem 0.9rem; border: 1px solid rgba(214,61,46,0.14); border-radius: 10px; background: rgba(255,255,255,0.82); }
       .brief-row span { color: rgb(var(--gray)); font-size: 0.82rem; font-weight: 750; }
@@ -75,7 +76,6 @@ const pillars = [
       .section-link { color: var(--accent); font-size: 0.9rem; font-weight: 800; text-decoration: none; white-space: nowrap; }
       .latest-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; }
       .latest-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; padding: 1rem 1.05rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; color: inherit; text-decoration: none; }
-      .latest-item:first-child { grid-column: 1 / -1; padding: 1.2rem; box-shadow: var(--box-shadow); }
       .latest-item:hover { border-color: rgba(214,61,46,0.24); transform: translateY(-1px); }
       .latest-title { display: flex; align-items: baseline; gap: 0.55rem; flex-wrap: wrap; }
       .latest-title strong { color: rgb(var(--black)); font-size: 1.02rem; }
@@ -105,7 +105,6 @@ const pillars = [
         .market-brief { padding: 1rem; border-radius: 10px; }
         .brief-row { grid-template-columns: 4.8rem 1fr; gap: 0.5rem; padding: 0.65rem 0.75rem; }
         .latest-grid { grid-template-columns: 1fr; }
-        .latest-item:first-child { grid-column: 1; }
         .latest-item { grid-template-columns: 1fr; gap: 0.4rem; }
         .latest-date { white-space: normal; }
         .section-head { align-items: flex-start; }
