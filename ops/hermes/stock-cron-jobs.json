@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "jobs": [
+    {
+      "id": "6247acc17646",
+      "name": "FFAI Faraday 美股盘后最终复盘",
+      "prompt": "### 角色与目标\n你是 FFAI (Faraday Future) 美股盘后最终复盘任务。北京时间 06:00 运行，确保美股夏令时和冬令时都已正式收盘。\n\n### 交易日与收盘检查\n1. 执行 `python3 ${HOME}/.hermes/scripts/is_us_trading_day.py`\n   如果 exit code != 0 → 今天非美股交易日（周末/美股假日），输出 `[SKIP] 今天非美股交易日` 结束。\n\n### 数据获取与复盘\n1. 通过问财/妙想接口查询 FFAI.O 当日美股收盘数据：`python3 ${HOME}/skills/hithink-market-query/scripts/cli.py -q \"FFAI.O 现价 涨跌幅 开盘价 最高价 最低价 压力位 支撑位\"`\n2. 读取 `${STOCK_SITE_DIR}/src/content/blog/ffai-faraday.md` 文件。\n3. 检查收盘价、涨跌幅、最高价、最低价是否需要更新 `decision` 字段与正文中的跟踪记录：\n   - 支撑位：$0.109\n   - 压力位：$0.147\n   - 均线阻力：$0.123\n   - 止损线：$0.100\n4. 如果数据变化或到达收盘复核点，更新 `src/content/blog/ffai-faraday.md` 中的 `updatedDate`、`currentPrice`、`changePct`、`dataAsOf` 以及新增/更新 H3 跟踪记录。\n5. 运行校验与部署：\n   ```bash\n   npm run validate:decisions\n   npm test\n   npm run build\n   git add src/content/blog/ffai-faraday.md public/_redirects\n   git commit -m \"[ffai-tracker] $(date +'%Y-%m-%d') 盘后同步复盘\"\n   git push\n   ```\n6. 输出完成摘要。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * 2-6",
+        "display": "0 6 * * 2-6"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}"
+    },
+    {
+      "id": "4a278e7b6f54",
+      "name": "NU Nubank 美股盘中跟踪",
+      "prompt": "### 角色与边界\n你是 NU (Nubank) 美股盘中关键位监控任务。普通波动只读且静默；仅关键触发时才更新博客并部署。\n\n### 交易日检查\n执行 `python3 ${HOME}/.hermes/scripts/is_us_trading_day.py`。若非美股交易日，最终仅输出 `[SILENT]`。\n\n### 触发条件\n至少满足一项才允许写入：\n- 价格触及或穿越 `decision` 中第一压力、第一支撑、减仓位或失效位；\n- 相对前收绝对涨跌幅 >= 3%；\n- 成交量相对可比时段明显异常，且有可核验数据；\n- 财报、监管、增发、评级或重大公司事件改变当前策略。\n未触发时禁止改文件，最终仅输出 `[SILENT]`。\n\n### 数据与编辑\n1. 获取 NU 盘中价格、前收、开高低、涨跌幅、成交量和时间戳。至少做两项交叉校验：主数据源 + Yahoo Finance chart 或另一公开行情源；无法双源确认时仅提醒，不写博客。\n2. 修改前执行：`cd ${STOCK_SITE_DIR} && git status --porcelain && git fetch origin && git pull --ff-only origin main`。若工作区非空或 pull 失败，停止写入并告警，禁止覆盖/清理现有改动。\n3. 仅修改 `src/content/blog/NU-nubank.md`。保留 `decision` 与 `usMarket`；同步更新 decision 的价格、涨跌幅、asOf、状态、关键位和动作。盘中记录必须明确标注“盘中临时记录”，不得自称最终收盘。\n4. 独立复核价格差、涨跌幅、开盘高低方向、连涨连跌天数；不确定则不写。\n\n### 验证、提交与部署\n- 运行 `npm run validate:decisions && npm run build && git diff --check`；失败则不得提交。\n- 仅执行 `git add src/content/blog/NU-nubank.md`，禁止 `git add .`。\n- 提交信息：`update(NU): intraday key-level alert`。\n- 执行 `git push origin main`。推送失败必须告警，不得宣称已上线。\n- 推送后检查 Cloudflare 最新生产部署对应新提交，并用 curl 验证 `https://stock.peekabo.cc/nu-nubank/` HTTP 200、updatedDate 与 decision 已更新。未验证成功时说明“已推送，生产仍传播中/验证失败”。\n\n### 安全规则\n禁止输出凭据、访问令牌或完整远端 URL；敏感值统一写 `[REDACTED]`。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 23 * * 1-5",
+        "display": "30 23 * * 1-5"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "local",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}"
+    },
+    {
+      "id": "71a98d7aa851",
+      "name": "NU Nubank 美股盘前跟踪",
+      "prompt": "### 角色与边界\n你是 NU (Nubank) 美股盘前风险提醒任务。本任务只读，不修改博客、不提交 Git、不部署。\n\n### 交易日检查\n执行 `python3 ${HOME}/.hermes/scripts/is_us_trading_day.py`。若非美股交易日，最终仅输出 `[SILENT]`。\n\n### 执行步骤\n1. 检查 `${STOCK_SITE_DIR}`：若存在未提交改动，不处理这些改动，也不要尝试清理或提交。\n2. 使用 `python3 ${HOME}/skills/hithink-usstock-selector/scripts/cli.py --query \"NU Nubank 最新盘前价格、前收、涨跌幅、成交量、重要新闻\"` 获取盘前信息；数据不足时明确说明，不得猜测。\n3. 读取 `src/content/blog/NU-nubank.md` 中当前 `decision` 的压力、支撑、减仓和失效位。\n4. 仅在以下任一情况成立时发送简短提醒：盘前价格触及/穿越关键位；绝对涨跌幅 >= 3%；出现财报、监管、增发、评级或重大公司事件。提醒必须标注“盘前数据，不代表正式开盘/收盘”。\n5. 其他情况最终仅输出 `[SILENT]`。\n\n### 安全规则\n- 禁止修改任何文件，禁止 git add/commit/push。\n- 禁止输出凭据、访问令牌或完整远端 URL；敏感值统一写 `[REDACTED]`。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 21 * * 1-5",
+        "display": "0 21 * * 1-5"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}"
+    },
+    {
+      "id": "c0010565dade",
+      "name": "NU Nubank 美股盘后最终复盘",
+      "prompt": "### 角色与目标\n你是 NU (Nubank) 美股盘后最终复盘任务。北京时间 06:00 运行，确保美股夏令时和冬令时都已正式收盘。每天最多由本任务产生一个常规最终提交。\n\n### 交易日与收盘检查\n1. 用 America/New_York 时区计算刚结束的美股交易日期，并调用 `${HOME}/.hermes/scripts/is_us_trading_day.py` 的逻辑确认该日期为交易日。\n2. 明确验证纽约时间已晚于当日 16:00；若尚未收盘、非交易日或数据日期不匹配，最终仅输出 `[SILENT]`，不得写入。\n\n### 数据双源核验\n1. 主源：`python3 ${HOME}/skills/hithink-usstock-selector/scripts/cli.py --query \"NU Nubank 最终收盘价、前收、涨跌幅、开高低、成交量、市值、交易日期\"`。\n2. 第二源：Yahoo Finance chart 或另一公开行情源。\n3. 必须核对交易日期、收盘价、前收、涨跌幅、开高低和成交量。价格/涨跌幅明显不一致或任一来源仍是盘中缓存时，不覆盖博客，发送数据冲突告警。\n\n### Git前置检查\n执行：`cd ${STOCK_SITE_DIR} && git status --porcelain && git fetch origin && git pull --ff-only origin main`。\n- 工作区非空：停止并告警，不得 stash、reset、checkout 或覆盖用户改动。\n- fetch/pull失败：停止并告警。\n\n### 编辑规则\n- 仅修改 `src/content/blog/NU-nubank.md`。\n- 保留 `decision` 与 `usMarket`；用最终数据同步更新 currentPrice、previousClose、changePct、asOf、状态、关键位和动作。\n- 同一交易日的盘中记录标为“历史初值（已失效）”；最终记录唯一标明“最终收盘复核”。\n- 更新 updatedDate 和 description。\n- 独立复核价格差、涨跌幅、开盘高低方向、连涨连跌天数、成交量变化；算术不一致则停止写入。\n\n### 验证、提交、推送、生产确认\n1. 运行 `npm run validate:decisions && npm run build && git diff --check`；任一失败不得提交。\n2. 仅执行 `git add src/content/blog/NU-nubank.md`，禁止 `git add .`。\n3. 提交信息：`update(NU): final close review`；无文件变化时最终仅输出 `[SILENT]`。\n4. 执行 `git push origin main`；失败则告警且不得宣称上线。\n5. 检查 Cloudflare 最新生产部署对应新提交；用 curl 验证 `https://stock.peekabo.cc/nu-nubank/` HTTP 200、新 updatedDate 和 decision.currentPrice。边缘传播未完成时如实说明。\n\n### 输出与安全\n成功时输出收盘价、涨跌幅、触发位、当前动作、提交短SHA和生产验证。无变化输出 `[SILENT]`。禁止输出凭据、令牌或完整远端 URL，敏感值写 `[REDACTED]`。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * 2-6",
+        "display": "0 6 * * 2-6"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}"
+    },
+    {
+      "id": "df4ab2b921b9",
+      "name": "Serenity 白发股神 动态监控",
+      "prompt": "你是 AI/半导体供应链投资分析师。执行以下任务：\n\n## 任务：监控 Serenity (@aleabitoreddit) → 月度博客同步 + 专栏首页赛道汇总维护 + 长期记忆\n\n### 步骤1：抓取 + 落盘（用持久化脚本，避免 /tmp 重启丢失 + 控制 xurl 费用）\n```bash\n# 直接拉 Serenity user-timeline (user_id=1940360837547565056) + since_id 增量\n# 不调 search recent！user-timeline 无 7 天窗口限制\n# 每天 1 次约 1-3 条新推文 = $0.005-$0.015/天 ≈ $0.5/月\npython3 ${HOME}/.hermes/scripts/serenity_persist.py fetch\n\n# 把 6 月及以后、未入库的推文写进 fact_store（cutoff=2026-06-01）\n# 自动跳过已有人工 fact 覆盖的整日（6/11-6/12），避免重复入库\npython3 ${HOME}/.hermes/scripts/serenity_persist.py sync\n```\n注意：xurl 已硬编码 user_id + since_id；不要改用 blogwatcher-cli/Nitter（已废）。\n\n### 步骤2：分析推文（四维决策化重构）\n对于提取出的每一条新推文，在翻译和分析时，必须严格执行以下四维决策化重构，并在博客和推送中输出：\n1. **[Conviction Level] 信心指数评级**：\n   - 🔴 **Level 3 (战略级 / Goated)**：确立或颠覆行业中长期估值底部的重磅研判（如 CPO 估值模型、CXL 内存池化大趋势）。\n   - 🟡 **Level 2 (战术级 / Tactical)**：大跌日杠杆清洗、CW laser chokepoint 供应紧张、M&A 潜在套利等短中期交易窗口或催化剂。\n   - 🔵 **Level 1 (观察级 / Insight)**：日常观点补充、个股 TAM 重新评估等背景信息。\n2. **[Thesis Drift] 观点链溯源与证伪**：\n   - 必须寻找并关联本月或历史往期推文（例如 “👈 继承/印证 Tweet 88” 或 “⚠️ 修正/转向：推翻了 Tweet 42 的假设，时间窗口推迟”），保持观点连续性。\n3. **[Actionable Value Chain Vector] A股传导路径与交易动作**：\n   - 明确传导链条：`传导链：美股源头 ➡️ 传导机制 ➡️ A股核心映射与实操建议`。\n     - 澜起科技：`澜起科技 (688008，CXL 接口芯片龙头，直接承接 ALAB 估值上修，回调分批低吸)`\n     - 源杰科技：`源杰科技 (688498，CW/EML 光芯片国产化对标，承接 LITE 瓶颈逻辑，右侧跟进)`\n4. **[Contrarian Matrix] 反指双栏对照（如有）**：\n   - 若推文属于典型的 Contrarian Play（反向交易），列出：\n     - 🚫 **卖方/舆论共识 (毒药)**：例如 BoFA 看空存储、Cramer 唱多。\n     - 🚀 **操盘手买点判读 (解药)**：例如 杠杆出清 90% 见底、反指空点确立。\n\n### 步骤3：同步到博客\n- 编辑 src/content/blog/YYYYMM.md（按四维重构结构录入新推文；对于 Level 1 级别的非核心推文，在 Markdown 中使用 `<details><summary>展开查看日常互动详情...</summary>...</details>` 进行折叠以保持排版精简；同步更新头部的 `## 🎯 6月核心赛道专题看板`）。\n- 更新 src/pages/serenity.astro 首页赛道汇总（含 A 股代码，格式：A股映射：公司名（代码））。\n- 更新 src/data/market-pulse.json 中相关标的的最新观点标签。\n- git add + commit + push。\n\n**patch 重试规则**（重要：YYYYMM.md 有大量重复表格模板，容易踩\"Found N matches\"）：\n  1. patch 报 \"Found N matches\" → 不要放弃，重新读取文件，选更唯一的 old_string（多包 2-3 行上下文，比如带上该 Tweet 的标题行 `### Tweet X · ` 做锚点）\n  2. 第二次还报 → 用 write_file 全量覆盖（读全文 → 改内容 → write_file 完整写出）\n  3. 如果只是微调 wording 不重要且 3 次都失败 → 记到 commit message 里跳过，不要卡住\n\n### 步骤4：保存到长期记忆\n脚本 sync 已自动写 6 月及以后新推文 fact（带 ticker 标签 + cutoff 过滤 + 6/11-6/12 跳过）。\n本月新推文只需在 sync 没覆盖到时手动补：\n- category: \"general\"\n- content: \"Serenity @aleabitoreddit 推文 YYYY-MM-DD HH:MM BJT: <推文内容摘要>。涉及赛道: <赛道>。涉及标的: <A 股代码+公司名 或 美股 $ticker>。\"\n- tags: \"serenity,tweet,YYYY-MM-DD,赛道名,ticker-code\"\n\n### 步骤5：返回摘要\n输出一句话给用户：\"{N} 条新推文，{M} 条已存为 fact，{K} 处博客/首页更新，{C} 美元 xurl 消耗\"\n\n## 注意事项\n- 高水位标记：~/.hermes/cache/serenity/_high_water.json（持久化，非 /tmp）\n- xurl 余额：$5 起，已用 ~$3，剩 ~$2。每次 user-timeline fetch 按条数计费（$0.005/条），24h 内 dup 同一推文免费\n- 24h 去重：同一 tweet 24h 内多次 read 只收 1 次（UTC 凌晨重置）\n- fact_store 是 Hermes 工具；不重复存同 ticker 同日事实\n\n### Serenity 月度页面分片规则（必须执行）\n- 只直接编辑 `src/content/blog/YYYYMM.md`；禁止手工编辑 `YYYYMM-archive-N.md`，它们是构建生成物。\n- 写完月度主文件后，先执行 `npm run build`。构建会运行 `scripts/split-serenity-archives.mjs`：主页面只保留最近 30 条推文，较早推文每 25 条拆为一个归档页，并更新旧 hash 兼容脚本。\n- build 后必须核对：主文件 `rg -c '^### Tweet'` 不超过 30；主文件 + 同月 archive 文件的总 Tweet 数不减少；`git diff --check` 通过。\n- Git 必须显式暂存：本月 `YYYYMM.md`、同月 `YYYYMM-archive-*.md`、`public/serenity-archive-redirect.js`，以及本轮真实修改的 `src/pages/serenity.astro` / `src/data/market-pulse.json`。禁止 `git add .`。\n- commit/push 后验证月度主 URL HTTP 200、HTML 体积不重新膨胀，并确认最新推文仍在主页面。\n",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 9 * * 1-5",
+        "display": "10 9 * * 1-5"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": null,
+      "workdir": null,
+      "profile": null
+    },
+    {
+      "id": "07c393e2b87d",
+      "name": "market-pulse-refresh",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\nRun the A-share market-pulse refresh workflow and record the closing snapshot to long-term memory.\n\n## Step 1: Refresh data\nExecute exactly:\n  bash ${STOCK_SITE_DIR}/scripts/market_pulse_refresh.sh\n\nThe script writes ${STOCK_SITE_DIR}/src/data/market-pulse.json and git-commits+pushes it. It uses **iWencai 7 hithink-* skills** (主力) + mx-data (补盲盘中价)。具体: hithink-astock-selector (18 只票批量收盘价) + hithink-market-query (板块涨跌) + hithink-macro-query (CPI/PMI/PPI) + hithink-industry-query (行业板块前 5)。mx-data 仅作为单只票盘中价的补盲。\n\n## Step 2: Optional enrichment (do these if scripts not in batch above)\nFor richer daily snapshot, also call:\n- `python3 -m hithink-industry-query (or cd ~ && python3 ~/skills/hithink-industry-query/scripts/cli.py) --query \"今日同花顺行业板块涨幅前 5\" --limit 5` → 行业板块前 5\n- `python3 ~/skills/hithink-market-query/scripts/cli.py --query \"今日北向资金净买入额前 5\" --limit 5` → 北向资金前 5\n- `python3 -m news-search` (or `cd ~ && python3 -m skills.news-search.scripts -q \"A 股 收盘 异动\" -l 5 -f text`) → 财经新闻 top 5\n\nIf you can't find the news-search entry point via -m, just call its scripts/cli.py directly. If the skills/ structure is at the repo root, use that path.\n\n## Step 3: Record closing snapshot to holographic memory\nRead the resulting JSON and call fact_store action=\"add\" once per day:\n\n  category: \"project\"\n  content: \"A-share close snapshot YYYY-MM-DD: <list 8 tickers with name, code, price, pct>; top5 行业板块 <list>; top5 北向资金 <list>; macro CPI=X% (date), PMI=Y (date). Source: market-pulse.json + hithink-* skills.\"\n  tags: \"snapshot,A-share,close,daily,2026,06\"  (split YYYY-MM into YYYY,MM since FTS5 tokenizer treats \"-\" as separator)\n\n## Step 4: 1-line summary\nFormat: \"pulse refreshed for YYYY-MM-DD: 8 stocks + 5 industries + 5 北向资金 + macro recorded (fact_id=N)\"",
+      "skills": [
+        "hithink-astock-selector",
+        "hithink-market-query",
+        "hithink-macro-query",
+        "hithink-industry-query",
+        "mx-data"
+      ],
+      "skill": "hithink-astock-selector",
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 17 * * 1-5",
+        "display": "30 17 * * 1-5"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "local",
+      "enabled_toolsets": [
+        "terminal",
+        "skills"
+      ],
+      "workdir": null,
+      "profile": null
+    },
+    {
+      "id": "f4cf89704897",
+      "name": "卧龙电驱 600580 盘中跟踪",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\n你是 A 股单股跟踪 watchdog。跟踪 卧龙电驱 (600580.SH)。**每次运行均必须同步自动修改到博客，保持博客内的行情与结论为最新，并执行 R1-R5 全文修订。** 对于 Telegram 推送：上午/午间仍按监控规则触发推送（未触发则仅更新博客和 state，不推 TG）；下午盘后运行（15:00 后）必须取消静默，无论是否触发监控规则，均要推送一条盘后筹码分布简报。\n\n## 固定文件\n- workdir: ${STOCK_SITE_DIR}\n- 文章: src/content/blog/600580-wldq.md\n- 详情链接: https://stock.peekabo.cc/600580-wldq/\n- state: ${HOME}/.hermes/state/wldq_tracker.json\n- fact JSONL: ${HOME}/.hermes/state/wldq_tracker_facts.jsonl\n\n## 数据源（直接用 CLI，不依赖 skill 注入）\n优先 iWencai，mx 补盲：\n1. 行情 + 筹码分布: `python3 ${HOME}/skills/hithink-astock-selector/scripts/cli.py --query \"卧龙电驱 600580.SH 今日最新价 涨跌幅 成交量 成交额 换手率 振幅 开盘价 最高价 最低价 获利盘 套牢盘 平均成本\" --limit 3`\n2. 资金: `python3 ${HOME}/skills/hithink-market-query/scripts/cli.py --query \"卧龙电驱 600580.SH 今日主力资金 大单 中单 小单 融资余额 融资净买入 融券余额\" --limit 5`\n3. 事件: `python3 ${HOME}/skills/hithink-event-query/scripts/cli.py --query \"卧龙电驱 600580.SH 今日公告 业绩预告 增减持 质押 解禁 调研 监管函\" --limit 5`\n4. 盘口补盲: `python3 ${HOME}/skills/mx-data/mx-data/mx_data.py \"卧龙电驱 最新价\"`\n5. 资讯补盲: `python3 ${HOME}/skills/mx-search/mx-search/mx_search.py \"卧龙电驱 600580.SH 今日 公告 新闻\"`\n若某个源失败，不要把任务判失败；用可用数据继续，并在 state 里记录 unavailable。\n\n## 关键位来源\n不要在 prompt 里猜关键位。运行时读取文章 `## 关键价位` 表格/段落和上次 state，抽取当前生效关键位。关键位档位原则上不改；只更新“距当前价 X% / 是否触发”。\n\n\n## 下午盘后筹码分布强制推送规则（用户要求）\n- 判断当前 BJT 时间：若运行时间在 **15:00 以后**（包括 15:xx / 16:xx 的下午任务），**不要静默**。\n- 无论价格/量能/资金/公告等规则是否命中，都必须推送一条“盘后筹码分布简报”。\n- 若命中“筹码触发”（获利盘连续上涨且 >90%，或连续下跌且 <1%），它等同于正式触发：必须推送 + 按 R1-R5 同步博客。\n- 简报必须包含 iWencai 筹码字段：\n  - 获利盘比例：`收盘获利[YYYYMMDD]`\n  - 套牢盘比例：`套牢盘[YYYYMMDD]`\n  - 平均成本：`平均成本[YYYYMMDD]`\n- 重点提示：\n  - 获利盘连续上涨且超过 **90%** → 高获利盘兑现压力，必须重点提示。\n  - 获利盘连续下跌且低于 **1%** → 极端套牢/弱势或杀跌末段，必须重点提示。\n- 若无法拿到上一期获利盘用于“连续”判断，要读取 state 里的 `chip_distribution.prev_profit_ratio`；仍拿不到就写“本轮仅有单点数据，连续性待下次确认”。\n- state 必须保存 `chip_distribution`: `{profit_ratio, trapped_ratio, avg_cost, as_of, prev_profit_ratio, trend, chip_triggered, chip_trigger_reason}`。\n\n## 触发规则（任一命中才推送）\n1. 价格突破/跌破文章关键位（建仓、支撑、压力、减仓、止损、突破）。\n2. 单日涨跌幅绝对值 > 3%。\n3. 成交量 > 近 5 日均量 × 1.5（拿不到 5 日均量则跳过该条）。\n4. 今日新交易所/公司公告/监管披露（普通新闻不单独触发）。\n5. 融资净买入/净偿还绝对值 > 500 万元。\n6. 相关板块当日涨跌幅绝对值 > 4%（拿不到板块则跳过）。\n7. 筹码触发（下午盘后重点）：获利盘连续上涨且超过 90%；或获利盘连续下跌且低于 1%。命中则视为正式触发 → 推送 + 同步博客。\n\n## 未触发（即 1-7 条监控规则均未命中）\n- **上午/午间（15:00 前）**：不发送 Telegram 消息；但**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- **下午盘后（15:00 后）**：必须向 Telegram 发送“盘后筹码分布简报”（不静默），并且**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- 未触发时的 commit message 格式：`[wldq-tracker] YYYY-MM-DD HH:MM 定时同步 + 全文修订`。\n- 覆盖写 state JSON：价格、涨跌幅、量能、资金、公告摘要、关键位距离、筹码分布、triggered=false、data_quality。\n\n## 博客同步规则（R1-R5，每次运行均执行）\n1. 只改现有文章 `src/content/blog/600580-wldq.md`，URL 永远用 https://stock.peekabo.cc/600580-wldq/，不新建文件。\n2. **【仅保留最近一天/一条详细记录】** 每次运行都完全清空旧的跟踪记录，在 `## 跟踪记录` 下方仅写入/更新一条本次运行的 H3 详细记录（正文中永远只有一条最新跟踪段）。结构必须精简、专业，严格按以下格式输出（不要有冗余字段）：\n   **触发原因：** ...\n   \n   **📊 盘面数据快照：**\n   - **收盘价 / 盘中最新价**：**X.XX 元**（±X.XX%，iWencai 口径）\n   - **资金与动能**：量比 **X.XXx**，换手率 **X.XX%**，主力大单净流入 **X.XX**（散户净流向）\n   - **收盘/盘中获利盘**：**X.XX%**（描述筹码趋势及形态）\n   \n   **🛡 当前对峙边界：**\n   - 🔼 **直属攻击线**（上方阻力）：**X.XX 元**（距 X.XX%）\n   - 🔽 **直属防守线**（下方支撑）：**X.XX 元**（距 X.XX%）\n   - 🚨 **风控/止损底线**：**X.XX 元**（距 X.XX%，说明风控状态）\n   \n   **🎯 条件执行计划 (If-Then Plan)：**\n   - **IF 向上**：若日内放量（量比 > 1.5x）站稳 攻击线 元 → 动作建议\n   - **IF 向下**：若收盘实质性跌破 防守线 元 → 动作建议\n3. bump frontmatter `updatedDate: YYYY-MM-DDTHH:MM:00+08:00`。\n4. 重写 frontmatter `description` 为 80-120 字最新结论，必须以“最新结论：”开头。\n4b. **必须同步完整 frontmatter `decision` 块**（首页/列表/文章首屏单一数据源）。字段：ticker, name, status, currentPrice, previousClose, changePct, currency=元, asOf；resistance/support 各含 label/value/state；invalidation 含 label/value/action；action 一句话；changeSummary 最多 4 条。changePct 与 (currentPrice/previousClose-1)*100 误差 ≤0.08；现价低于 support 时 state 不得写已收复/已站稳。提交前先 `npm run validate:decisions`，失败禁止 push。\n5. R5 全文小修：`结论先行` 每次必改；`近1个月行情` 有数据变化就改；`关键价位` 档位不动，只更新状态说明；其它 H2 只在事件影响时改。\n6. 由于正文仅保留一条最新记录，删除更老记录时，在 commit message 中加 `archive <被删除的日期>`。\n7. 对中文长文，优先用 patch/write_file；不要在 terminal heredoc 里塞大段中文。\n8. 若触发原因是筹码触发，跟踪段必须写清：获利盘当前值、上一期值、连续方向、套牢盘、平均成本，以及“高获利兑现压力/极端套牢”判断。\n9. 运行 `python3 ${STOCK_SITE_DIR}/scripts/generate_chip_chart.py wldq \"卧龙电驱\"` 生成筹码与股价走势图，随后运行 `npm run validate:decisions && npm run build`，成功后 `git add src/content/blog/600580-wldq.md public/assets/chips/wldq.svg && git commit -m \"[wldq-tracker] YYYY-MM-DD HH:MM <触发原因> + 全文修订\" && git push origin main`（如果是未触发的定时同步，`<触发原因>` 填 `定时同步` 或 `盘后同步`）。\n\n## 推送格式（只在触发后，或下午盘后简报）\n📊 卧龙电驱 600580.SH 跟踪 (操盘日志)\n\n⏰ YYYY-MM-DD HH:MM BJT\n💰 最新价：X.XX 元（±X.XX%）\n📈 动能资金：量比 X.XXx · 换手率 X.XX% · 主力大单 X.XX\n🧩 获利盘：X.XX%\n\n🚨 触发：<具体原因>\n\n🛡 对峙边界：\n- 🔼 阻力位：X.XX 元（距 X.XX%）\n- 🔽 支撑位：X.XX 元（距 X.XX%）\n- 🚨 止损位：X.XX 元（距 X.XX%）\n\n🎯 执行计划：\n- IF 向上：...\n- IF 向下：...\n\n🔗 https://stock.peekabo.cc/600580-wldq/\n## 注意\n- 若模型/工具失败但已有部分数据，优先写 state；下午盘后不要静默，必须至少推送可得的筹码/价格简报并明确缺失字段，不要编造数据。\n- 推送要短，有信号感；不要堆长文。\n- 不要写入长期 memory；日内进展只写 state/fact JSONL/博客。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "38 11,15 * * 1-5",
+        "display": "38 11,15 * * 1-5"
+      },
+      "repeat": null,
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}",
+      "profile": null
+    },
+    {
+      "id": "7bed0c891ba4",
+      "name": "山东威达 002026 盘中跟踪",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\n你是 A 股单股跟踪 watchdog。跟踪 山东威达 (002026.SZ)。**每次运行均必须同步自动修改到博客，保持博客内的行情与结论为最新，并执行 R1-R5 全文修订。** 对于 Telegram 推送：上午/午间仍按监控规则触发推送（未触发则仅更新博客和 state，不推 TG）；下午盘后运行（15:00 后）必须取消静默，无论是否触发监控规则，均要推送一条盘后筹码分布简报。\n\n## 固定文件\n- workdir: ${STOCK_SITE_DIR}\n- 文章: src/content/blog/002026-swd.md\n- 详情链接: https://stock.peekabo.cc/002026-swd/\n- state: ${HOME}/.hermes/state/swd_tracker.json\n- fact JSONL: ${HOME}/.hermes/state/swd_tracker_facts.jsonl\n\n## 数据源（直接用 CLI，不依赖 skill 注入）\n优先 iWencai，mx 补盲：\n1. 行情 + 筹码分布: `python3 ${HOME}/skills/hithink-astock-selector/scripts/cli.py --query \"山东威达 002026.SZ 今日最新价 涨跌幅 成交量 成交额 换手率 振幅 开盘价 最高价 最低价 获利盘 套牢盘 平均成本\" --limit 3`\n2. 资金: `python3 ${HOME}/skills/hithink-market-query/scripts/cli.py --query \"山东威达 002026.SZ 今日主力资金 大单 中单 小单 融资余额 融资净买入 融券余额\" --limit 5`\n3. 事件: `python3 ${HOME}/skills/hithink-event-query/scripts/cli.py --query \"山东威达 002026.SZ 今日公告 业绩预告 增减持 质押 解禁 调研 监管函\" --limit 5`\n4. 盘口补盲: `python3 ${HOME}/skills/mx-data/mx-data/mx_data.py \"山东威达 最新价\"`\n5. 资讯补盲: `python3 ${HOME}/skills/mx-search/mx-search/mx_search.py \"山东威达 002026.SZ 今日 公告 新闻\"`\n若某个源失败，不要把任务判失败；用可用数据继续，并在 state 里记录 unavailable。\n\n## 关键位来源\n不要在 prompt 里猜关键位。运行时读取文章 `## 关键价位` 表格/段落和上次 state，抽取当前生效关键位。关键位档位原则上不改；只更新“距当前价 X% / 是否触发”。\n\n\n## 下午盘后筹码分布强制推送规则（用户要求）\n- 判断当前 BJT 时间：若运行时间在 **15:00 以后**（包括 15:xx / 16:xx 的下午任务），**不要静默**。\n- 无论价格/量能/资金/公告等规则是否命中，都必须推送一条“盘后筹码分布简报”。\n- 若命中“筹码触发”（获利盘连续上涨且 >90%，或连续下跌且 <1%），它等同于正式触发：必须推送 + 按 R1-R5 同步博客。\n- 简报必须包含 iWencai 筹码字段：\n  - 获利盘比例：`收盘获利[YYYYMMDD]`\n  - 套牢盘比例：`套牢盘[YYYYMMDD]`\n  - 平均成本：`平均成本[YYYYMMDD]`\n- 重点提示：\n  - 获利盘连续上涨且超过 **90%** → 高获利盘兑现压力，必须重点提示。\n  - 获利盘连续下跌且低于 **1%** → 极端套牢/弱势或杀跌末段，必须重点提示。\n- 若无法拿到上一期获利盘用于“连续”判断，要读取 state 里的 `chip_distribution.prev_profit_ratio`；仍拿不到就写“本轮仅有单点数据，连续性待下次确认”。\n- state 必须保存 `chip_distribution`: `{profit_ratio, trapped_ratio, avg_cost, as_of, prev_profit_ratio, trend, chip_triggered, chip_trigger_reason}`。\n\n## 触发规则（任一命中才推送）\n1. 价格突破/跌破文章关键位（建仓、支撑、压力、减仓、止损、突破）。\n2. 单日涨跌幅绝对值 > 3%。\n3. 成交量 > 近 5 日均量 × 1.5（拿不到 5 日均量则跳过该条）。\n4. 今日新交易所/公司公告/监管披露（普通新闻不单独触发）。\n5. 融资净买入/净偿还绝对值 > 500 万元。\n6. 相关板块当日涨跌幅绝对值 > 4%（拿不到板块则跳过）。\n7. 筹码触发（下午盘后重点）：获利盘连续上涨且超过 90%；或获利盘连续下跌且低于 1%。命中则视为正式触发 → 推送 + 同步博客。\n\n## 未触发（即 1-7 条监控规则均未命中）\n- **上午/午间（15:00 前）**：不发送 Telegram 消息；但**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- **下午盘后（15:00 后）**：必须向 Telegram 发送“盘后筹码分布简报”（不静默），并且**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- 未触发时的 commit message 格式：`[swd-tracker] YYYY-MM-DD HH:MM 定时同步 + 全文修订`。\n- 覆盖写 state JSON：价格、涨跌幅、量能、资金、公告摘要、关键位距离、筹码分布、triggered=false、data_quality。\n\n## 博客同步规则（R1-R5，每次运行均执行）\n1. 只改现有文章 `src/content/blog/002026-swd.md`，URL 永远用 https://stock.peekabo.cc/002026-swd/，不新建文件。\n2. **【仅保留最近一天/一条详细记录】** 每次运行都完全清空旧的跟踪记录，在 `## 跟踪记录` 下方仅写入/更新一条本次运行的 H3 详细记录（正文中永远只有一条最新跟踪段）。结构必须精简、专业，严格按以下格式输出（不要有冗余字段）：\n   **触发原因：** ...\n   \n   **📊 盘面数据快照：**\n   - **收盘价 / 盘中最新价**：**X.XX 元**（±X.XX%，iWencai 口径）\n   - **资金与动能**：量比 **X.XXx**，换手率 **X.XX%**，主力大单净流入 **X.XX**（散户净流向）\n   - **收盘/盘中获利盘**：**X.XX%**（描述筹码趋势及形态）\n   \n   **🛡 当前对峙边界：**\n   - 🔼 **直属攻击线**（上方阻力）：**X.XX 元**（距 X.XX%）\n   - 🔽 **直属防守线**（下方支撑）：**X.XX 元**（距 X.XX%）\n   - 🚨 **风控/止损底线**：**X.XX 元**（距 X.XX%，说明风控状态）\n   \n   **🎯 条件执行计划 (If-Then Plan)：**\n   - **IF 向上**：若日内放量（量比 > 1.5x）站稳 攻击线 元 → 动作建议\n   - **IF 向下**：若收盘实质性跌破 防守线 元 → 动作建议\n3. bump frontmatter `updatedDate: YYYY-MM-DDTHH:MM:00+08:00`。\n4. 重写 frontmatter `description` 为 80-120 字最新结论，必须以“最新结论：”开头。\n4b. **必须同步完整 frontmatter `decision` 块**（首页/列表/文章首屏单一数据源）。字段：ticker, name, status, currentPrice, previousClose, changePct, currency=元, asOf；resistance/support 各含 label/value/state；invalidation 含 label/value/action；action 一句话；changeSummary 最多 4 条。changePct 与 (currentPrice/previousClose-1)*100 误差 ≤0.08；现价低于 support 时 state 不得写已收复/已站稳。提交前先 `npm run validate:decisions`，失败禁止 push。\n5. R5 全文小修：`结论先行` 每次必改；`近1个月行情` 有数据变化就改；`关键价位` 档位不动，只更新状态说明；其它 H2 只在事件影响时改。\n6. 由于正文仅保留一条最新记录，删除更老记录时，在 commit message 中加 `archive <被删除的日期>`。\n7. 对中文长文，优先用 patch/write_file；不要在 terminal heredoc 里塞大段中文。\n8. 若触发原因是筹码触发，跟踪段必须写清：获利盘当前值、上一期值、连续方向、套牢盘、平均成本，以及“高获利兑现压力/极端套牢”判断。\n9. 运行 `python3 ${STOCK_SITE_DIR}/scripts/generate_chip_chart.py swd \"山东威达\"` 生成筹码与股价走势图，随后运行 `npm run validate:decisions && npm run build`，成功后 `git add src/content/blog/002026-swd.md public/assets/chips/swd.svg && git commit -m \"[swd-tracker] YYYY-MM-DD HH:MM <触发原因> + 全文修订\" && git push origin main`（如果是未触发的定时同步，`<触发原因>` 填 `定时同步` 或 `盘后同步`）。\n\n## 推送格式（只在触发后，或下午盘后简报）\n📊 山东威达 002026.SZ 跟踪 (操盘日志)\n\n⏰ YYYY-MM-DD HH:MM BJT\n💰 最新价：X.XX 元（±X.XX%）\n📈 动能资金：量比 X.XXx · 换手率 X.XX% · 主力大单 X.XX\n🧩 获利盘：X.XX%\n\n🚨 触发：<具体原因>\n\n🛡 对峙边界：\n- 🔼 阻力位：X.XX 元（距 X.XX%）\n- 🔽 支撑位：X.XX 元（距 X.XX%）\n- 🚨 止损位：X.XX 元（距 X.XX%）\n\n🎯 执行计划：\n- IF 向上：...\n- IF 向下：...\n\n🔗 https://stock.peekabo.cc/002026-swd/\n## 注意\n- 若模型/工具失败但已有部分数据，优先写 state；下午盘后不要静默，必须至少推送可得的筹码/价格简报并明确缺失字段，不要编造数据。\n- 推送要短，有信号感；不要堆长文。\n- 不要写入长期 memory；日内进展只写 state/fact JSONL/博客。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "8 11,15 * * 1-5",
+        "display": "8 11,15 * * 1-5"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}",
+      "profile": null
+    },
+    {
+      "id": "b47f9bdb4f65",
+      "name": "山东赫达 002810 盘中跟踪",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\n你是 A 股单股跟踪 watchdog。跟踪 山东赫达 (002810.SZ)。**每次运行均必须同步自动修改到博客，保持博客内的行情与结论为最新，并执行 R1-R5 全文修订。** 对于 Telegram 推送：上午/午间仍按监控规则触发推送（未触发则仅更新博客和 state，不推 TG）；下午盘后运行（15:00 后）必须取消静默，无论是否触发监控规则，均要推送一条盘后筹码分布简报。\n\n## 固定文件\n- workdir: ${STOCK_SITE_DIR}\n- 文章: src/content/blog/002810-shda.md\n- 详情链接: https://stock.peekabo.cc/002810-shda/\n- state: ${HOME}/.hermes/state/shda_tracker.json\n- fact JSONL: ${HOME}/.hermes/state/shda_tracker_facts.jsonl\n\n## 数据源（直接用 CLI，不依赖 skill 注入）\n优先 iWencai，mx 补盲：\n1. 行情 + 筹码分布: `python3 ${HOME}/skills/hithink-astock-selector/scripts/cli.py --query \"山东赫达 002810.SZ 今日最新价 涨跌幅 成交量 成交额 换手率 振幅 开盘价 最高价 最低价 获利盘 套牢盘 平均成本\" --limit 3`\n2. 资金: `python3 ${HOME}/skills/hithink-market-query/scripts/cli.py --query \"山东赫达 002810.SZ 今日主力资金 大单 中单 小单 融资余额 融资净买入 融券余额\" --limit 5`\n3. 事件: `python3 ${HOME}/skills/hithink-event-query/scripts/cli.py --query \"山东赫达 002810.SZ 今日公告 业绩预告 增减持 质押 解禁 调研 监管函\" --limit 5`\n4. 盘口补盲: `python3 ${HOME}/skills/mx-data/mx-data/mx_data.py \"山东赫达 最新价\"`\n5. 资讯补盲: `python3 ${HOME}/skills/mx-search/mx-search/mx_search.py \"山东赫达 002810.SZ 今日 公告 新闻\"`\n若某个源失败，不要把任务判失败；用可用数据继续，并在 state 里记录 unavailable。\n\n## 关键位来源\n不要在 prompt 里猜关键位。运行时读取文章 `## 关键价位` 表格/段落和上次 state，抽取当前生效关键位。关键位档位原则上不改；只更新“距当前价 X% / 是否触发”。\n\n\n## 下午盘后筹码分布强制推送规则（用户要求）\n- 判断当前 BJT 时间：若运行时间在 **15:00 以后**（包括 15:xx / 16:xx 的下午任务），**不要静默**。\n- 无论价格/量能/资金/公告等规则是否命中，都必须推送一条“盘后筹码分布简报”。\n- 若命中“筹码触发”（获利盘连续上涨且 >90%，或连续下跌且 <1%），它等同于正式触发：必须推送 + 按 R1-R5 同步博客。\n- 简报必须包含 iWencai 筹码字段：\n  - 获利盘比例：`收盘获利[YYYYMMDD]`\n  - 套牢盘比例：`套牢盘[YYYYMMDD]`\n  - 平均成本：`平均成本[YYYYMMDD]`\n- 重点提示：\n  - 获利盘连续上涨且超过 **90%** → 高获利盘兑现压力，必须重点提示。\n  - 获利盘连续下跌且低于 **1%** → 极端套牢/弱势或杀跌末段，必须重点提示。\n- 若无法拿到上一期获利盘用于“连续”判断，要读取 state 里的 `chip_distribution.prev_profit_ratio`；仍拿不到就写“本轮仅有单点数据，连续性待下次确认”。\n- state 必须保存 `chip_distribution`: `{profit_ratio, trapped_ratio, avg_cost, as_of, prev_profit_ratio, trend, chip_triggered, chip_trigger_reason}`。\n\n## 触发规则（任一命中才推送）\n1. 价格突破/跌破文章关键位（建仓、支撑、压力、减仓、止损、突破）。\n2. 单日涨跌幅绝对值 > 3%。\n3. 成交量 > 近 5 日均量 × 1.5（拿不到 5 日均量则跳过该条）。\n4. 今日新交易所/公司公告/监管披露（普通新闻不单独触发）。\n5. 融资净买入/净偿还绝对值 > 500 万元。\n6. 相关板块当日涨跌幅绝对值 > 4%（拿不到板块则跳过）。\n7. 筹码触发（下午盘后重点）：获利盘连续上涨且超过 90%；或获利盘连续下跌且低于 1%。命中则视为正式触发 → 推送 + 同步博客。\n\n## 未触发（即 1-7 条监控规则均未命中）\n- **上午/午间（15:00 前）**：不发送 Telegram 消息；但**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- **下午盘后（15:00 后）**：必须向 Telegram 发送“盘后筹码分布简报”（不静默），并且**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- 未触发时的 commit message 格式：`[shda-tracker] YYYY-MM-DD HH:MM 定时同步 + 全文修订`。\n- 覆盖写 state JSON：价格、涨跌幅、量能、资金、公告摘要、关键位距离、筹码分布、triggered=false、data_quality。\n\n## 博客同步规则（R1-R5，每次运行均执行）\n1. 只改现有文章 `src/content/blog/002810-shda.md`，URL 永远用 https://stock.peekabo.cc/002810-shda/，不新建文件。\n2. **【仅保留最近一天/一条详细记录】** 每次运行都完全清空旧的跟踪记录，在 `## 跟踪记录` 下方仅写入/更新一条本次运行的 H3 详细记录（正文中永远只有一条最新跟踪段）。结构必须精简、专业，严格按以下格式输出（不要有冗余字段）：\n   **触发原因：** ...\n   \n   **📊 盘面数据快照：**\n   - **收盘价 / 盘中最新价**：**X.XX 元**（±X.XX%，iWencai 口径）\n   - **资金与动能**：量比 **X.XXx**，换手率 **X.XX%**，主力大单净流入 **X.XX**（散户净流向）\n   - **收盘/盘中获利盘**：**X.XX%**（描述筹码趋势及形态）\n   \n   **🛡 当前对峙边界：**\n   - 🔼 **直属攻击线**（上方阻力）：**X.XX 元**（距 X.XX%）\n   - 🔽 **直属防守线**（下方支撑）：**X.XX 元**（距 X.XX%）\n   - 🚨 **风控/止损底线**：**X.XX 元**（距 X.XX%，说明风控状态）\n   \n   **🎯 条件执行计划 (If-Then Plan)：**\n   - **IF 向上**：若日内放量（量比 > 1.5x）站稳 攻击线 元 → 动作建议\n   - **IF 向下**：若收盘实质性跌破 防守线 元 → 动作建议\n3. bump frontmatter `updatedDate: YYYY-MM-DDTHH:MM:00+08:00`。\n4. 重写 frontmatter `description` 为 80-120 字最新结论，必须以“最新结论：”开头。\n4b. **必须同步完整 frontmatter `decision` 块**（首页/列表/文章首屏单一数据源）。字段：ticker, name, status, currentPrice, previousClose, changePct, currency=元, asOf；resistance/support 各含 label/value/state；invalidation 含 label/value/action；action 一句话；changeSummary 最多 4 条。changePct 与 (currentPrice/previousClose-1)*100 误差 ≤0.08；现价低于 support 时 state 不得写已收复/已站稳。提交前先 `npm run validate:decisions`，失败禁止 push。\n5. R5 全文小修：`结论先行` 每次必改；`近1个月行情` 有数据变化就改；`关键价位` 档位不动，只更新状态说明；其它 H2 只在事件影响时改。\n6. 由于正文仅保留一条最新记录，删除更老记录时，在 commit message 中加 `archive <被删除的日期>`。\n7. 对中文长文，优先用 patch/write_file；不要在 terminal heredoc 里塞大段中文。\n8. 若触发原因是筹码触发，跟踪段必须写清：获利盘当前值、上一期值、连续方向、套牢盘、平均成本，以及“高获利兑现压力/极端套牢”判断。\n9. 运行 `python3 ${STOCK_SITE_DIR}/scripts/generate_chip_chart.py shda \"山东赫达\"` 生成筹码与股价走势图，随后运行 `npm run validate:decisions && npm run build`，成功后 `git add src/content/blog/002810-shda.md public/assets/chips/shda.svg && git commit -m \"[shda-tracker] YYYY-MM-DD HH:MM <触发原因> + 全文修订\" && git push origin main`（如果是未触发的定时同步，`<触发原因>` 填 `定时同步` 或 `盘后同步`）。\n\n## 推送格式（只在触发后，或下午盘后简报）\n📊 山东赫达 002810.SZ 跟踪 (操盘日志)\n\n⏰ YYYY-MM-DD HH:MM BJT\n💰 最新价：X.XX 元（±X.XX%）\n📈 动能资金：量比 X.XXx · 换手率 X.XX% · 主力大单 X.XX\n🧩 获利盘：X.XX%\n\n🚨 触发：<具体原因>\n\n🛡 对峙边界：\n- 🔼 阻力位：X.XX 元（距 X.XX%）\n- 🔽 支撑位：X.XX 元（距 X.XX%）\n- 🚨 止损位：X.XX 元（距 X.XX%）\n\n🎯 执行计划：\n- IF 向上：...\n- IF 向下：...\n\n🔗 https://stock.peekabo.cc/002810-shda/\n## 注意\n- 若模型/工具失败但已有部分数据，优先写 state；下午盘后不要静默，必须至少推送可得的筹码/价格简报并明确缺失字段，不要编造数据。\n- 推送要短，有信号感；不要堆长文。\n- 不要写入长期 memory；日内进展只写 state/fact JSONL/博客。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "38 12,16 * * 1-5",
+        "display": "38 12,16 * * 1-5"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}"
+    },
+    {
+      "id": "accb0baa12cd",
+      "name": "晶澳科技 002459 盘中跟踪",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\n你是 A 股单股跟踪 watchdog。跟踪 晶澳科技 (002459.SZ)。**每次运行均必须同步自动修改到博客，保持博客内的行情与结论为最新，并执行 R1-R5 全文修订。** 对于 Telegram 推送：上午/午间仍按监控规则触发推送（未触发则仅更新博客和 state，不推 TG）；下午盘后运行（15:00 后）必须取消静默，无论是否触发监控规则，均要推送一条盘后筹码分布简报。\n\n## 固定文件\n- workdir: ${STOCK_SITE_DIR}\n- 文章: src/content/blog/002459-jakt.md\n- 详情链接: https://stock.peekabo.cc/002459-jakt/\n- state: ${HOME}/.hermes/state/jakt_tracker.json\n- fact JSONL: ${HOME}/.hermes/state/jakt_tracker_facts.jsonl\n\n## 数据源（直接用 CLI，不依赖 skill 注入）\n优先 iWencai，mx 补盲：\n1. 行情 + 筹码分布: `python3 ${HOME}/skills/hithink-astock-selector/scripts/cli.py --query \"晶澳科技 002459.SZ 今日最新价 涨跌幅 成交量 成交额 换手率 振幅 开盘价 最高价 最低价 获利盘 套牢盘 平均成本\" --limit 3`\n2. 资金: `python3 ${HOME}/skills/hithink-market-query/scripts/cli.py --query \"晶澳科技 002459.SZ 今日主力资金 大单 中单 小单 融资余额 融资净买入 融券余额\" --limit 5`\n3. 事件: `python3 ${HOME}/skills/hithink-event-query/scripts/cli.py --query \"晶澳科技 002459.SZ 今日公告 业绩预告 增减持 质押 解禁 调研 监管函\" --limit 5`\n4. 盘口补盲: `python3 ${HOME}/skills/mx-data/mx-data/mx_data.py \"晶澳科技 最新价\"`\n5. 资讯补盲: `python3 ${HOME}/skills/mx-search/mx-search/mx_search.py \"晶澳科技 002459.SZ 今日 公告 新闻\"`\n若某个源失败，不要把任务判失败；用可用数据继续，并在 state 里记录 unavailable。\n\n## 关键位来源\n不要在 prompt 里猜关键位。运行时读取文章 `## 关键价位` 表格/段落和上次 state，抽取当前生效关键位。关键位档位原则上不改；只更新“距当前价 X% / 是否触发”。\n\n\n## 下午盘后筹码分布强制推送规则（用户要求）\n- 判断当前 BJT 时间：若运行时间在 **15:00 以后**（包括 15:xx / 16:xx 的下午任务），**不要静默**。\n- 无论价格/量能/资金/公告等规则是否命中，都必须推送一条“盘后筹码分布简报”。\n- 若命中“筹码触发”（获利盘连续上涨且 >90%，或连续下跌且 <1%），它等同于正式触发：必须推送 + 按 R1-R5 同步博客。\n- 简报必须包含 iWencai 筹码字段：\n  - 获利盘比例：`收盘获利[YYYYMMDD]`\n  - 套牢盘比例：`套牢盘[YYYYMMDD]`\n  - 平均成本：`平均成本[YYYYMMDD]`\n- 重点提示：\n  - 获利盘连续上涨且超过 **90%** → 高获利盘兑现压力，必须重点提示。\n  - 获利盘连续下跌且低于 **1%** → 极端套牢/弱势或杀跌末段，必须重点提示。\n- 若无法拿到上一期获利盘用于“连续”判断，要读取 state 里的 `chip_distribution.prev_profit_ratio`；仍拿不到就写“本轮仅有单点数据，连续性待下次确认”。\n- state 必须保存 `chip_distribution`: `{profit_ratio, trapped_ratio, avg_cost, as_of, prev_profit_ratio, trend, chip_triggered, chip_trigger_reason}`。\n\n## 触发规则（任一命中才推送）\n1. 价格突破/跌破文章关键位（建仓、支撑、压力、减仓、止损、突破）。\n2. 单日涨跌幅绝对值 > 3%。\n3. 成交量 > 近 5 日均量 × 1.5（拿不到 5 日均量则跳过该条）。\n4. 今日新交易所/公司公告/监管披露（普通新闻不单独触发）。\n5. 融资净买入/净偿还绝对值 > 500 万元。\n6. 相关板块当日涨跌幅绝对值 > 4%（拿不到板块则跳过）。\n7. 筹码触发（下午盘后重点）：获利盘连续上涨且超过 90%；或获利盘连续下跌且低于 1%。命中则视为正式触发 → 推送 + 同步博客。\n\n## 未触发（即 1-7 条监控规则均未命中）\n- **上午/午间（15:00 前）**：不发送 Telegram 消息；但**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- **下午盘后（15:00 后）**：必须向 Telegram 发送“盘后筹码分布简报”（不静默），并且**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- 未触发时的 commit message 格式：`[jakt-tracker] YYYY-MM-DD HH:MM 定时同步 + 全文修订`。\n- 覆盖写 state JSON：价格、涨跌幅、量能、资金、公告摘要、关键位距离、筹码分布、triggered=false、data_quality。\n\n## 博客同步规则（R1-R5，每次运行均执行）\n1. 只改现有文章 `src/content/blog/002459-jakt.md`，URL 永远用 https://stock.peekabo.cc/002459-jakt/，不新建文件。\n2. **【仅保留最近一天/一条详细记录】** 每次运行都完全清空旧的跟踪记录，在 `## 跟踪记录` 下方仅写入/更新一条本次运行的 H3 详细记录（正文中永远只有一条最新跟踪段）。结构必须精简、专业，严格按以下格式输出（不要有冗余字段）：\n   **触发原因：** ...\n   \n   **📊 盘面数据快照：**\n   - **收盘价 / 盘中最新价**：**X.XX 元**（±X.XX%，iWencai 口径）\n   - **资金与动能**：量比 **X.XXx**，换手率 **X.XX%**，主力大单净流入 **X.XX**（散户净流向）\n   - **收盘/盘中获利盘**：**X.XX%**（描述筹码趋势及形态）\n   \n   **🛡 当前对峙边界：**\n   - 🔼 **直属攻击线**（上方阻力）：**X.XX 元**（距 X.XX%）\n   - 🔽 **直属防守线**（下方支撑）：**X.XX 元**（距 X.XX%）\n   - 🚨 **风控/止损底线**：**X.XX 元**（距 X.XX%，说明风控状态）\n   \n   **🎯 条件执行计划 (If-Then Plan)：**\n   - **IF 向上**：若日内放量（量比 > 1.5x）站稳 攻击线 元 → 动作建议\n   - **IF 向下**：若收盘实质性跌破 防守线 元 → 动作建议\n3. bump frontmatter `updatedDate: YYYY-MM-DDTHH:MM:00+08:00`。\n4. 重写 frontmatter `description` 为 80-120 字最新结论，必须以“最新结论：”开头。\n4b. **必须同步完整 frontmatter `decision` 块**（首页/列表/文章首屏单一数据源）。字段：ticker, name, status, currentPrice, previousClose, changePct, currency=元, asOf；resistance/support 各含 label/value/state；invalidation 含 label/value/action；action 一句话；changeSummary 最多 4 条。changePct 与 (currentPrice/previousClose-1)*100 误差 ≤0.08；现价低于 support 时 state 不得写已收复/已站稳。提交前先 `npm run validate:decisions`，失败禁止 push。\n5. R5 全文小修：`结论先行` 每次必改；`近1个月行情` 有数据变化就改；`关键价位` 档位不动，只更新状态说明；其它 H2 只在事件影响时改。\n6. 由于正文仅保留一条最新记录，删除更老记录时，在 commit message 中加 `archive <被删除的日期>`。\n7. 对中文长文，优先用 patch/write_file；不要在 terminal heredoc 里塞大段中文。\n8. 若触发原因是筹码触发，跟踪段必须写清：获利盘当前值、上一期值、连续方向、套牢盘、平均成本，以及“高获利兑现压力/极端套牢”判断。\n9. 运行 `python3 ${STOCK_SITE_DIR}/scripts/generate_chip_chart.py jakt \"晶澳科技\"` 生成筹码与股价走势图，随后运行 `npm run validate:decisions && npm run build`，成功后 `git add src/content/blog/002459-jakt.md public/assets/chips/jakt.svg && git commit -m \"[jakt-tracker] YYYY-MM-DD HH:MM <触发原因> + 全文修订\" && git push origin main`（如果是未触发的定时同步，`<触发原因>` 填 `定时同步` 或 `盘后同步`）。\n\n## 推送格式（只在触发后，或下午盘后简报）\n📊 晶澳科技 002459.SZ 跟踪 (操盘日志)\n\n⏰ YYYY-MM-DD HH:MM BJT\n💰 最新价：X.XX 元（±X.XX%）\n📈 动能资金：量比 X.XXx · 换手率 X.XX% · 主力大单 X.XX\n🧩 获利盘：X.XX%\n\n🚨 触发：<具体原因>\n\n🛡 对峙边界：\n- 🔼 阻力位：X.XX 元（距 X.XX%）\n- 🔽 支撑位：X.XX 元（距 X.XX%）\n- 🚨 止损位：X.XX 元（距 X.XX%）\n\n🎯 执行计划：\n- IF 向上：...\n- IF 向下：...\n\n🔗 https://stock.peekabo.cc/002459-jakt/\n## 注意\n- 若模型/工具失败但已有部分数据，优先写 state；下午盘后不要静默，必须至少推送可得的筹码/价格简报并明确缺失字段，不要编造数据。\n- 推送要短，有信号感；不要堆长文。\n- 不要写入长期 memory；日内进展只写 state/fact JSONL/博客。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "8 12,16 * * 1-5",
+        "display": "8 12,16 * * 1-5"
+      },
+      "repeat": null,
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}",
+      "profile": null
+    },
+    {
+      "id": "4039990991cd",
+      "name": "继峰股份 603997 盘中跟踪",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\n你是 A 股单股跟踪 watchdog。跟踪 继峰股份 (603997.SH)。**每次运行均必须同步自动修改到博客，保持博客内的行情与结论为最新，并执行 R1-R5 全文修订。** 对于 Telegram 推送：上午/午间仍按监控规则触发推送（未触发则仅更新博客和 state，不推 TG）；下午盘后运行（15:00 后）必须取消静默，无论是否触发监控规则，均要推送一条盘后筹码分布简报。\n\n## 固定文件\n- workdir: ${STOCK_SITE_DIR}\n- 文章: src/content/blog/603997-jfgf.md\n- 详情链接: https://stock.peekabo.cc/603997-jfgf/\n- state: ${HOME}/.hermes/state/jfgf_tracker.json\n- fact JSONL: ${HOME}/.hermes/state/jfgf_tracker_facts.jsonl\n\n## 数据源（直接用 CLI，不依赖 skill 注入）\n优先 iWencai，mx 补盲：\n1. 行情 + 筹码分布: `python3 ${HOME}/skills/hithink-astock-selector/scripts/cli.py --query \"继峰股份 603997.SH 今日最新价 涨跌幅 成交量 成交额 换手率 振幅 开盘价 最高价 最低价 获利盘 套牢盘 平均成本\" --limit 3`\n2. 资金: `python3 ${HOME}/skills/hithink-market-query/scripts/cli.py --query \"继峰股份 603997.SH 今日主力资金 大单 中单 小单 融资余额 融资净买入 融券余额\" --limit 5`\n3. 事件: `python3 ${HOME}/skills/hithink-event-query/scripts/cli.py --query \"继峰股份 603997.SH 今日公告 业绩预告 增减持 质押 解禁 调研 监管函\" --limit 5`\n4. 盘口补盲: `python3 ${HOME}/skills/mx-data/mx-data/mx_data.py \"继峰股份 最新价\"`\n5. 资讯补盲: `python3 ${HOME}/skills/mx-search/mx-search/mx_search.py \"继峰股份 603997.SH 今日 公告 新闻\"`\n若某个源失败，不要把任务判失败；用可用数据继续，并在 state 里记录 unavailable。\n\n## 关键位来源\n不要在 prompt 里猜关键位。运行时读取文章 `## 关键价位` 表格/段落和上次 state，抽取当前生效关键位。关键位档位原则上不改；只更新“距当前价 X% / 是否触发”。\n\n\n## 下午盘后筹码分布强制推送规则（用户要求）\n- 判断当前 BJT 时间：若运行时间在 **15:00 以后**（包括 15:xx / 16:xx 的下午任务），**不要静默**。\n- 无论价格/量能/资金/公告等规则是否命中，都必须推送一条“盘后筹码分布简报”。\n- 若命中“筹码触发”（获利盘连续上涨且 >90%，或连续下跌且 <1%），它等同于正式触发：必须推送 + 按 R1-R5 同步博客。\n- 简报必须包含 iWencai 筹码字段：\n  - 获利盘比例：`收盘获利[YYYYMMDD]`\n  - 套牢盘比例：`套牢盘[YYYYMMDD]`\n  - 平均成本：`平均成本[YYYYMMDD]`\n- 重点提示：\n  - 获利盘连续上涨且超过 **90%** → 高获利盘兑现压力，必须重点提示。\n  - 获利盘连续下跌且低于 **1%** → 极端套牢/弱势或杀跌末段，必须重点提示。\n- 若无法拿到上一期获利盘用于“连续”判断，要读取 state 里的 `chip_distribution.prev_profit_ratio`；仍拿不到就写“本轮仅有单点数据，连续性待下次确认”。\n- state 必须保存 `chip_distribution`: `{profit_ratio, trapped_ratio, avg_cost, as_of, prev_profit_ratio, trend, chip_triggered, chip_trigger_reason}`。\n\n## 触发规则（任一命中才推送）\n1. 价格突破/跌破文章关键位（建仓、支撑、压力、减仓、止损、突破）。\n2. 单日涨跌幅绝对值 > 3%。\n3. 成交量 > 近 5 日均量 × 1.5（拿不到 5 日均量则跳过该条）。\n4. 今日新交易所/公司公告/监管披露（普通新闻不单独触发）。\n5. 融资净买入/净偿还绝对值 > 500 万元。\n6. 相关板块当日涨跌幅绝对值 > 4%（拿不到板块则跳过）。\n7. 筹码触发（下午盘后重点）：获利盘连续上涨且超过 90%；或获利盘连续下跌且低于 1%。命中则视为正式触发 → 推送 + 同步博客。\n\n## 未触发（即 1-7 条监控规则均未命中）\n- **上午/午间（15:00 前）**：不发送 Telegram 消息；但**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- **下午盘后（15:00 后）**：必须向 Telegram 发送“盘后筹码分布简报”（不静默），并且**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- 未触发时的 commit message 格式：`[jfgf-tracker] YYYY-MM-DD HH:MM 定时同步 + 全文修订`。\n- 覆盖写 state JSON：价格、涨跌幅、量能、资金、公告摘要、关键位距离、筹码分布、triggered=false、data_quality。\n\n## 博客同步规则（R1-R5，每次运行均执行）\n1. 只改现有文章 `src/content/blog/603997-jfgf.md`，URL 永远用 https://stock.peekabo.cc/603997-jfgf/，不新建文件。\n2. **【仅保留最近一天/一条详细记录】** 每次运行都完全清空旧的跟踪记录，在 `## 跟踪记录` 下方仅写入/更新一条本次运行的 H3 详细记录（正文中永远只有一条最新跟踪段）。结构必须精简、专业，严格按以下格式输出（不要有冗余字段）：\n   **触发原因：** ...\n   \n   **📊 盘面数据快照：**\n   - **收盘价 / 盘中最新价**：**X.XX 元**（±X.XX%，iWencai 口径）\n   - **资金与动能**：量比 **X.XXx**，换手率 **X.XX%**，主力大单净流入 **X.XX**（散户净流向）\n   - **收盘/盘中获利盘**：**X.XX%**（描述筹码趋势及形态）\n   \n   **🛡 当前对峙边界：**\n   - 🔼 **直属攻击线**（上方阻力）：**X.XX 元**（距 X.XX%）\n   - 🔽 **直属防守线**（下方支撑）：**X.XX 元**（距 X.XX%）\n   - 🚨 **风控/止损底线**：**X.XX 元**（距 X.XX%，说明风控状态）\n   \n   **🎯 条件执行计划 (If-Then Plan)：**\n   - **IF 向上**：若日内放量（量比 > 1.5x）站稳 攻击线 元 → 动作建议\n   - **IF 向下**：若收盘实质性跌破 防守线 元 → 动作建议\n3. bump frontmatter `updatedDate: YYYY-MM-DDTHH:MM:00+08:00`。\n4. 重写 frontmatter `description` 为 80-120 字最新结论，必须以“最新结论：”开头。\n4b. **必须同步完整 frontmatter `decision` 块**（首页/列表/文章首屏单一数据源）。字段：ticker, name, status, currentPrice, previousClose, changePct, currency=元, asOf；resistance/support 各含 label/value/state；invalidation 含 label/value/action；action 一句话；changeSummary 最多 4 条。changePct 与 (currentPrice/previousClose-1)*100 误差 ≤0.08；现价低于 support 时 state 不得写已收复/已站稳。提交前先 `npm run validate:decisions`，失败禁止 push。\n5. R5 全文小修：`结论先行` 每次必改；`近1个月行情` 有数据变化就改；`关键价位` 档位不动，只更新状态说明；其它 H2 只在事件影响时改。\n6. 由于正文仅保留一条最新记录，删除更老记录时，在 commit message 中加 `archive <被删除的日期>`。\n7. 对中文长文，优先用 patch/write_file；不要在 terminal heredoc 里塞大段中文。\n8. 若触发原因是筹码触发，跟踪段必须写清：获利盘当前值、上一期值、连续方向、套牢盘、平均成本，以及“高获利兑现压力/极端套牢”判断。\n9. 运行 `python3 ${STOCK_SITE_DIR}/scripts/generate_chip_chart.py jfgf \"继峰股份\"` 生成筹码与股价走势图，随后运行 `npm run validate:decisions && npm run build`，成功后 `git add src/content/blog/603997-jfgf.md public/assets/chips/jfgf.svg && git commit -m \"[jfgf-tracker] YYYY-MM-DD HH:MM <触发原因> + 全文修订\" && git push origin main`（如果是未触发的定时同步，`<触发原因>` 填 `定时同步` 或 `盘后同步`）。\n\n## 推送格式（只在触发后，或下午盘后简报）\n📊 继峰股份 603997.SH 跟踪 (操盘日志)\n\n⏰ YYYY-MM-DD HH:MM BJT\n💰 最新价：X.XX 元（±X.XX%）\n📈 动能资金：量比 X.XXx · 换手率 X.XX% · 主力大单 X.XX\n🧩 获利盘：X.XX%\n\n🚨 触发：<具体原因>\n\n🛡 对峙边界：\n- 🔼 阻力位：X.XX 元（距 X.XX%）\n- 🔽 支撑位：X.XX 元（距 X.XX%）\n- 🚨 止损位：X.XX 元（距 X.XX%）\n\n🎯 执行计划：\n- IF 向上：...\n- IF 向下：...\n\n🔗 https://stock.peekabo.cc/603997-jfgf/\n## 注意\n- 若模型/工具失败但已有部分数据，优先写 state；下午盘后不要静默，必须至少推送可得的筹码/价格简报并明确缺失字段，不要编造数据。\n- 推送要短，有信号感；不要堆长文。\n- 不要写入长期 memory；日内进展只写 state/fact JSONL/博客。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "18 11,15 * * 1-5",
+        "display": "18 11,15 * * 1-5"
+      },
+      "repeat": null,
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}",
+      "profile": null
+    },
+    {
+      "id": "3bcb91f7fd1a",
+      "name": "美股研究周度复核",
+      "prompt": "### 角色与目标\n每周复核美股研究文章：NU、SOFI、INTR、UMC、WULF、FFAI。目标是识别显著行情、财报、监管、融资或基本面变化，**强制把结构化 `decision` 保持为当前有效口径**；若只有常规波动而没有触发新边界，则显式保留或精简原结论，不破坏已有的决策结构。\n\n### 规则\n1. 执行 `python3 ${HOME}/.hermes/scripts/is_us_trading_day.py`\n2. 逐一复核 NU, SOFI, INTR, UMC, WULF, FFAI 美股最新行情与资讯。\n3. 如果数据/行情有重大突破或触及关键攻防位，更新对应的 Markdown 文章并重新校验打包部署：\n   ```bash\n   npm run validate:decisions\n   npm test\n   npm run build\n   git add src/content/blog/*.md\n   git commit -m \"[us-stock-weekly] 周度美股复核更新\"\n   git push\n   ```\n4. 输出简要复核报告。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 * * 6",
+        "display": "0 10 * * 6"
+      },
+      "repeat": {
+        "times": null
+      },
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}"
+    },
+    {
+      "id": "210ce6a22481",
+      "name": "通威股份 600438 盘中跟踪",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\n你是 A 股单股跟踪 watchdog。跟踪 通威股份 (600438.SH)。**每次运行均必须同步自动修改到博客，保持博客内的行情与结论为最新，并执行 R1-R5 全文修订。** 对于 Telegram 推送：上午/午间仍按监控规则触发推送（未触发则仅更新博客和 state，不推 TG）；下午盘后运行（15:00 后）必须取消静默，无论是否触发监控规则，均要推送一条盘后筹码分布简报。\n\n## 固定文件\n- workdir: ${STOCK_SITE_DIR}\n- 文章: src/content/blog/600438-twgf.md\n- 详情链接: https://stock.peekabo.cc/600438-twgf/\n- state: ${HOME}/.hermes/state/twgf_tracker.json\n- fact JSONL: ${HOME}/.hermes/state/twgf_tracker_facts.jsonl\n\n## 数据源（直接用 CLI，不依赖 skill 注入）\n优先 iWencai，mx 补盲：\n1. 行情 + 筹码分布: `python3 ${HOME}/skills/hithink-astock-selector/scripts/cli.py --query \"通威股份 600438.SH 今日最新价 涨跌幅 成交量 成交额 换手率 振幅 开盘价 最高价 最低价 获利盘 套牢盘 平均成本\" --limit 3`\n2. 资金: `python3 ${HOME}/skills/hithink-market-query/scripts/cli.py --query \"通威股份 600438.SH 今日主力资金 大单 中单 小单 融资余额 融资净买入 融券余额\" --limit 5`\n3. 事件: `python3 ${HOME}/skills/hithink-event-query/scripts/cli.py --query \"通威股份 600438.SH 今日公告 业绩预告 增减持 质押 解禁 调研 监管函\" --limit 5`\n4. 盘口补盲: `python3 ${HOME}/skills/mx-data/mx-data/mx_data.py \"通威股份 最新价\"`\n5. 资讯补盲: `python3 ${HOME}/skills/mx-search/mx-search/mx_search.py \"通威股份 600438.SH 今日 公告 新闻\"`\n若某个源失败，不要把任务判失败；用可用数据继续，并在 state 里记录 unavailable。\n\n## 关键位来源\n不要在 prompt 里猜关键位。运行时读取文章 `## 关键价位` 表格/段落和上次 state，抽取当前生效关键位。关键位档位原则上不改；只更新“距当前价 X% / 是否触发”。\n\n\n## 下午盘后筹码分布强制推送规则（用户要求）\n- 判断当前 BJT 时间：若运行时间在 **15:00 以后**（包括 15:xx / 16:xx 的下午任务），**不要静默**。\n- 无论价格/量能/资金/公告等规则是否命中，都必须推送一条“盘后筹码分布简报”。\n- 若命中“筹码触发”（获利盘连续上涨且 >90%，或连续下跌且 <1%），它等同于正式触发：必须推送 + 按 R1-R5 同步博客。\n- 简报必须包含 iWencai 筹码字段：\n  - 获利盘比例：`收盘获利[YYYYMMDD]`\n  - 套牢盘比例：`套牢盘[YYYYMMDD]`\n  - 平均成本：`平均成本[YYYYMMDD]`\n- 重点提示：\n  - 获利盘连续上涨且超过 **90%** → 高获利盘兑现压力，必须重点提示。\n  - 获利盘连续下跌且低于 **1%** → 极端套牢/弱势或杀跌末段，必须重点提示。\n- 若无法拿到上一期获利盘用于“连续”判断，要读取 state 里的 `chip_distribution.prev_profit_ratio`；仍拿不到就写“本轮仅有单点数据，连续性待下次确认”。\n- state 必须保存 `chip_distribution`: `{profit_ratio, trapped_ratio, avg_cost, as_of, prev_profit_ratio, trend, chip_triggered, chip_trigger_reason}`。\n\n## 触发规则（任一命中才推送）\n1. 价格突破/跌破文章关键位（建仓、支撑、压力、减仓、止损、突破）。\n2. 单日涨跌幅绝对值 > 3%。\n3. 成交量 > 近 5 日均量 × 1.5（拿不到 5 日均量则跳过该条）。\n4. 今日新交易所/公司公告/监管披露（普通新闻不单独触发）。\n5. 融资净买入/净偿还绝对值 > 500 万元。\n6. 相关板块当日涨跌幅绝对值 > 4%（拿不到板块则跳过）。\n7. 筹码触发（下午盘后重点）：获利盘连续上涨且超过 90%；或获利盘连续下跌且低于 1%。命中则视为正式触发 → 推送 + 同步博客。\n\n## 未触发（即 1-7 条监控规则均未命中）\n- **上午/午间（15:00 前）**：不发送 Telegram 消息；但**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- **下午盘后（15:00 后）**：必须向 Telegram 发送“盘后筹码分布简报”（不静默），并且**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- 未触发时的 commit message 格式：`[twgf-tracker] YYYY-MM-DD HH:MM 定时同步 + 全文修订`。\n- 覆盖写 state JSON：价格、涨跌幅、量能、资金、公告摘要、关键位距离、筹码分布、triggered=false、data_quality。\n\n## 博客同步规则（R1-R5，每次运行均执行）\n1. 只改现有文章 `src/content/blog/600438-twgf.md`，URL 永远用 https://stock.peekabo.cc/600438-twgf/，不新建文件。\n2. **【仅保留最近一天/一条详细记录】** 每次运行都完全清空旧的跟踪记录，在 `## 跟踪记录` 下方仅写入/更新一条本次运行的 H3 详细记录（正文中永远只有一条最新跟踪段）。结构必须精简、专业，严格按以下格式输出（不要有冗余字段）：\n   **触发原因：** ...\n   \n   **📊 盘面数据快照：**\n   - **收盘价 / 盘中最新价**：**X.XX 元**（±X.XX%，iWencai 口径）\n   - **资金与动能**：量比 **X.XXx**，换手率 **X.XX%**，主力大单净流入 **X.XX**（散户净流向）\n   - **收盘/盘中获利盘**：**X.XX%**（描述筹码趋势及形态）\n   \n   **🛡 当前对峙边界：**\n   - 🔼 **直属攻击线**（上方阻力）：**X.XX 元**（距 X.XX%）\n   - 🔽 **直属防守线**（下方支撑）：**X.XX 元**（距 X.XX%）\n   - 🚨 **风控/止损底线**：**X.XX 元**（距 X.XX%，说明风控状态）\n   \n   **🎯 条件执行计划 (If-Then Plan)：**\n   - **IF 向上**：若日内放量（量比 > 1.5x）站稳 攻击线 元 → 动作建议\n   - **IF 向下**：若收盘实质性跌破 防守线 元 → 动作建议\n3. bump frontmatter `updatedDate: YYYY-MM-DDTHH:MM:00+08:00`。\n4. 重写 frontmatter `description` 为 80-120 字最新结论，必须以“最新结论：”开头。\n4b. **必须同步完整 frontmatter `decision` 块**（首页/列表/文章首屏单一数据源）。字段：ticker, name, status, currentPrice, previousClose, changePct, currency=元, asOf；resistance/support 各含 label/value/state；invalidation 含 label/value/action；action 一句话；changeSummary 最多 4 条。changePct 与 (currentPrice/previousClose-1)*100 误差 ≤0.08；现价低于 support 时 state 不得写已收复/已站稳。提交前先 `npm run validate:decisions`，失败禁止 push。\n5. R5 全文小修：`结论先行` 每次必改；`近1个月行情` 有数据变化就改；`关键价位` 档位不动，只更新状态说明；其它 H2 只在事件影响时改。\n6. 由于正文仅保留一条最新记录，删除更老记录时，在 commit message 中加 `archive <被删除的日期>`。\n7. 对中文长文，优先用 patch/write_file；不要在 terminal heredoc 里塞大段中文。\n8. 若触发原因是筹码触发，跟踪段必须写清：获利盘当前值、上一期值、连续方向、套牢盘、平均成本，以及“高获利兑现压力/极端套牢”判断。\n9. 运行 `python3 ${STOCK_SITE_DIR}/scripts/generate_chip_chart.py twgf \"通威股份\"` 生成筹码与股价走势图，随后运行 `npm run validate:decisions && npm run build`，成功后 `git add src/content/blog/600438-twgf.md public/assets/chips/twgf.svg && git commit -m \"[twgf-tracker] YYYY-MM-DD HH:MM <触发原因> + 全文修订\" && git push origin main`（如果是未触发的定时同步，`<触发原因>` 填 `定时同步` 或 `盘后同步`）。\n\n## 推送格式（只在触发后，或下午盘后简报）\n📊 通威股份 600438.SH 跟踪 (操盘日志)\n\n⏰ YYYY-MM-DD HH:MM BJT\n💰 最新价：X.XX 元（±X.XX%）\n📈 动能资金：量比 X.XXx · 换手率 X.XX% · 主力大单 X.XX\n🧩 获利盘：X.XX%\n\n🚨 触发：<具体原因>\n\n🛡 对峙边界：\n- 🔼 阻力位：X.XX 元（距 X.XX%）\n- 🔽 支撑位：X.XX 元（距 X.XX%）\n- 🚨 止损位：X.XX 元（距 X.XX%）\n\n🎯 执行计划：\n- IF 向上：...\n- IF 向下：...\n\n🔗 https://stock.peekabo.cc/600438-twgf/\n## 注意\n- 若模型/工具失败但已有部分数据，优先写 state；下午盘后不要静默，必须至少推送可得的筹码/价格简报并明确缺失字段，不要编造数据。\n- 推送要短，有信号感；不要堆长文。\n- 不要写入长期 memory；日内进展只写 state/fact JSONL/博客。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "28 11,15 * * 1-5",
+        "display": "28 11,15 * * 1-5"
+      },
+      "repeat": null,
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}",
+      "profile": null
+    },
+    {
+      "id": "12c8526213db",
+      "name": "隆基绿能 601012 盘中跟踪",
+      "prompt": "### 交易日检查\n先执行：python3 ${HOME}/.hermes/scripts/is_trading_day.py\n如果 exit code != 0 → 今天非交易日（周末/法定假），本轮直接退出，不做任何数据查询，也不推送。\n如果 exit code == 0 → 继续执行以下任务。\n\n你是 A 股单股跟踪 watchdog。跟踪 隆基绿能 (601012.SH)。**每次运行均必须同步自动修改到博客，保持博客内的行情与结论为最新，并执行 R1-R5 全文修订。** 对于 Telegram 推送：上午/午间仍按监控规则触发推送（未触发则仅更新博客和 state，不推 TG）；下午盘后运行（15:00 后）必须取消静默，无论是否触发监控规则，均要推送一条盘后筹码分布简报。\n\n## 固定文件\n- workdir: ${STOCK_SITE_DIR}\n- 文章: src/content/blog/601012-ljln.md\n- 详情链接: https://stock.peekabo.cc/601012-ljln/\n- state: ${HOME}/.hermes/state/ljln_tracker.json\n- fact JSONL: ${HOME}/.hermes/state/ljln_tracker_facts.jsonl\n\n## 数据源（直接用 CLI，不依赖 skill 注入）\n优先 iWencai，mx 补盲：\n1. 行情 + 筹码分布: `python3 ${HOME}/skills/hithink-astock-selector/scripts/cli.py --query \"隆基绿能 601012.SH 今日最新价 涨跌幅 成交量 成交额 换手率 振幅 开盘价 最高价 最低价 获利盘 套牢盘 平均成本\" --limit 3`\n2. 资金: `python3 ${HOME}/skills/hithink-market-query/scripts/cli.py --query \"隆基绿能 601012.SH 今日主力资金 大单 中单 小单 融资余额 融资净买入 融券余额\" --limit 5`\n3. 事件: `python3 ${HOME}/skills/hithink-event-query/scripts/cli.py --query \"隆基绿能 601012.SH 今日公告 业绩预告 增减持 质押 解禁 调研 监管函\" --limit 5`\n4. 盘口补盲: `python3 ${HOME}/skills/mx-data/mx-data/mx_data.py \"隆基绿能 最新价\"`\n5. 资讯补盲: `python3 ${HOME}/skills/mx-search/mx-search/mx_search.py \"隆基绿能 601012.SH 今日 公告 新闻\"`\n若某个源失败，不要把任务判失败；用可用数据继续，并在 state 里记录 unavailable。\n\n## 关键位来源\n不要在 prompt 里猜关键位。运行时读取文章 `## 关键价位` 表格/段落和上次 state，抽取当前生效关键位。关键位档位原则上不改；只更新“距当前价 X% / 是否触发”。\n\n\n## 下午盘后筹码分布强制推送规则（用户要求）\n- 判断当前 BJT 时间：若运行时间在 **15:00 以后**（包括 15:xx / 16:xx 的下午任务），**不要静默**。\n- 无论价格/量能/资金/公告等规则是否命中，都必须推送一条“盘后筹码分布简报”。\n- 若命中“筹码触发”（获利盘连续上涨且 >90%，或连续下跌且 <1%），它等同于正式触发：必须推送 + 按 R1-R5 同步博客。\n- 简报必须包含 iWencai 筹码字段：\n  - 获利盘比例：`收盘获利[YYYYMMDD]`\n  - 套牢盘比例：`套牢盘[YYYYMMDD]`\n  - 平均成本：`平均成本[YYYYMMDD]`\n- 重点提示：\n  - 获利盘连续上涨且超过 **90%** → 高获利盘兑现压力，必须重点提示。\n  - 获利盘连续下跌且低于 **1%** → 极端套牢/弱势或杀跌末段，必须重点提示。\n- 若无法拿到上一期获利盘用于“连续”判断，要读取 state 里的 `chip_distribution.prev_profit_ratio`；仍拿不到就写“本轮仅有单点数据，连续性待下次确认”。\n- state 必须保存 `chip_distribution`: `{profit_ratio, trapped_ratio, avg_cost, as_of, prev_profit_ratio, trend, chip_triggered, chip_trigger_reason}`。\n\n## 触发规则（任一命中才推送）\n1. 价格突破/跌破文章关键位（建仓、支撑、压力、减仓、止损、突破）。\n2. 单日涨跌幅绝对值 > 3%。\n3. 成交量 > 近 5 日均量 × 1.5（拿不到 5 日均量则跳过该条）。\n4. 今日新交易所/公司公告/监管披露（普通新闻不单独触发）。\n5. 融资净买入/净偿还绝对值 > 500 万元。\n6. 相关板块当日涨跌幅绝对值 > 4%（拿不到板块则跳过）。\n7. 筹码触发（下午盘后重点）：获利盘连续上涨且超过 90%；或获利盘连续下跌且低于 1%。命中则视为正式触发 → 推送 + 同步博客。\n\n## 未触发（即 1-7 条监控规则均未命中）\n- **上午/午间（15:00 前）**：不发送 Telegram 消息；但**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- **下午盘后（15:00 后）**：必须向 Telegram 发送“盘后筹码分布简报”（不静默），并且**必须同步自动修改博客文章**（新增/更新当前时间戳的 H3 跟踪记录，执行 R1-R5 全文修订，运行 `npm run build`，并执行 git commit & push），同时覆盖写入 state JSON。\n- 未触发时的 commit message 格式：`[ljln-tracker] YYYY-MM-DD HH:MM 定时同步 + 全文修订`。\n- 覆盖写 state JSON：价格、涨跌幅、量能、资金、公告摘要、关键位距离、筹码分布、triggered=false、data_quality。\n\n## 博客同步规则（R1-R5，每次运行均执行）\n1. 只改现有文章 `src/content/blog/601012-ljln.md`，URL 永远用 https://stock.peekabo.cc/601012-ljln/，不新建文件。\n2. **【仅保留最近一天/一条详细记录】** 每次运行都完全清空旧的跟踪记录，在 `## 跟踪记录` 下方仅写入/更新一条本次运行的 H3 详细记录（正文中永远只有一条最新跟踪段）。结构必须精简、专业，严格按以下格式输出（不要有冗余字段）：\n   **触发原因：** ...\n   \n   **📊 盘面数据快照：**\n   - **收盘价 / 盘中最新价**：**X.XX 元**（±X.XX%，iWencai 口径）\n   - **资金与动能**：量比 **X.XXx**，换手率 **X.XX%**，主力大单净流入 **X.XX**（散户净流向）\n   - **收盘/盘中获利盘**：**X.XX%**（描述筹码趋势及形态）\n   \n   **🛡 当前对峙边界：**\n   - 🔼 **直属攻击线**（上方阻力）：**X.XX 元**（距 X.XX%）\n   - 🔽 **直属防守线**（下方支撑）：**X.XX 元**（距 X.XX%）\n   - 🚨 **风控/止损底线**：**X.XX 元**（距 X.XX%，说明风控状态）\n   \n   **🎯 条件执行计划 (If-Then Plan)：**\n   - **IF 向上**：若日内放量（量比 > 1.5x）站稳 攻击线 元 → 动作建议\n   - **IF 向下**：若收盘实质性跌破 防守线 元 → 动作建议\n3. bump frontmatter `updatedDate: YYYY-MM-DDTHH:MM:00+08:00`。\n4. 重写 frontmatter `description` 为 80-120 字最新结论，必须以“最新结论：”开头。\n4b. **必须同步完整 frontmatter `decision` 块**（首页/列表/文章首屏单一数据源）。字段：ticker, name, status, currentPrice, previousClose, changePct, currency=元, asOf；resistance/support 各含 label/value/state；invalidation 含 label/value/action；action 一句话；changeSummary 最多 4 条。changePct 与 (currentPrice/previousClose-1)*100 误差 ≤0.08；现价低于 support 时 state 不得写已收复/已站稳。提交前先 `npm run validate:decisions`，失败禁止 push。\n5. R5 全文小修：`结论先行` 每次必改；`近1个月行情` 有数据变化就改；`关键价位` 档位不动，只更新状态说明；其它 H2 只在事件影响时改。\n6. 由于正文仅保留一条最新记录，删除更老记录时，在 commit message 中加 `archive <被删除的日期>`。\n7. 对中文长文，优先用 patch/write_file；不要在 terminal heredoc 里塞大段中文。\n8. 若触发原因是筹码触发，跟踪段必须写清：获利盘当前值、上一期值、连续方向、套牢盘、平均成本，以及“高获利兑现压力/极端套牢”判断。\n9. 运行 `python3 ${STOCK_SITE_DIR}/scripts/generate_chip_chart.py ljln \"隆基绿能\"` 生成筹码与股价走势图，随后运行 `npm run validate:decisions && npm run build`，成功后 `git add src/content/blog/601012-ljln.md public/assets/chips/ljln.svg && git commit -m \"[ljln-tracker] YYYY-MM-DD HH:MM <触发原因> + 全文修订\" && git push origin main`（如果是未触发的定时同步，`<触发原因>` 填 `定时同步` 或 `盘后同步`）。\n\n## 推送格式（只在触发后，或下午盘后简报）\n📊 隆基绿能 601012.SH 跟踪 (操盘日志)\n\n⏰ YYYY-MM-DD HH:MM BJT\n💰 最新价：X.XX 元（±X.XX%）\n📈 动能资金：量比 X.XXx · 换手率 X.XX% · 主力大单 X.XX\n🧩 获利盘：X.XX%\n\n🚨 触发：<具体原因>\n\n🛡 对峙边界：\n- 🔼 阻力位：X.XX 元（距 X.XX%）\n- 🔽 支撑位：X.XX 元（距 X.XX%）\n- 🚨 止损位：X.XX 元（距 X.XX%）\n\n🎯 执行计划：\n- IF 向上：...\n- IF 向下：...\n\n🔗 https://stock.peekabo.cc/601012-ljln/\n## 注意\n- 若模型/工具失败但已有部分数据，优先写 state；下午盘后不要静默，必须至少推送可得的筹码/价格简报并明确缺失字段，不要编造数据。\n- 推送要短，有信号感；不要堆长文。\n- 不要写入长期 memory；日内进展只写 state/fact JSONL/博客。",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "28 12,16 * * 1-5",
+        "display": "28 12,16 * * 1-5"
+      },
+      "repeat": null,
+      "enabled": true,
+      "deliver": "origin",
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
+      "workdir": "${STOCK_SITE_DIR}",
+      "profile": null
+    }
+  ]
+}

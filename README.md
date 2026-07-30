@@ -22,3 +22,9 @@ Cloudflare Pages 构建配置：
 - Node.js version: `22.12.0` 或更高
 
 正式域名：<https://stock.peekabo.cc>
+
+## 维护与迁移
+
+- Agent 自动维护规则：[`AGENTS.md`](./AGENTS.md)
+- 新服务器迁移、定时任务恢复与安全备份：[`docs/MIGRATION.md`](./docs/MIGRATION.md)
+- 刷新 Hermes 自动化备份：`python3 scripts/export_hermes_stock_ops.py`
