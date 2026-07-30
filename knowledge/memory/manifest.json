@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-30T12:54:17.167925+00:00",
+  "record_count": 1634,
+  "source": "sanitized export from Hermes holographic memory",
+  "redactions": [
+    "URLs",
+    "social handles",
+    "email addresses",
+    "Chinese mobile numbers",
+    "credential-like strings"
+  ],
+  "excluded": {
+    "not_stock_related": 4,
+    "user_preference": 2,
+    "system_or_credential_context": 3
+  },
+  "top_tags": [
+    [
+      "serenity",
+      1594
+    ],
+    [
+      "tweet",
+      1586
+    ],
+    [
+      "cache-persist",
+      1566
+    ],
+    [
+      "ticker-sive",
+      364
+    ],
+    [
+      "ticker-lite",
+      211
+    ],
+    [
+      "ticker-aaoi",
+      202
+    ],
+    [
+      "2026-06-15",
+      194
+    ],
+    [
+      "ticker-nvda",
+      164
+    ],
+    [
+      "ticker-jbl",
+      137
+    ],
+    [
+      "ticker-gfs",
+      133
+    ],
+    [
+      "ticker-nbis",
+      108
+    ],
+    [
+      "2026-06-09",
+      103
+    ],
+    [
+      "ticker-cohr",
+      102
+    ],
+    [
+      "2026-07-03",
+      102
+    ],
+    [
+      "ticker-meta",
+      97
+    ],
+    [
+      "ticker-amd",
+      92
+    ],
+    [
+      "2026-06-16",
+      91
+    ],
+    [
+      "2026-06-26",
+      91
+    ],
+    [
+      "ticker-mu",
+      88
+    ],
+    [
+      "ticker-sndk",
+      87
+    ],
+    [
+      "ticker-poet",
+      85
+    ],
+    [
+      "ticker-mrvl",
+      79
+    ],
+    [
+      "2026-06-23",
+      79
+    ],
+    [
+      "2026-06-19",
+      77
+    ],
+    [
+      "2026-06-25",
+      73
+    ],
+    [
+      "ticker-tsem",
+      69
+    ],
+    [
+      "ticker-axti",
+      65
+    ],
+    [
+      "ticker-amzn",
+      65
+    ],
+    [
+      "ticker-xfab",
+      64
+    ],
+    [
+      "ticker-ccxi",
+      64
+    ],
+    [
+      "ticker-spcx",
+      61
+    ],
+    [
+      "ticker-iqe",
+      59
+    ],
+    [
+      "ticker-soi",
+      57
+    ],
+    [
+      "ticker-googl",
+      57
+    ],
+    [
+      "2026-07-01",
+      51
+    ],
+    [
+      "ticker-ewy",
+      49
+    ],
+    [
+      "2026-07-07",
+      48
+    ],
+    [
+      "ticker-iren",
+      46
+    ],
+    [
+      "ticker-lpk",
+      44
+    ],
+    [
+      "2026-07-06",
+      44
+    ]
+  ],
+  "import_note": "Import records as new facts; source_id is a content/tag deduplication key, not the original database fact_id."
+}

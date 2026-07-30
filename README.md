@@ -28,3 +28,4 @@ Cloudflare Pages 构建配置：
 - Agent 自动维护规则：[`AGENTS.md`](./AGENTS.md)
 - 新服务器迁移、定时任务恢复与安全备份：[`docs/MIGRATION.md`](./docs/MIGRATION.md)
 - 刷新 Hermes 自动化备份：`python3 scripts/export_hermes_stock_ops.py`
+- 刷新脱敏股票长期知识：`python3 scripts/export_stock_knowledge.py`

@@ -7,6 +7,8 @@
 - Astro 网站源码、文章、测试与构建脚本
 - `ops/hermes/stock-cron-jobs.json`：14 个 Hermes 定时任务的脱敏、可移植快照
 - `ops/hermes/scripts/`：任务依赖的 4 个自建辅助脚本
+- `knowledge/memory/stock-knowledge.jsonl`：长期记忆中股票相关事实的脱敏导出
+- `knowledge/memory/manifest.json`：导出数量、脱敏规则和标签概览
 - `templates/`：文章和 cron prompt 模板
 
 不会进入 GitHub：API Key、Telegram/GitHub 凭据、Hermes 运行日志、输出、会话数据库、tracker 实时 state。它们必须在新服务器单独恢复或重新生成。
@@ -87,7 +89,31 @@ chmod 700 ~/.hermes/scripts/*.py
 
 精确 prompt 和 schedule 以导出的 JSON 为准。
 
-## 6. 运行状态（不进 Git）
+## 6. 恢复脱敏股票知识
+
+`knowledge/memory/stock-knowledge.jsonl` 是可移植的历史股票事实，不包含原数据库 fact_id、URL、社交账号、邮箱、手机号或凭据。新 Agent 可以逐行导入 holographic memory：
+
+```bash
+python3 - <<'PY'
+import json, subprocess
+from pathlib import Path
+for line in Path('knowledge/memory/stock-knowledge.jsonl').read_text().splitlines():
+    row = json.loads(line)
+    subprocess.run([
+        'recall', 'add', row['content'], row['category'], ','.join(row['tags'])
+    ], check=True)
+PY
+```
+
+导入前先确认 `hermes memory status` 显示 holographic 可用。重复导入可能产生重复事实；应以 `source_id` 建立自己的导入日志，或只执行一次。原始数据库里的 HRR 向量和实体关系不会直接迁移，导入后由新 memory provider 重新建立。
+
+重新导出最新知识：
+
+```bash
+python3 scripts/export_stock_knowledge.py
+```
+
+## 7. 运行状态（不进 Git）
 
 如需无缝接续，在停旧服务器后、启新服务器前，通过加密通道备份：
 
@@ -99,7 +125,7 @@ chmod 700 ~/.hermes/scripts/*.py
 
 不要上传这些文件到公开或普通 GitHub 仓库，因为可能包含用户 ID、历史内容或认证上下文。
 
-## 7. 切换服务器顺序
+## 8. 切换服务器顺序
 
 1. 暂停旧服务器所有写入型 cron，防止双写。
 2. 确认旧仓库工作区 clean，并把最后提交推到 GitHub。
@@ -111,7 +137,7 @@ chmod 700 ~/.hermes/scripts/*.py
 8. 检查 GitHub 新提交与线上 `https://stock.peekabo.cc`。
 9. 新服务器逐项 resume；确认旧服务器 scheduler/gateway 已停止。
 
-## 8. Agent 工作规则
+## 9. Agent 工作规则
 
 - 修改结构化文章必须遵守 `AGENTS.md` 的 decision contract。
 - 修改前 `git pull --ff-only`，工作区不干净时不得覆盖其他 Agent 的工作。
@@ -120,13 +146,14 @@ chmod 700 ~/.hermes/scripts/*.py
 - 禁止把最新文章编辑时间冒充行情时间。
 - 禁止在输出、commit、remote URL 或文档中写入明文凭据。
 
-## 9. 更新备份
+## 10. 更新备份
 
 定时任务有增删改后运行：
 
 ```bash
 python3 scripts/export_hermes_stock_ops.py
-git add ops/hermes scripts/export_hermes_stock_ops.py docs/MIGRATION.md
+python3 scripts/export_stock_knowledge.py
+git add ops/hermes knowledge/memory scripts/export_hermes_stock_ops.py scripts/export_stock_knowledge.py docs/MIGRATION.md
 git commit -m "chore: refresh Hermes stock automation backup"
 git push origin main
 ```
