@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-30T12:54:17.167925+00:00",
+  "generated_at": "2026-07-30T15:24:01.366424+00:00",
   "record_count": 1634,
   "source": "sanitized export from Hermes holographic memory",
   "redactions": [
@@ -12,7 +12,7 @@
   ],
   "excluded": {
     "not_stock_related": 4,
-    "user_preference": 2,
+    "user_preference": 3,
     "system_or_credential_context": 3
   },
   "top_tags": [
