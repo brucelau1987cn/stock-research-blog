@@ -5,7 +5,8 @@ Exits with code 0 if today is a trading day, 1 if not.
 Silent output - just the exit code matters.
 """
 import sys
-from datetime import date
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 # 2026 US Market Holidays (NYSE / NASDAQ)
 # Note: For holidays falling on Saturday, the market closes on the preceding Friday.
@@ -25,7 +26,10 @@ HOLIDAYS = [
 
 def is_us_trading_day(check_date=None):
     if check_date is None:
-        check_date = date.today()
+        # US-market jobs frequently run after midnight in Asia while it is
+        # still the prior trading date in New York. Anchor the default date to
+        # the exchange timezone instead of the server-local calendar date.
+        check_date = datetime.now(ZoneInfo("America/New_York")).date()
     
     # Weekends -> non-trading day
     if check_date.weekday() >= 5:

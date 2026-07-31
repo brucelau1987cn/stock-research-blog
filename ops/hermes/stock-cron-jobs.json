@@ -4,7 +4,7 @@
     {
       "id": "6247acc17646",
       "name": "FFAI Faraday 美股盘后最终复盘",
-      "prompt": "### 角色与目标\n你是 FFAI (Faraday Future) 美股盘后最终复盘任务。北京时间 06:00 运行，确保美股夏令时和冬令时都已正式收盘。\n\n### 交易日与收盘检查\n1. 执行 `python3 ${HOME}/.hermes/scripts/is_us_trading_day.py`\n   如果 exit code != 0 → 今天非美股交易日（周末/美股假日），输出 `[SKIP] 今天非美股交易日` 结束。\n\n### 数据获取与复盘\n1. 通过问财/妙想接口查询 FFAI.O 当日美股收盘数据：`python3 ${HOME}/skills/hithink-market-query/scripts/cli.py -q \"FFAI.O 现价 涨跌幅 开盘价 最高价 最低价 压力位 支撑位\"`\n2. 读取 `${STOCK_SITE_DIR}/src/content/blog/ffai-faraday.md` 文件。\n3. 检查收盘价、涨跌幅、最高价、最低价是否需要更新 `decision` 字段与正文中的跟踪记录：\n   - 支撑位：$0.109\n   - 压力位：$0.147\n   - 均线阻力：$0.123\n   - 止损线：$0.100\n4. 如果数据变化或到达收盘复核点，更新 `src/content/blog/ffai-faraday.md` 中的 `updatedDate`、`currentPrice`、`changePct`、`dataAsOf` 以及新增/更新 H3 跟踪记录。\n5. 运行校验与部署：\n   ```bash\n   npm run validate:decisions\n   npm test\n   npm run build\n   git add src/content/blog/ffai-faraday.md public/_redirects\n   git commit -m \"[ffai-tracker] $(date +'%Y-%m-%d') 盘后同步复盘\"\n   git push\n   ```\n6. 输出完成摘要。",
+      "prompt": "### 角色与目标\n你是 FFAI (Faraday Future) 美股盘后最终复盘任务。任务以 **America/New_York（美东时间）** 为唯一市场时间基准，目标是在每个正常美股交易日 **17:00 ET（正式收盘后一小时）** 执行一次最终复盘。调度器会在北京时间 05:00 和 06:00 都唤醒任务，以覆盖 EDT/EST；只有纽约时间窗口匹配的一次可以执行。\n\n### 美东时间门控（最高优先级）\n1. 首先执行：\n   `python3 ${HOME}/.hermes/scripts/is_us_postclose_window.py --hour 17 --minute-start 0 --minute-end 20`\n2. 如果 exit code != 0：本轮是冬夏令时的冗余唤醒，最终响应必须严格且只能是 `[SILENT]`，不得查询行情、不得读取或修改博客、不得执行 Git。\n3. 如果 exit code == 0：脚本 stdout 是当前 `America/New_York` 时间；继续执行。\n4. 再执行 `python3 ${HOME}/.hermes/scripts/is_us_trading_day.py`。该脚本按纽约日期判断。若 exit code != 0，最终响应必须严格且只能是 `[SILENT]`。\n5. 从门控脚本输出提取纽约交易日期 `YYYY-MM-DD`。所有行情、文章 `sessionDate` 和 `dataAsOf` 必须对应这个纽约交易日期；不允许使用北京时间自然日代替美股交易日。\n\n### 写入前事务检查\n1. 在 `${STOCK_SITE_DIR}` 执行 `git status --porcelain`；若非空，禁止 stash/reset/checkout/覆盖他人改动，输出简短阻塞告警并停止。\n2. 工作区干净时执行 `git fetch origin && git pull --ff-only origin main`。\n3. 只允许修改 `src/content/blog/ffai-faraday.md` 及其明确关联、确有变化的静态资源；不得无条件修改 `public/_redirects`。\n\n### 数据获取与最终收盘确认\n1. 使用 iWencai 精确查询 FFAI.O 当前纽约交易日最终收盘数据：收盘价、前收盘价、涨跌幅、开盘价、最高价、最低价、成交量和数据日期。\n2. 使用第二个独立来源复核至少交易日期、收盘价、前收盘价、OHLC 和成交量。若第二源不可用，明确告警并停止发布，不得把单源盘中数据写成最终收盘。\n3. 必须确认数据对应门控脚本给出的纽约交易日期，且最终收盘时间为 `16:00 America/New_York`。无法确认时停止，不修改文章。\n4. 读取 `src/content/blog/ffai-faraday.md` 的当前 `decision` 和 `## 关键价位`，以文章当前生效价位为准，不得从 prompt 猜旧档位。\n\n### 博客同步\n1. 同步 frontmatter：`updatedDate`、`decision.currentPrice`、`previousClose`、`changePct`、`market: US`、`sessionDate`、`dataAsOf`、`asOf`、压力/支撑/失效状态、`action`、`changeSummary`。\n2. `dataAsOf` 必须写纽约交易日 `16:00` 的 ISO 时间，并正确使用 EDT `-04:00` 或 EST `-05:00`。\n3. 正文中只允许一条记录声称是该交易日最终收盘；更早的盘中记录必须明确标为历史/临时或被最终记录覆盖。\n4. 所有关键位距离和涨跌幅必须独立重算，不能复制旧数字。\n\n### 校验、提交与部署\n1. 依次运行：\n   - `npm run validate:decisions`\n   - `npm test`\n   - `npm run build`\n   - `git diff --check`\n2. 任一步失败都禁止提交和推送，输出真实错误摘要。\n3. 只暂存实际修改的 FFAI 目标文件，禁止 `git add .`。\n4. commit message 使用纽约交易日期：`[ffai-tracker] YYYY-MM-DD ET final close`。\n5. `git push origin main`，随后验证远端 SHA 与本地 HEAD 一致；再请求生产 FFAI 页面，确认 HTTP 200 且页面出现新的纽约交易日期和最终收盘数据。\n6. 没有任何内容变化时不要创建空提交；输出 `[SILENT]`。\n\n### 输出\n- 成功时简短汇报纽约交易日期、最终收盘、涨跌幅、关键位状态、校验结果、commit SHA 和生产验证。\n- 冗余时点、非交易日或无变化时严格只输出 `[SILENT]`。\n- 禁止输出凭据、Token 或带认证信息的远端 URL；敏感值统一写 `[REDACTED]`。",
       "skills": [],
       "skill": null,
       "model": null,
@@ -15,8 +15,8 @@
       "context_from": null,
       "schedule": {
         "kind": "cron",
-        "expr": "0 6 * * 2-6",
-        "display": "0 6 * * 2-6"
+        "expr": "0 5,6 * * 2-6",
+        "display": "0 5,6 * * 2-6"
       },
       "repeat": {
         "times": null

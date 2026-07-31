@@ -18,6 +18,7 @@ HELPERS = (
     "iwencai_runner.py",
     "is_trading_day.py",
     "is_us_trading_day.py",
+    "is_us_postclose_window.py",
     "serenity_persist.py",
     "write_tracker_state.py",
 )
