@@ -19,6 +19,7 @@ HELPERS = (
     "is_trading_day.py",
     "is_us_trading_day.py",
     "serenity_persist.py",
+    "write_tracker_state.py",
 )
 SECRET_PATTERNS = (
     re.compile(r"gh[pousr]_[A-Za-z0-9_]{20,}"),

@@ -6,7 +6,7 @@
 
 - Astro 网站源码、文章、测试与构建脚本
 - `ops/hermes/stock-cron-jobs.json`：14 个 Hermes 定时任务的脱敏、可移植快照
-- `ops/hermes/scripts/`：任务依赖的 4 个自建辅助脚本
+- `ops/hermes/scripts/`：任务依赖的 5 个自建辅助脚本（含 tracker state 原子 JSON 写入器）
 - `knowledge/memory/stock-knowledge.jsonl`：长期记忆中股票相关事实的脱敏导出
 - `knowledge/memory/manifest.json`：导出数量、脱敏规则和标签概览
 - `templates/`：文章和 cron prompt 模板
