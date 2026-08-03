@@ -1,6 +1,6 @@
 {
-  "as_of": "2026-07-31 17:31:00 HKT",
-  "trading_day": "2026-07-31",
+  "as_of": "2026-08-02 11:42:29 BJT",
+  "trading_day": "2026-08-02",
   "stocks": [
     {
       "name": "绿的谐波",
@@ -11,7 +11,8 @@
       "sector_label": "🤖 人形机器人",
       "amplitude": 9.563217999999999,
       "turnover": 8.222,
-      "amount_yi": 45.24
+      "amount_yi": 45.24,
+      "latest_view": "人形机器人主机厂IPO/贸易壁垒催化外溢；零部件回调观察"
     },
     {
       "name": "雅克科技",
@@ -33,7 +34,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 3.302286,
       "turnover": 3.749,
-      "amount_yi": 23.09
+      "amount_yi": 23.09,
+      "latest_view": "化合物半导体材料映射InP供给链；等待订单验证"
     },
     {
       "name": "云南锗业",
@@ -44,7 +46,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 2.783172,
       "turnover": 8.734,
-      "amount_yi": 38.55
+      "amount_yi": 38.55,
+      "latest_view": "InP/化合物材料链随$AXTI +64%盘面验证；不单独据此交易"
     },
     {
       "name": "立昂微",
@@ -154,7 +157,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 9.940971999999999,
       "turnover": 5.13,
-      "amount_yi": 540.44
+      "amount_yi": 540.44,
+      "latest_view": "Citadel清仓后AI/CPO多链反指修复；关注1.6T/800G真实订单，回调分批低吸"
     },
     {
       "name": "中船特气",
