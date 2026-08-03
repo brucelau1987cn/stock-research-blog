@@ -105,6 +105,10 @@ def main():
                         })
                         
     # Filter to keep only the latest record per day
+    # Normalize dt to naive (strip tz) to avoid aware/naive comparison errors
+    for h in history:
+        if h['dt'].tzinfo is not None:
+            h['dt'] = h['dt'].replace(tzinfo=None)
     daily_records = {}
     for h in history:
         date_key = h['date_key']
