@@ -1,268 +1,268 @@
 {
-  "as_of": "2026-08-05 17:30:29 HKT",
-  "trading_day": "2026-08-05",
+  "as_of": "2026-08-06 17:30:47 HKT",
+  "trading_day": "2026-08-06",
   "stocks": [
     {
       "name": "绿的谐波",
       "code": "688017",
-      "price": "340.54",
-      "pct": "4.4601",
+      "price": "336.04",
+      "pct": "-1.3214",
       "sector": "robot",
       "sector_label": "🤖 人形机器人",
-      "amplitude": 6.730061,
-      "turnover": 7.631,
-      "amount_yi": 47.01
+      "amplitude": 3.955482,
+      "turnover": 6.018,
+      "amount_yi": 37.16
     },
     {
       "name": "雅克科技",
       "code": "002409",
-      "price": "140.62",
-      "pct": "8.6036",
+      "price": "145.01",
+      "pct": "3.1219",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 11.144578,
-      "turnover": 13.437,
-      "amount_yi": 58.91
+      "amplitude": 9.351444,
+      "turnover": 12.144,
+      "amount_yi": 55.24
     },
     {
       "name": "三安光电",
       "code": "600703",
-      "price": "13.35",
-      "pct": "5.1181",
+      "price": "13.71",
+      "pct": "2.6966",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 7.165354,
-      "turnover": 4.849,
-      "amount_yi": 31.91
+      "amplitude": 6.5168539999999995,
+      "turnover": 5.065,
+      "amount_yi": 34.57
     },
     {
       "name": "云南锗业",
       "code": "002428",
-      "price": "82.71",
-      "pct": "10.0013",
+      "price": "90.98",
+      "pct": "9.9988",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 1.063971,
-      "turnover": 4.766,
-      "amount_yi": 25.73
+      "amplitude": 3.60295,
+      "turnover": 11.968,
+      "amount_yi": 70.63
     },
     {
       "name": "立昂微",
       "code": "605358",
-      "price": "41.64",
-      "pct": "8.7206",
+      "price": "43.48",
+      "pct": "4.4188",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 10.313316,
-      "turnover": 7.213,
-      "amount_yi": 22.68
+      "amplitude": 7.372719,
+      "turnover": 6.874,
+      "amount_yi": 22.63
     },
     {
       "name": "北方华创",
       "code": "002371",
-      "price": "734.2",
-      "pct": "6.8705",
+      "price": "742.5",
+      "pct": "1.1305",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 9.621543,
-      "turnover": 1.899,
-      "amount_yi": 99.46
+      "amplitude": 7.5837650000000005,
+      "turnover": 1.484,
+      "amount_yi": 79.71
     },
     {
       "name": "沪硅产业",
       "code": "688126",
-      "price": "25.5",
-      "pct": "7.0529",
+      "price": "25.88",
+      "pct": "1.4902",
       "sector": "mat",
       "sector_label": "🧪 半导体材料",
-      "amplitude": 9.193954999999999,
-      "turnover": 4.476999999999999,
-      "amount_yi": 31.65
+      "amplitude": 6.392157,
+      "turnover": 4.629,
+      "amount_yi": 33.57
     },
     {
       "name": "天孚通信",
       "code": "300394",
-      "price": "216.85",
-      "pct": "2.2877",
+      "price": "225.28",
+      "pct": "3.8875",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 11.886792,
-      "turnover": 7.897,
-      "amount_yi": 177.69
+      "amplitude": 11.989855,
+      "turnover": 6.225,
+      "amount_yi": 147.11
     },
     {
       "name": "拓荆科技",
       "code": "688072",
-      "price": "677.88",
-      "pct": "12.1390",
+      "price": "682.03",
+      "pct": "0.6122",
       "sector": "equip",
       "sector_label": "⚙️ 半导体设备",
-      "amplitude": 15.217534999999998,
-      "turnover": 3.966,
-      "amount_yi": 72.64
+      "amplitude": 9.29368,
+      "turnover": 2.91,
+      "amount_yi": 56.0
     },
     {
       "name": "长电科技",
       "code": "600584",
-      "price": "68.97",
-      "pct": "5.4426",
+      "price": "75.87",
+      "pct": "10.0043",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 7.4759210000000005,
-      "turnover": 9.841999999999999,
-      "amount_yi": 120.08
+      "amplitude": 12.846165000000001,
+      "turnover": 13.184000000000001,
+      "amount_yi": 172.6
     },
     {
       "name": "通富微电",
       "code": "002156",
-      "price": "58.0",
-      "pct": "4.3165",
+      "price": "60.96",
+      "pct": "5.1034",
       "sector": "packaging",
       "sector_label": "🔧 ASIC 封测",
-      "amplitude": 9.784173000000001,
-      "turnover": 10.923,
-      "amount_yi": 94.92
+      "amplitude": 11.724138,
+      "turnover": 10.483,
+      "amount_yi": 95.29
     },
     {
       "name": "昊华科技",
       "code": "600378",
-      "price": "44.07",
-      "pct": "6.2696",
+      "price": "48.26",
+      "pct": "9.5076",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 7.861103999999999,
-      "turnover": 6.439,
-      "amount_yi": 29.94
+      "amplitude": 11.640572,
+      "turnover": 8.237,
+      "amount_yi": 40.86
     },
     {
       "name": "沃格光电",
       "code": "603773",
-      "price": "78.57",
-      "pct": "9.9958",
+      "price": "86.43",
+      "pct": "10.0038",
       "sector": "tgv",
       "sector_label": "🧊 TGV / 玻璃基板",
-      "amplitude": 7.055859000000001,
-      "turnover": 4.557,
-      "amount_yi": 7.89
+      "amplitude": 6.936489999999999,
+      "turnover": 5.971,
+      "amount_yi": 11.36
     },
     {
       "name": "中际旭创",
       "code": "300308",
-      "price": "947.74",
-      "pct": "-7.2652",
+      "price": "955.0",
+      "pct": "0.7660",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 10.095011,
-      "turnover": 6.516,
-      "amount_yi": 675.11
+      "amplitude": 11.865067999999999,
+      "turnover": 3.811,
+      "amount_yi": 397.67
     },
     {
       "name": "中船特气",
       "code": "688146",
-      "price": "286.32",
-      "pct": "13.1252",
+      "price": "308.0",
+      "pct": "7.5719",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 12.113789,
-      "turnover": 17.215,
-      "amount_yi": 68.74
+      "amplitude": 18.598072,
+      "turnover": 21.235,
+      "amount_yi": 92.58
     },
     {
       "name": "新易盛",
       "code": "300502",
-      "price": "424.3",
-      "pct": "-5.2902",
+      "price": "421.87",
+      "pct": "-0.5727",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 8.5625,
-      "turnover": 6.944999999999999,
-      "amount_yi": 364.01
+      "amplitude": 10.075417999999999,
+      "turnover": 4.102,
+      "amount_yi": 215.53
     },
     {
       "name": "金宏气体",
       "code": "688106",
-      "price": "28.45",
-      "pct": "7.0354",
+      "price": "29.95",
+      "pct": "5.2724",
       "sector": "gas_epi",
       "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 9.255078999999999,
-      "turnover": 5.4239999999999995,
-      "amount_yi": 8.13
+      "amplitude": 10.369069,
+      "turnover": 7.585999999999999,
+      "amount_yi": 12.0
     },
     {
       "name": "光库科技",
       "code": "300620",
-      "price": "260.98",
-      "pct": "2.6147",
+      "price": "275.67",
+      "pct": "5.6288",
       "sector": "cpo",
       "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 11.182322,
-      "turnover": 9.185,
-      "amount_yi": 57.06
+      "amplitude": 14.978159,
+      "turnover": 8.366,
+      "amount_yi": 55.94
     }
   ],
   "etf_top": [
     {
-      "code": "560780.SH",
-      "name": "广发中证半导体材料设备etf",
-      "price": "1.034",
-      "pct": 9.883103
+      "code": "515220.SH",
+      "name": "国泰中证煤炭etf",
+      "price": "1.243",
+      "pct": 5.877342
     },
     {
-      "code": "562590.SH",
-      "name": "华夏中证半导体材料设备主题etf",
-      "price": "0.992",
-      "pct": 9.734513
+      "code": "588160.SH",
+      "name": "南方上证科创板新材料etf",
+      "price": "1.098",
+      "pct": 3.2925679999999997
     },
     {
-      "code": "589020.SH",
-      "name": "鹏华科创板半导体材料设备主题etf",
-      "price": "2.312",
-      "pct": 9.729472999999999
+      "code": "588010.SH",
+      "name": "博时上证科创板新材料etf",
+      "price": "1.07",
+      "pct": 2.983638
     },
     {
       "code": "588170.SH",
       "name": "华夏上证科创板半导体材料设备主题etf",
-      "price": "0.949",
-      "pct": 9.710982999999999
+      "price": "0.977",
+      "pct": 2.9504740000000003
     },
     {
-      "code": "159558.SZ",
-      "name": "易方达中证半导体材料设备主题etf",
-      "price": "1.1",
-      "pct": 9.670987
+      "code": "530880.SH",
+      "name": "银河上证国有企业红利etf",
+      "price": "1.095",
+      "pct": 2.913534
     }
   ],
   "etf_bottom": [
     {
-      "code": "159831.SZ",
-      "name": "嘉实上海金etf",
-      "price": "8.718",
-      "pct": -3.133333
+      "code": "520780.SH",
+      "name": "华宝中证港股通汽车产业主题etf",
+      "price": "0.846",
+      "pct": -3.203661
     },
     {
-      "code": "159981.SZ",
-      "name": "建信能源化工期货etf",
-      "price": "1.46",
-      "pct": -2.406417
+      "code": "520600.SH",
+      "name": "广发中证港股通汽车etf",
+      "price": "1.045",
+      "pct": -3.151066
     },
     {
-      "code": "159518.SZ",
-      "name": "嘉实标普石油天然气勘探及生产精选行业etf(qdii)",
-      "price": "1.151",
-      "pct": -2.374894
+      "code": "520680.SH",
+      "name": "南方中证港股通汽车产业主题etf",
+      "price": "0.841",
+      "pct": -3.110599
     },
     {
-      "code": "513350.SH",
-      "name": "富国标普石油天然气勘探及生产精选行业etf(qdii)",
-      "price": "1.216",
-      "pct": -1.77706
+      "code": "159185.SZ",
+      "name": "鹏华中证港股通信息技术综合etf",
+      "price": "1.071",
+      "pct": -3.0769230000000003
     },
     {
-      "code": "560520.SH",
-      "name": "大成中证红利低波动100etf",
-      "price": "1.106",
-      "pct": -1.426025
+      "code": "159323.SZ",
+      "name": "华夏中证港股通汽车产业主题etf",
+      "price": "1.075",
+      "pct": -3.0658250000000002
     }
   ],
   "macro": {
