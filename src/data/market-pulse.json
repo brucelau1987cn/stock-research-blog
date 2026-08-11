@@ -88,7 +88,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 7.941737,
       "turnover": 4.288,
-      "amount_yi": 104.37
+      "amount_yi": 104.37,
+      "serenity_view": "🟡 8/10 短期事件：OCP APAC 集中发声 CPO + laser party 共识；回调分批低吸（pluggable 龙头）"
     },
     {
       "name": "拓荆科技",
@@ -154,7 +155,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 9.218694,
       "turnover": 4.7379999999999995,
-      "amount_yi": 457.64
+      "amount_yi": 457.64,
+      "serenity_view": "🟡 8/10 OCP APAC 双 hyperscaler ($AMD/$NVDA) 集体发声 CPO；回调分批低吸（1.6T/800G 量产 + Trump 限中政策双击）"
     },
     {
       "name": "中船特气",
@@ -168,28 +170,6 @@
       "amount_yi": 75.94
     },
     {
-      "name": "新易盛",
-      "code": "300502",
-      "price": "399.6",
-      "pct": "-5.0719",
-      "sector": "cpo",
-      "sector_label": "🔦 CPO / 光模块",
-      "amplitude": 8.542582,
-      "turnover": 5.328,
-      "amount_yi": 266.91
-    },
-    {
-      "name": "金宏气体",
-      "code": "688106",
-      "price": "30.19",
-      "pct": "-0.6581",
-      "sector": "gas_epi",
-      "sector_label": "💨 电子特气 + 外延片",
-      "amplitude": 5.923001,
-      "turnover": 4.7669999999999995,
-      "amount_yi": 7.61
-    },
-    {
       "name": "光库科技",
       "code": "300620",
       "price": "284.5",
@@ -198,7 +178,20 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.206887,
       "turnover": 5.013,
-      "amount_yi": 34.92
+      "amount_yi": 34.92,
+      "serenity_view": "🔴 8/10 laser party 五公司并列点名 + $AAOI/POET 暗示激光是 bottleneck；CW/EML 国产化对标，右侧跟进"
+    },
+    {
+      "name": "新易盛",
+      "code": "300502",
+      "price": "399.6",
+      "pct": "-5.0719",
+      "sector": "cpo",
+      "sector_label": "🔦 CPO / 光模块",
+      "amplitude": 8.542582,
+      "turnover": 5.328,
+      "amount_yi": 266.91,
+      "serenity_view": "🟡 8/10 OCP APAC 双 hyperscaler + laser party 共识；回调分批低吸（pluggable 二供）"
     }
   ],
   "etf_top": [
