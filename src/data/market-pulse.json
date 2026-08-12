@@ -11,7 +11,8 @@
       "sector_label": "🤖 人形机器人",
       "amplitude": 13.246878,
       "turnover": 8.527,
-      "amount_yi": 54.77
+      "amount_yi": 54.77,
+      "view_tag": "Unitree 8000x+Agility $2.5B双锚,回调分批低吸"
     },
     {
       "name": "雅克科技",
@@ -33,7 +34,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 2.677279,
       "turnover": 3.065,
-      "amount_yi": 20.76
+      "amount_yi": 20.76,
+      "view_tag": "化合物半导体材料+激光稀缺"
     },
     {
       "name": "云南锗业",
@@ -44,7 +46,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 7.5843240000000005,
       "turnover": 14.398,
-      "amount_yi": 94.27
+      "amount_yi": 94.27,
+      "view_tag": "InP衬底+激光紧缺2-3年+激光扩产约束"
     },
     {
       "name": "立昂微",
@@ -55,7 +58,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 3.594033,
       "turnover": 4.3020000000000005,
-      "amount_yi": 14.63
+      "amount_yi": 14.63,
+      "view_tag": "InP衬底外延+激光紧缺2-3年"
     },
     {
       "name": "北方华创",
@@ -66,7 +70,8 @@
       "sector_label": "⚙️ 半导体设备",
       "amplitude": 3.3144739999999997,
       "turnover": 0.927,
-      "amount_yi": 50.63
+      "amount_yi": 50.63,
+      "view_tag": "半导体设备+AI DC capex"
     },
     {
       "name": "沪硅产业",
@@ -77,7 +82,8 @@
       "sector_label": "🧪 半导体材料",
       "amplitude": 4.136065,
       "turnover": 2.473,
-      "amount_yi": 18.13
+      "amount_yi": 18.13,
+      "view_tag": "硅片外延+AI DC PCB+激光材料链"
     },
     {
       "name": "天孚通信",
@@ -88,7 +94,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.245931000000001,
       "turnover": 2.928,
-      "amount_yi": 71.17
+      "amount_yi": 71.17,
+      "view_tag": "光模块+完整模块锚+平台型TAM"
     },
     {
       "name": "拓荆科技",
@@ -99,7 +106,8 @@
       "sector_label": "⚙️ 半导体设备",
       "amplitude": 4.847527,
       "turnover": 2.095,
-      "amount_yi": 42.17
+      "amount_yi": 42.17,
+      "view_tag": "半导体设备+大基金注资对标"
     },
     {
       "name": "长电科技",
@@ -110,7 +118,8 @@
       "sector_label": "🔧 ASIC 封测",
       "amplitude": 5.145186,
       "turnover": 7.309,
-      "amount_yi": 102.84
+      "amount_yi": 102.84,
+      "view_tag": "先进封装+FC-BGA"
     },
     {
       "name": "通富微电",
@@ -121,7 +130,8 @@
       "sector_label": "🔧 ASIC 封测",
       "amplitude": 3.955696,
       "turnover": 5.708,
-      "amount_yi": 54.51
+      "amount_yi": 54.51,
+      "view_tag": "AMD封测+AI ASIC"
     },
     {
       "name": "昊华科技",
@@ -143,7 +153,8 @@
       "sector_label": "🧊 TGV / 玻璃基板",
       "amplitude": 7.508104,
       "turnover": 11.075,
-      "amount_yi": 23.92
+      "amount_yi": 23.92,
+      "view_tag": "TGV玻璃基板+CPO玻璃方案+激光雷达"
     },
     {
       "name": "中际旭创",
@@ -154,7 +165,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.561082,
       "turnover": 3.061,
-      "amount_yi": 299.59
+      "amount_yi": 299.59,
+      "view_tag": "1.6T/800G龙头+Trump限中光模块承接+回调分批低吸"
     },
     {
       "name": "中船特气",
@@ -176,7 +188,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 5.43043,
       "turnover": 3.856,
-      "amount_yi": 199.77
+      "amount_yi": 199.77,
+      "view_tag": "光模块+CW/EML激光国产化+回调分批"
     },
     {
       "name": "金宏气体",
@@ -198,7 +211,8 @@
       "sector_label": "🔦 CPO / 光模块",
       "amplitude": 4.678383,
       "turnover": 3.807,
-      "amount_yi": 26.64
+      "amount_yi": 26.64,
+      "view_tag": "CW/EML激光芯片+LITE H2 2027 ramp"
     }
   ],
   "etf_top": [
@@ -267,7 +281,7 @@
   ],
   "macro": {
     "cpi_yoy": {
-      "value": 0.0,
+      "value": 0,
       "date": "20251231",
       "unit": "%",
       "name": "CPI同比增长率"
